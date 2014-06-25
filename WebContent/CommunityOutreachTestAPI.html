@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Community Outreach Rest API Testing Environment</title>
+</head>
+<body>
+	<form action="createUser" method="post">
+		NRIC: <input type="text" name="nric"/>
+		<br/>
+		<button>Create user</button>
+	</form>
+	<form action="retrieveAllUsers" method="post">
+		<button>Retrieve all users</button>
+	</form>
+	<form action="retrieveAllActiveUsers" method="post">
+		<button>Retrieve all active users</button>
+	</form>
+	<form action="retrieveUser" method="post">
+		NRIC: <input type="text" name="nric"/>
+		<br/>
+		<button>Retrieve 1 user</button>
+	</form>
+	<form action="editUser" method="post">
+		NRIC: <input type="text" name="nric"/>
+		<br/>
+		<button>Edit user</button>
+	</form>
+	<form action="removeUser" method="post">
+		NRIC: <input type="text" name="nric"/>
+		<br/>
+		<button>Remove user</button>
+	</form>
+</body>
+</html>
