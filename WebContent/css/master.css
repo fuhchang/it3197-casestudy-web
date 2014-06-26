@@ -1,0 +1,22 @@
+@CHARSET "ISO-8859-1";
+
+html, body
+{
+	height:100%;
+	width:100%;
+}
+.container
+{
+	width:100%;
+	margin-left:0;
+	margin-right:0;
+}
+.pull-left
+{
+	margin-left:2%;
+}
+.nav-tabs
+{
+	padding-top:3%;
+	font-size:20px;
+}
