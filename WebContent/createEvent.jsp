@@ -9,6 +9,9 @@
 			.floatLeftText{
 				float:left;
 			}
+			#currentForm{
+				margin-top:25px;
+			}
 		</style>
 	</jsp:attribute>
 	<jsp:attribute name="jsImports">
@@ -16,11 +19,10 @@
 	</jsp:attribute>
 	
 	<jsp:attribute name="content">
-		<h1> Create Event </h1>
-		<div class="form-horizontal" role="form">
+		<div id="currentForm" class="form-horizontal" role="form">
 			<div class="panel panel-primary">
 			<div class="panel-heading">
-				Create Group Form
+				Create Event
 			</div>
 				<div class="panel-body">
 					<div class="form-group">
