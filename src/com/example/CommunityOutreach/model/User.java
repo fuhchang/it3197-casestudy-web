@@ -16,24 +16,6 @@ public class User {
 	public User(){};
 	
 	/**
-	 * This constructor is to edit user
-	 * @param nric
-	 * @param name
-	 * @param password
-	 * @param contactNo
-	 * @param address
-	 * @param email
-	 */
-	public User(String nric, String name, String password, String contactNo,String address, String email) {
-		this.nric = nric;
-		this.name = name;
-		this.password = password;
-		this.contactNo = contactNo;
-		this.address = address;
-		this.email = email;
-	}
-
-	/**
 	 * This constructor is to retrieve users
 	 * @param nric
 	 * @param name

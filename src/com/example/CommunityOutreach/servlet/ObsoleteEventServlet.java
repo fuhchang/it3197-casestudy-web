@@ -2,7 +2,6 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,23 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.UserManager;
+import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.User;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class GetUserServlet
+ * Servlet implementation class ObsoleteEventServlet
  */
-@WebServlet("/retrieveUser")
-public class RetrieveUserServlet extends HttpServlet {
+@WebServlet("/obsoleteEvent")
+public class ObsoleteEventServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveUserServlet() {
+    public ObsoleteEventServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,27 +52,51 @@ public class RetrieveUserServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
-        String nric = request.getParameter("nric");
-        System.out.println("NRIC: " + nric);
- 
-        UserManager userManager = new UserManager();
-        User user = userManager.retrieveUser(nric);
- 
-        if((nric == null) || (nric.equals("") || (user == null))){
+        int eventID = Integer.parseInt(request.getParameter("eventID"));
+        System.out.println("Event No: " + eventID);
+        
+        EventManager eventManager = new EventManager();
+        Event checkEvent = eventManager.retrieveEvent(eventID);
+        if((checkEvent == null) || (eventID == 0)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
-            myObj.addProperty("message","Unable to retrieve this user.");
+            myObj.addProperty("message","There is no record of such event.");
             out.println(myObj.toString());
+            return;
         }
-        else {
-            Gson gson = new Gson(); 
-            JsonElement countryObj = gson.toJsonTree(user);
+        
+        if(checkEvent.getActive() == 0){
             JsonObject myObj = new JsonObject();
-            myObj.addProperty("success", true);
-            myObj.add("userInfo", countryObj);
+            myObj.addProperty("success", false);
+            myObj.addProperty("message","This event has already been obsoleted.");
             out.println(myObj.toString());
+            return;
         }
-        out.close();
+        else{
+	        boolean isEventObsoleted = false;
+	        try{
+	        	isEventObsoleted = eventManager.obsoleteEvent(eventID);
+	        	if(!isEventObsoleted){
+	        		JsonObject myObj = new JsonObject();
+	                myObj.addProperty("success", false);
+	                myObj.addProperty("message","Unable to obsolete event successfully.");
+	                out.println(myObj.toString());
+	        	}
+	        	else{
+	                JsonObject myObj = new JsonObject();
+	                myObj.addProperty("success", true);
+	                myObj.addProperty("message","Event obsoleted successfully.");
+	                out.println(myObj.toString());
+	        	}
+	        }
+	        catch(Exception ex){
+	        	ex.printStackTrace();
+	    		JsonObject myObj = new JsonObject();
+	            myObj.addProperty("success", false);
+	            myObj.addProperty("message","Unable to obsolete event successfully.");
+	            out.println(myObj.toString());
+	        }
+        }
 	}
 
 }

@@ -22,7 +22,7 @@ public class DBController implements Settings{
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() throws IllegalAccessException,InstantiationException, ClassNotFoundException, SQLException {
+	public Connection getConnection() throws IllegalAccessException,InstantiationException, ClassNotFoundException, SQLException {
 		// Instantiate a new instance of the driver
 		Connection con = null;
 		try{
@@ -43,9 +43,5 @@ public class DBController implements Settings{
 			e.printStackTrace();
 		}
 		return con; 
-	}
-	
-	public static void main(String args[]) throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException{
-		getConnection();
 	}
 }

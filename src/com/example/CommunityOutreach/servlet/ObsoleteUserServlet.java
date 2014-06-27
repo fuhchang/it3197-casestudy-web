@@ -2,7 +2,6 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,21 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.User;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class GetUserServlet
+ * Servlet implementation class DeleteUserServlet
  */
-@WebServlet("/retrieveUser")
-public class RetrieveUserServlet extends HttpServlet {
+@WebServlet("/obsoleteUser")
+public class ObsoleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveUserServlet() {
+    public ObsoleteUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -55,25 +52,49 @@ public class RetrieveUserServlet extends HttpServlet {
         
         String nric = request.getParameter("nric");
         System.out.println("NRIC: " + nric);
- 
+        
         UserManager userManager = new UserManager();
-        User user = userManager.retrieveUser(nric);
- 
-        if((nric == null) || (nric.equals("") || (user == null))){
+        User checkUser = userManager.retrieveUser(nric);
+        if((checkUser == null) || (nric == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
-            myObj.addProperty("message","Unable to retrieve this user.");
+            myObj.addProperty("message","There is no record of such user.");
             out.println(myObj.toString());
+            return;
         }
-        else {
-            Gson gson = new Gson(); 
-            JsonElement countryObj = gson.toJsonTree(user);
+        
+        if(checkUser.getActive() == 0){
             JsonObject myObj = new JsonObject();
-            myObj.addProperty("success", true);
-            myObj.add("userInfo", countryObj);
+            myObj.addProperty("success", false);
+            myObj.addProperty("message","This user has already been obsoleted.");
             out.println(myObj.toString());
+            return;
         }
-        out.close();
+        else{
+	        boolean isUserObsoleted = false;
+	        try{
+	        	isUserObsoleted = userManager.obsoleteUser(nric);
+	        	if(!isUserObsoleted){
+	        		JsonObject myObj = new JsonObject();
+	                myObj.addProperty("success", false);
+	                myObj.addProperty("message","Unable to obsolete user successfully.");
+	                out.println(myObj.toString());
+	        	}
+	        	else{
+	                JsonObject myObj = new JsonObject();
+	                myObj.addProperty("success", true);
+	                myObj.addProperty("message","User obsoleted successfully.");
+	                out.println(myObj.toString());
+	        	}
+	        }
+	        catch(Exception ex){
+	        	ex.printStackTrace();
+	    		JsonObject myObj = new JsonObject();
+	            myObj.addProperty("success", false);
+	            myObj.addProperty("message","Unable to obsolete user successfully.");
+	            out.println(myObj.toString());
+	        }
+        }
 	}
 
 }

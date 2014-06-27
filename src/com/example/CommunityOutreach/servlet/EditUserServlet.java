@@ -68,13 +68,20 @@ public class EditUserServlet extends HttpServlet {
 		String email = "test";
         
         UserManager userManager = new UserManager();
-        User user = new User(nric,name,password,contactNo,address,email);
+        User user = new User(nric,name,null,password,contactNo,address,email,1);
         
         User checkUser = userManager.retrieveUser(nric);
         if((checkUser == null) || (nric == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
             myObj.addProperty("message","There is no record of such user.");
+            out.println(myObj.toString());
+            return;
+        }
+        if(checkUser.getActive() == 0){
+        	JsonObject myObj = new JsonObject();
+            myObj.addProperty("success", false);
+            myObj.addProperty("message","This user has already been obsoleted.");
             out.println(myObj.toString());
             return;
         }
@@ -85,13 +92,13 @@ public class EditUserServlet extends HttpServlet {
         	if(!isUserEdited){
         		JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", false);
-                myObj.addProperty("message","Unable to edit user successfully");
+                myObj.addProperty("message","Unable to edit user successfully.");
                 out.println(myObj.toString());
         	}
         	else{
                 JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", true);
-                myObj.addProperty("message","User updated successfully");
+                myObj.addProperty("message","User edited successfully.");
                 out.println(myObj.toString());
         	}
         }
@@ -99,7 +106,7 @@ public class EditUserServlet extends HttpServlet {
         	ex.printStackTrace();
     		JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
-            myObj.addProperty("message","Unable to edit user successfully");
+            myObj.addProperty("message","Unable to edit user successfully.");
             out.println(myObj.toString());
         }
 	}

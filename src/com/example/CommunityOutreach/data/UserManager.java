@@ -12,7 +12,7 @@ public class UserManager {
 	private static DBController dbController = new DBController();
 
 	/**
-	 * This method is to insert user into database
+	 * This method is to create user into database
 	 * 
 	 * @param user
 	 * @return boolean
@@ -81,7 +81,7 @@ public class UserManager {
 	}
 	
 	/**
-	 * This method is to retrieve all users from the database.
+	 * This method is to retrieve all active users from the database.
 	 * 
 	 * @return ArrayList<User>
 	 */
@@ -120,7 +120,6 @@ public class UserManager {
 	 */
 	public User retrieveUser(String nric) {
 		String sql = "SELECT * FROM user WHERE nric = '" + nric + "'";
-		System.out.println(sql);
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -182,9 +181,9 @@ public class UserManager {
 	/**
 	 * This method is to obsolete user
 	 * @param userID
-	 * @return
+	 * @return boolean
 	 */
-	public boolean removeUser(String nric) {
+	public boolean obsoleteUser(String nric) {
 		String sql = "UPDATE user SET active = 0 WHERE nric = '" + nric + "'";
 		try {
 			Connection conn = dbController.getConnection();
