@@ -11,13 +11,21 @@
 	</jsp:attribute>
 	
 	<jsp:attribute name="content">
-		<h1>Events</h1>
-		<a href="createEvent.jsp"><button type="submit" class="btn btn-default"> Create Event </button></a>
+		<div class="col-xs-12">
+		<h1 class="col-xs-9">Events</h1>
+		<div class="col-xs-3 ">
+		<a href="createEvent.jsp">
+			<button type="submit" id="addHobbies" class="btn btn-primary">
+  				<span class="glyphicon glyphicon-plus-sign"></span> Create Event
+			</button>
+		</a>
+		</div>
+		</div>
 		<ul class="nav nav-tabs text-center" id="tabs">
 			<li class="col-xs-6"><a href="#joined" data-toggle="tab">Joined</a></li>
 			<li class="col-xs-6"><a href="#all" data-toggle="tab">All</a></li>
 		</ul>
-		
+
 		<div class="tab-content">
 			<div class="tab-pane" id="joined">
 				<h3>Joined</h3>

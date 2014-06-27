@@ -28,8 +28,9 @@
 	   			oTable = $('#example').dataTable();
 		   		var OneMap = new GetOneMap('divMain','SM'); 
 				$("#overlayTheme").click(function(){
+					var themeName = $("#txtTheme").val();
 					$.ajax({
-						url: "http://www.onemap.sg/API/services.svc/mashupData?token=xkg8VRu6Ol+gMH+SUamkRIEB7fKzhwMvfMo/2U8UJcFhdvR4yN1GutmUIA3A6r3LDhot215OVVkZvNRzjl28TNUZgYFSswOi&themeName=Hotels",
+						url: "http://www.onemap.sg/API/services.svc/mashupData?token=xkg8VRu6Ol+gMH+SUamkRIEB7fKzhwMvfMo/2U8UJcFhdvR4yN1GutmUIA3A6r3LDhot215OVVkZvNRzjl28TNUZgYFSswOi&themeName="+themeName,
 						type: "GET",
 						dataType: "jsonp",
 				        success: function(data){
@@ -86,23 +87,23 @@
 		  	<thead>
 				<tr>
 		         	<th>Name</th>
-		            <th>Position</th>
-		            <th>Office</th>
-		            <th>Age</th>
-		            <th>Start date</th>
-		            <th>Salary</th>
+		            <th>Postal Code</th>
+		            <th>Street Name</th>
+		            <th>Hyperlink</th>
+		            <th>X/Y Coordinates</th>
+		            <th>Icon Name</th>
 		      	 </tr>
 		    </thead>
 			<tbody></tbody>
 	        <tfoot>
-	            <tr>
-	                <th>Name</th>
-	                <th>Position</th>
-	                <th>Office</th>
-	                <th>Extn.</th>
-	                <th>Start date</th>
-	                <th>Salary</th>
-	            </tr>
+				<tr>
+		         	<th>Name</th>
+		            <th>Postal Code</th>
+		            <th>Street Name</th>
+		            <th>Hyperlink</th>
+		            <th>X/Y Coordinates</th>
+		            <th>Icon Name</th>
+		      	 </tr>
 	        </tfoot>
 	    </table>
 	</jsp:attribute>
