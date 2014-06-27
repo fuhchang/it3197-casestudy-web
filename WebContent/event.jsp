@@ -12,7 +12,7 @@
 	
 	<jsp:attribute name="content">
 		<h1>Events</h1>
-		
+		<a href="createEvent.jsp"><button type="submit" class="btn btn-default"> Create Event </button></a>
 		<ul class="nav nav-tabs text-center" id="tabs">
 			<li class="col-xs-6"><a href="#joined" data-toggle="tab">Joined</a></li>
 			<li class="col-xs-6"><a href="#all" data-toggle="tab">All</a></li>
