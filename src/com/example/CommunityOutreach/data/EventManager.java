@@ -1,19 +1,21 @@
 package com.example.CommunityOutreach.data;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import com.example.CommunityOutreach.controller.DBController;
 import com.example.CommunityOutreach.model.Event;
-import com.example.CommunityOutreach.model.User;
 
+/**
+ * This is the data access manager for Event
+ * @author Lee Zhuo Xun
+ *
+ */
 public class EventManager {
-	private static DBController dbController = new DBController();
+	private DBController dbController = new DBController();
 	
 	/**
 	 * This method is to create event into database
@@ -22,13 +24,13 @@ public class EventManager {
 	 * @return boolean
 	 */
 	public boolean createEvent(Event event) {
-		String sql1 = "INSERT INTO event ";
-		sql1 += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+		String sql = "INSERT INTO event ";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
 
-			PreparedStatement ps = conn.prepareStatement(sql1);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, event.getEventID());
 			ps.setString(2, event.getEventAdminNRIC());
@@ -64,43 +66,6 @@ public class EventManager {
 	 */
 	public ArrayList<Event> retrieveAllEvents() {
 		String sql = "SELECT * FROM event";
-		ArrayList<Event> eventArrList = new ArrayList<Event>();
-		try {
-			Connection conn = dbController.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			System.out.println(ps);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Event event = new Event();
-				event.setEventID(rs.getInt("eventID"));
-				event.setEventAdminNRIC(rs.getString("eventAdminNRIC"));
-				event.setEventName(rs.getString("eventName"));
-				event.setEventCategory(rs.getString("eventCategory"));
-				event.setEventDescription(rs.getString("eventDescription"));
-				event.setEventType(rs.getString("eventType"));
-				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
-				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeTo"));
-				event.setOccurence(rs.getString("occurence"));
-				event.setEventLocation(rs.getString("eventLocation"));
-				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
-				event.setActive(rs.getInt("active"));
-				eventArrList.add(event);
-			}
-			conn.close();
-			return eventArrList;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/**
-	 * This method is to retrieve all active events from the database.
-	 * 
-	 * @return ArrayList<Event>
-	 */
-	public ArrayList<Event> retrieveAllActiveEvents() {
-		String sql = "SELECT * FROM event WHERE active = 1";
 		ArrayList<Event> eventArrList = new ArrayList<Event>();
 		try {
 			Connection conn = dbController.getConnection();

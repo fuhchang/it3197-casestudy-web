@@ -8,11 +8,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.example.CommunityOutreach.controller.DBController;
-import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.EventParticipants;
 
+/**
+ * This is the data access manager for Event Participants
+ * @author Lee Zhuo Xun
+ *
+ */
 public class EventParticipantsManager {
-	private static DBController dbController = new DBController();
+	private DBController dbController = new DBController();
 	
 	/**
 	 * This method is to create event participants into database
@@ -21,13 +25,13 @@ public class EventParticipantsManager {
 	 * @return boolean
 	 */
 	public boolean createEventParticipant(EventParticipants eventParticipant) {
-		String sql1 = "INSERT INTO event_participants ";
-		sql1 += "VALUES( ? , ? , ? , ? )";
+		String sql = "INSERT INTO event_participants ";
+		sql += "VALUES( ? , ? , ? , ? )";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
 
-			PreparedStatement ps = conn.prepareStatement(sql1);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, eventParticipant.getEventID());
 			ps.setString(2, eventParticipant.getUserNRIC());
@@ -112,6 +116,36 @@ public class EventParticipantsManager {
 	 */
 	public EventParticipants retrieveEventParticipant(String userNRIC) {
 		String sql = "SELECT * FROM event_participants WHERE userNRIC = '" + userNRIC + "'";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			EventParticipants eventParticipant = new EventParticipants();
+			if (rs.next()) {
+				eventParticipant.setEventID(rs.getInt("eventID"));
+				eventParticipant.setUserNRIC(rs.getString("userNRIC"));
+				eventParticipant.setDateTimeJoined(rs.getTimestamp("dateTimeJoined"));
+				eventParticipant.setCheckIn(rs.getInt("checkIn"));
+			} else {
+				return null;
+			}
+			conn.close();
+			return eventParticipant;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * This method is to retrieve a event based on user's nric and event id
+	 * @param eventID
+	 * @param userNRIC
+	 * @return EventParticipants
+	 */
+	public EventParticipants retrieveEventParticipant(int eventID, String userNRIC) {
+		String sql = "SELECT * FROM event_participants WHERE userNRIC = '" + userNRIC + "' AND eventID = " + eventID;
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);

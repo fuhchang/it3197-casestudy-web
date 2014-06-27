@@ -5,31 +5,112 @@
 <title>Community Outreach Rest API Testing Environment</title>
 </head>
 <body>
+	<h1>Community Outreach Rest API Testing Environment</h1>
+	<br/>
+
+	<form action="testDBConnection" method="post">
+		<button>Test Connection</button>
+	</form>
+	<br/>
+	<br/>
+	
+	<h4> User </h4>
 	<form action="createUser" method="post">
-		NRIC: <input type="text" name="nric"/>
+		NRIC: <input type="text" name="nric" required/>
 		<br/>
 		<button>Create user</button>
 	</form>
 	<form action="retrieveAllUsers" method="post">
 		<button>Retrieve all users</button>
 	</form>
-	<form action="retrieveAllActiveUsers" method="post">
-		<button>Retrieve all active users</button>
-	</form>
 	<form action="retrieveUser" method="post">
-		NRIC: <input type="text" name="nric"/>
+		NRIC: <input type="text" name="nric" required/>
 		<br/>
 		<button>Retrieve 1 user</button>
 	</form>
 	<form action="editUser" method="post">
-		NRIC: <input type="text" name="nric"/>
+		NRIC: <input type="text" name="nric" required/>
 		<br/>
 		<button>Edit user</button>
 	</form>
-	<form action="removeUser" method="post">
-		NRIC: <input type="text" name="nric"/>
+	<form action="obsoleteUser" method="post">
+		NRIC: <input type="text" name="nric" required/>
 		<br/>
-		<button>Remove user</button>
+		<button>Obsolete user</button>
 	</form>
+	
+	<br/>
+	<h4> Event </h4>
+	<form action="createEvent" method="post">
+		<button>Create Event</button>
+	</form>
+	<form action="retrieveAllEvents" method="post">
+		<button>Retrieve all events</button>
+	</form>
+	<form action="retrieveEvent" method="post">
+		Event No: <input type="number" name="eventID" required/>
+		<br/>
+		<button>Retrieve 1 event</button>
+	</form>	
+	<form action="editEvent" method="post">
+		Event No: <input type="number" name="eventID" required/>
+		<br/>
+		<button>Edit event</button>
+	</form>
+	<form action="obsoleteEvent" method="post">
+		Event No: <input type="number" name="eventID" required/>
+		<br/>
+		<button>Obsolete event</button>
+	</form>	
+	
+	<br/>
+	<h4> Event Participants </h4>
+	<form action="createEventParticipant" method="post">
+		NRIC: <input type="text" name="nric" required/>
+		<br/>
+		<button>Create Event</button>
+	</form>
+	<form action="retrieveAllEventParticipants" method="post">
+		<button>Retrieve all event participants</button>
+	</form>
+	<form action="retrieveEventParticipant" method="post">
+		NRIC: <input type="text" name="userNRIC" required/>
+		<br/>
+		<button>Retrieve event participants by NRIC</button>
+	</form>
+	<form action="retrieveEventParticipant" method="post">
+		Event No: <input type="number" name="eventID" required/>
+		<br/>
+		<button>Retrieve event participants by Event No</button>
+	</form>
+	<form action="retrieveEventParticipant" method="post">
+		NRIC: <input type="text" name="userNRIC" required/>
+		Event No: <input type="number" name="eventID" required/>
+		<br/>
+		<button>Retrieve event participants by Event No and NRIC</button>
+	</form>
+	<form action="editEventParticipant" method="post">
+		NRIC: <input type="text" name="userNRIC" required/>
+		Event No: <input type="number" name="eventID" required/>
+		<br/>
+		<button>Edit event participant</button>
+	</form>		
+	<form action="deleteEventParticipant" method="post">
+		NRIC: <input type="text" name="userNRIC" required/>
+		Event No: <input type="number" name="eventID" required/>
+		<br/>
+		<button>Delete event participant</button>
+	</form>	
+	
+	<br/>
+	<h4> Articles </h4>	
+	<form action="retrieveAllArticles" method="post">
+		<button>Retrieve all articles</button>
+	</form>
+	<form action="retrieveArticle" method="post">
+		Article No: <input type="number" name="articleID" required/>
+		<br/>
+		<button>Retrieve article</button>
+	</form>	
 </body>
 </html>

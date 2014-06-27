@@ -10,24 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.CommunityOutreach.data.UserManager;
-import com.example.CommunityOutreach.model.User;
+import com.example.CommunityOutreach.data.EventManager;
+import com.example.CommunityOutreach.data.EventParticipantsManager;
+import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.model.EventParticipants;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class RetrieveAllActiveUsersServlet
+ * Servlet implementation class RetrieveAllEventParticipantsServlet
  */
-@WebServlet("/retrieveAllActiveUsers")
-public class RetrieveAllActiveUsersServlet extends HttpServlet {
+@WebServlet("/retrieveAllEventParticipants")
+public class RetrieveAllEventParticipantsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveAllActiveUsersServlet() {
+    public RetrieveAllEventParticipantsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -54,27 +56,27 @@ public class RetrieveAllActiveUsersServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
 
-        UserManager userManager = new UserManager();
-        ArrayList<User> userArrList = userManager.retrieveAllActiveUsers();
+        EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
+        ArrayList<EventParticipants> eventParticipantsArrList = eventParticipantsManager.retrieveAllEventParticipants();
         
-        System.out.println(userArrList.size());
+        System.out.println(eventParticipantsArrList.size());
  
-        if((userArrList.size() == 0) || (userArrList == null)){
+        if((eventParticipantsArrList.size() == 0) || (eventParticipantsArrList == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
-            myObj.addProperty("message", "Unable to retrieve active users.");
+            myObj.addProperty("message", "Unable to retrieve event participants.");
             out.println(myObj.toString());
         }
         else {
             Gson gson = new Gson();
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", true);
-        	JsonElement userObj;
-        	JsonArray userArray = new JsonArray();
-            for(int i=0;i<userArrList.size();i++){
-            	userObj = gson.toJsonTree(userArrList.get(i));
-            	userArray.add(userObj);
-            	myObj.add("userInfo", userArray);
+        	JsonElement eventParticipantsObj;
+        	JsonArray eventParticipantsArray = new JsonArray();
+            for(int i=0;i<eventParticipantsArrList.size();i++){
+            	eventParticipantsObj = gson.toJsonTree(eventParticipantsArrList.get(i));
+            	eventParticipantsArray.add(eventParticipantsObj);
+            	myObj.add("eventParticipantsInfo", eventParticipantsArray);
             }
             out.println(myObj.toString());
         }

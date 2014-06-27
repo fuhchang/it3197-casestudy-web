@@ -8,8 +8,13 @@ import java.util.ArrayList;
 import com.example.CommunityOutreach.controller.DBController;
 import com.example.CommunityOutreach.model.User;
 
+/**
+ * This is the data access manager for User
+ * @author Lee Zhuo Xun
+ *
+ */
 public class UserManager {
-	private static DBController dbController = new DBController();
+	private DBController dbController = new DBController();
 
 	/**
 	 * This method is to create user into database
@@ -18,13 +23,13 @@ public class UserManager {
 	 * @return boolean
 	 */
 	public boolean createUser(User user) {
-		String sql1 = "INSERT INTO user ";
-		sql1 += "VALUES( ? , ? , ? , ? , ? , ? , ? , ?)";
+		String sql = "INSERT INTO user ";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ?)";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
 
-			PreparedStatement ps = conn.prepareStatement(sql1);
+			PreparedStatement ps = conn.prepareStatement(sql);
 
 			ps.setString(1, user.getNric());
 			ps.setString(2, user.getName());

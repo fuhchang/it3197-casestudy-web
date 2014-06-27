@@ -67,10 +67,10 @@ public class RetrieveUserServlet extends HttpServlet {
         }
         else {
             Gson gson = new Gson(); 
-            JsonElement countryObj = gson.toJsonTree(user);
+            JsonElement userObj = gson.toJsonTree(user);
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", true);
-            myObj.add("userInfo", countryObj);
+            myObj.add("userInfo", userObj);
             out.println(myObj.toString());
         }
         out.close();

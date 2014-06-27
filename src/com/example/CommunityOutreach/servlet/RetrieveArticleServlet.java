@@ -9,25 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.CommunityOutreach.data.ArticleManager;
 import com.example.CommunityOutreach.data.EventManager;
-import com.example.CommunityOutreach.data.UserManager;
+import com.example.CommunityOutreach.model.Article;
 import com.example.CommunityOutreach.model.Event;
-import com.example.CommunityOutreach.model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class RetrieveEventServlet
+ * Servlet implementation class RetrieveArticleServlet
  */
-@WebServlet("/retrieveEvent")
-public class RetrieveEventServlet extends HttpServlet {
+@WebServlet("/retrieveArticle")
+public class RetrieveArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveEventServlet() {
+    public RetrieveArticleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -54,30 +54,30 @@ public class RetrieveEventServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
-        int eventID;
-        if((request.getParameter("eventID") == null) || (request.getParameter("eventID").equals(""))){
-        	eventID = 0;
+        int articleID;
+        if((request.getParameter("articleID") == null) || (request.getParameter("articleID").equals(""))){
+        	articleID = 0;
         }
         else{
-        	eventID = Integer.parseInt(request.getParameter("eventID"));
+        	articleID = Integer.parseInt(request.getParameter("articleID"));
         }
-        System.out.println("Event No: " + eventID);
+        System.out.println("Article No: " + articleID);
  
-        EventManager eventManager = new EventManager();
-        Event event = eventManager.retrieveEvent(eventID);
+        ArticleManager articleManager = new ArticleManager();
+        Article article = articleManager.retrieveArticle(articleID);
  
-        if((eventID == 0) || (event == null)){
+        if((articleID == 0) || (article == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
-            myObj.addProperty("message","Unable to retrieve this event.");
+            myObj.addProperty("message","Unable to retrieve this article.");
             out.println(myObj.toString());
         }
         else {
             Gson gson = new Gson(); 
-            JsonElement eventObj = gson.toJsonTree(event);
+            JsonElement articleObj = gson.toJsonTree(article);
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", true);
-            myObj.add("eventInfo", eventObj);
+            myObj.add("articleInfo", articleObj);
             out.println(myObj.toString());
         }
         out.close();

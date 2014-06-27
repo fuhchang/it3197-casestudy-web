@@ -19,16 +19,16 @@ import com.example.CommunityOutreach.model.User;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class CreateEventParticipantServlet
+ * Servlet implementation class EditEventParticipantServlet
  */
-@WebServlet("/createEventParticipant")
-public class CreateEventParticipantServlet extends HttpServlet {
+@WebServlet("/editEventParticipant")
+public class EditEventParticipantServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateEventParticipantServlet() {
+    public EditEventParticipantServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -55,18 +55,22 @@ public class CreateEventParticipantServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
-        String userNRIC = request.getParameter("nric");
+        int eventID;
+        if((request.getParameter("eventID") == null) || (request.getParameter("eventID").equals(""))){
+        	eventID = 0;
+        }
+        else{
+        	eventID = Integer.parseInt(request.getParameter("eventID"));
+        }
+        String userNRIC = request.getParameter("userNRIC");
         //Real Values
         /*String name = request.getParameter("name");
-        String type = request.getParameter("type");
         String password = request.getParameter("password");
         String contactNo = request.getParameter("contactNo");
         String address = request.getParameter("address");
         String email = request.getParameter("email");*/
         
         //Testing Values
-        System.out.println("NRIC: " + userNRIC);
-		int eventID = 7;
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH,27);
@@ -75,15 +79,29 @@ public class CreateEventParticipantServlet extends HttpServlet {
 		calendar.set(Calendar.HOUR_OF_DAY,9);
 		calendar.set(Calendar.MINUTE,00);
 		calendar.set(Calendar.SECOND, 00);
-		
-        UserManager userManager = new UserManager();
-		EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
-		EventManager eventManager = new EventManager();
-        EventParticipants eventParticipant = new EventParticipants(eventID,userNRIC,calendar.getTime(),0);
-        User checkUser = userManager.retrieveUser(userNRIC);
-        Event checkEvent = eventManager.retrieveEvent(eventID);
-        EventParticipants checkEventParticipants= eventParticipantsManager.retrieveEventParticipant(eventID,userNRIC);
         
+		UserManager userManager = new UserManager();
+		EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
+        EventManager eventManager = new EventManager();
+        Event checkEvent = eventManager.retrieveEvent(eventID);
+        User checkUser = userManager.retrieveUser(userNRIC);
+        EventParticipants eventParticipants = new EventParticipants(eventID,userNRIC,calendar.getTime(),1);
+        EventParticipants checkEventParticipant = eventParticipantsManager.retrieveEventParticipant(eventID, userNRIC);
+        
+        if((checkEvent == null) || (eventID == 0)){
+            JsonObject myObj = new JsonObject();
+            myObj.addProperty("success", false);
+            myObj.addProperty("message","There is no record of such event.");
+            out.println(myObj.toString());
+            return;
+        }
+        if(checkEvent.getActive() == 0){
+        	JsonObject myObj = new JsonObject();
+            myObj.addProperty("success", false);
+            myObj.addProperty("message","This event has already been obsoleted.");
+            out.println(myObj.toString());
+            return;
+        }
         if((checkUser == null) || (userNRIC == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
@@ -98,40 +116,27 @@ public class CreateEventParticipantServlet extends HttpServlet {
             out.println(myObj.toString());
             return;
         }
-        if((checkEvent == null) || (checkEvent.getEventID() == 0)){
-            JsonObject myObj = new JsonObject();
-            myObj.addProperty("success", false);
-            myObj.addProperty("message","There is no record of such event.");
-            out.println(myObj.toString());
-            return;
-        }
-        if(checkEvent.getActive() == 0){
+        if(checkEventParticipant == null){
         	JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
-            myObj.addProperty("message","This event has already been obsoleted.");
+            myObj.addProperty("message","This is no record of such event participants.");
             out.println(myObj.toString());
             return;
         }
-        if((checkEventParticipants != null)){
-        	JsonObject myObj = new JsonObject();
-            myObj.addProperty("success", false);
-            myObj.addProperty("message","This user has already join the event.");
-            out.println(myObj.toString());
-            return;
-        }
-        boolean isEventParticipantCreated = false;
+        
+        boolean isEventParticipantsEdited = false;
         try{
-        	isEventParticipantCreated = eventParticipantsManager.createEventParticipant(eventParticipant);
-        	if(!isEventParticipantCreated){
+        	isEventParticipantsEdited = eventParticipantsManager.editEventParticipant(eventParticipants);
+        	if(!isEventParticipantsEdited){
         		JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", false);
-                myObj.addProperty("message","Unable to create event participant successfully.");
+                myObj.addProperty("message","Unable to edit event participants successfully.");
                 out.println(myObj.toString());
         	}
         	else{
                 JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", true);
-                myObj.addProperty("message","Event participant created successfully.");
+                myObj.addProperty("message","Event participants edited successfully.");
                 out.println(myObj.toString());
         	}
         }
@@ -139,7 +144,7 @@ public class CreateEventParticipantServlet extends HttpServlet {
         	ex.printStackTrace();
     		JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
-            myObj.addProperty("message","Unable to create event participant successfully.");
+            myObj.addProperty("message","Unable to edit event participants successfully.");
             out.println(myObj.toString());
         }
 	}
