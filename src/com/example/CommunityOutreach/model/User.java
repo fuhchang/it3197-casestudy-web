@@ -9,7 +9,6 @@ public class User {
 	private String address;
 	private String email;
 	private int active;
-	private int points;
 	
 	/**
 	 * User's default constructor
@@ -26,9 +25,8 @@ public class User {
 	 * @param address
 	 * @param email
 	 * @param active
-	 * @param points
 	 */
-	public User(String nric, String name, String type, String password,String contactNo, String address, String email, int active, int points) {
+	public User(String nric, String name, String type, String password,String contactNo, String address, String email, int active) {
 		this.nric = nric;
 		this.name = name;
 		this.type = type;
@@ -37,7 +35,6 @@ public class User {
 		this.address = address;
 		this.email = email;
 		this.active = active;
-		this.points = points;
 	}
 	public String getNric() {
 		return nric;
@@ -86,13 +83,5 @@ public class User {
 	}
 	public void setActive(int active) {
 		this.active = active;
-	}
-
-	public int getPoints() {
-		return points;
-	}
-
-	public void setPoints(int points) {
-		this.points = points;
 	}
 }
