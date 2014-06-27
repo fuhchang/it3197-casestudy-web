@@ -14,7 +14,7 @@
 		<div class="col-xs-12">
 		<h1 class="col-xs-9">Events</h1>
 		<div class="col-xs-3 ">
-		<a href="createEvent.jsp">
+		<a href="createEventStep1.jsp">
 			<button type="submit" id="addHobbies" class="btn btn-primary">
   				<span class="glyphicon glyphicon-plus-sign"></span> Create Event
 			</button>
