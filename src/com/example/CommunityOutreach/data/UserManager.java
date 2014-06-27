@@ -24,7 +24,7 @@ public class UserManager {
 	 */
 	public boolean createUser(User user) {
 		String sql = "INSERT INTO user ";
-		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ?)";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? )";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -39,7 +39,7 @@ public class UserManager {
 			ps.setString(6, user.getAddress());
 			ps.setString(7, user.getEmail());
 			ps.setInt(8, user.getActive());
-
+			ps.setInt(9, user.getPoints());
 			System.out.println(ps);
 			ps.executeUpdate();
 
@@ -75,39 +75,7 @@ public class UserManager {
 				user.setAddress(rs.getString("address"));
 				user.setEmail(rs.getString("email"));
 				user.setActive(rs.getInt("active"));
-				userArrList.add(user);
-			}
-			conn.close();
-			return userArrList;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/**
-	 * This method is to retrieve all active users from the database.
-	 * 
-	 * @return ArrayList<User>
-	 */
-	public ArrayList<User> retrieveAllActiveUsers() {
-		String sql = "SELECT * FROM user WHERE active = 1";
-		ArrayList<User> userArrList = new ArrayList<User>();
-		try {
-			Connection conn = dbController.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			System.out.println(ps);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				User user = new User();
-				user.setNric(rs.getString("nric"));
-				user.setName(rs.getString("name"));
-				user.setType(rs.getString("type"));
-				user.setPassword(rs.getString("password"));
-				user.setContactNo(rs.getString("contactNo"));
-				user.setAddress(rs.getString("address"));
-				user.setEmail(rs.getString("email"));
-				user.setActive(rs.getInt("active"));
+				user.setPoints(rs.getInt("points"));
 				userArrList.add(user);
 			}
 			conn.close();
@@ -140,6 +108,7 @@ public class UserManager {
 				user.setAddress(rs.getString("address"));
 				user.setEmail(rs.getString("email"));
 				user.setActive(rs.getInt("active"));
+				user.setPoints(rs.getInt("points"));
 			} else {
 				return null;
 			}
@@ -158,7 +127,7 @@ public class UserManager {
 	 */
 	public boolean editUser(User user) {
 		String sql = "UPDATE user ";
-		sql += "SET name = ? , password = ? , contactNo = ? , address = ? , email = ? WHERE nric = ? ";
+		sql += "SET name = ? , password = ? , contactNo = ? , address = ? , email = ? , points = ? WHERE nric = ? ";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -170,7 +139,8 @@ public class UserManager {
 			ps.setString(3, user.getContactNo());
 			ps.setString(4, user.getAddress());
 			ps.setString(5, user.getEmail());
-			ps.setString(6, user.getNric());
+			ps.setInt(6, user.getPoints());
+			ps.setString(7, user.getNric());
 			
 			System.out.println(ps);
 			ps.executeUpdate();

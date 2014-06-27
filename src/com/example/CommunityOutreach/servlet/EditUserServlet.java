@@ -68,7 +68,7 @@ public class EditUserServlet extends HttpServlet {
 		String email = "test";
         
         UserManager userManager = new UserManager();
-        User user = new User(nric,name,null,password,contactNo,address,email,1);
+        User user = new User(nric,name,null,password,contactNo,address,email,1,0);
         
         User checkUser = userManager.retrieveUser(nric);
         if((checkUser == null) || (nric == null)){

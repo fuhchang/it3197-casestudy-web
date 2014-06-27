@@ -23,23 +23,21 @@
 			margin-right:0;
 			text-align:center;
 		}
-		.jumbotron
-		{
-			background:none;
-			margin-top:5%;
-		}
 		.glyphicon
 		{
 			font-size:50px;
+		}
+		#icon
+		{
+			margin-top:5%;
 		}
 		</style>
 	</head>
 	
 	<body class="container">
-		<div class="jumbotron">
-			<img src="resources/community.png">
-		 	<h1>Community Outreach</h1>
-		</div>
+		<img id="icon" src="resources/community.png">
+	 	<h1>Community Outreach</h1>
+
 		<div class="row marketing">
 			<button class="btn btn-default col-xs-6" onclick="location.href='event.jsp'">
 				<span class="glyphicon glyphicon-calendar"></span>
