@@ -29,13 +29,14 @@
 		   		var OneMap = new GetOneMap('divMain','SM'); 
 				$("#overlayTheme").click(function(){
 					var themeName = $("#txtTheme").val();
+					alert(themeName);
 					$.ajax({
 						url: "http://www.onemap.sg/API/services.svc/mashupData?token=xkg8VRu6Ol+gMH+SUamkRIEB7fKzhwMvfMo/2U8UJcFhdvR4yN1GutmUIA3A6r3LDhot215OVVkZvNRzjl28TNUZgYFSswOi&themeName="+themeName,
 						type: "GET",
 						dataType: "jsonp",
 				        success: function(data){
 				         	var size = data.SrchResults[0].FeatCount;
-					   		var searchResults = new Array();
+					   		alert(url);
 				           	for(var i=1;i<size;i++){
 				           		var name = data.SrchResults[i].NAME.toString();
 				           		var postalCode = data.SrchResults[i].ADDRESSPOSTALCODE.toString();
@@ -78,7 +79,7 @@
 		  	</tr>  
 		  	<tr>
 		   		<td id="txt"></td>
-		   		<td><input type="button" value="MashUp Theme" id="overlayTheme" /></td>
+		   		<td><input type="button" value="MashUp Theme" id="overlayTheme" class="btn btn-default"/></td>
 		  	</tr>
 		</table>
 		<br />
