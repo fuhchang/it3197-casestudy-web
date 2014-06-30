@@ -33,7 +33,6 @@
 		        	var description = $(".form-control").eq(2).val();
 		        	var location = $(".form-control").eq(3).val();
 		        	var noOfParticipants = $(".form-control").eq(4).val();
-		        	alert(eventName);
 		        	if(eventName == ""){
 		        		$(".form-group").eq(1).html("<span class='floatLeftText'><label class='col-xs-12 control-label' for='inputError1'> Name</label></span><input class='form-control' type='text' name='eventName' id='inputError1' placeholder='Enter event name'/>").addClass("has-error");
 		        		e.preventDefault();
@@ -43,14 +42,13 @@
 		        		e.preventDefault();
 		        	}
 		        	if(location == ""){
-		        		$(".form-group").eq(4).html("<span class='floatLeftText'><label class='col-xs-12 control-label' for='inputError1'>Description</label></span><textarea class='form-control' rows='3' placeholder='Enter event description' id='inputError1'></textarea>").addClass("has-error");
+		        		$(".form-group").eq(4).html("<span class='floatLeftText'><label class='col-xs-12 control-label'>Location</label></span><textarea class='form-control' rows='3' placeholder='Enter event location'></textarea>").addClass("has-error");
 		        		e.preventDefault();
 		        	}
-		        	if(noOfParticipants == ""){
-		        		$(".form-group").eq(5).html("<span class='floatLeftText'><label class='col-xs-12 control-label' for='inputError1'>Description</label></span><textarea class='form-control' rows='3' placeholder='Enter event description' id='inputError1'></textarea>").addClass("has-error");
+		        	/*if((noOfParticipants == "") || (noOfParticipants == Nan)){
+		        		$(".form-group").eq(5).html("<span class='floatLeftText'><label class='col-xs-12 control-label'>No. of Participants </label></span><input class='form-control' type='number' name='gName' placeholder='Enter number of participants (0-999999)' min='0' max='999999'/>").addClass("has-error");
 		        		e.preventDefault();
-		        	}
-		        	
+		        	}*/
 		        });
 			});
 		</script>
@@ -101,7 +99,6 @@
 							<input class="form-control" type="number" name="gName" placeholder="Enter number of participants (0-999999)" min="0" max="999999"/>
 						</div>
 						<div class="form-group">
-						
 							<a href="event.jsp"><button type="submit" class="btn btn-default"> Cancel </button></a>
 							<input type="Submit" name="submit" id="submitBtn" value="Next" class="btn btn-default"/>
 						</div>
