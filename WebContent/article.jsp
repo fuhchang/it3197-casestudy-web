@@ -11,24 +11,23 @@
 	</jsp:attribute>
 	
 	<jsp:attribute name="content">
-		<h1>Articles</h1>
+		 <h1></h1>
 		
 		<div class="jumbotron">
-			<h2>Brief Intro</h2>
-		</div>
-		
-		<ul class="nav nav-tabs text-center" id="tabs">
-			<li class="col-xs-6"><a href="#latest" data-toggle="tab">Latest</a></li>
-			<li class="col-xs-6"><a href="#upcoming" data-toggle="tab">Upcoming</a></li>
-		</ul>
-		
-		<div class="tab-content">
-			<div class="tab-pane" id="latest">
-				<h3>Latest</h3>
+			<div class="row">
+			  <div class="col-sm-6 col-md-4">
+			    <div class="thumbnail">
+			      <img id="icon" src="resources/wewantyou.jpg">
+			      <div class="caption">
+			        <p>Have an article to share? Complain to make? Request to give? You came to the right page!</p>
+			        
+			         <p><a href="#" class="btn btn-primary" onclick="location.href='articleSubmission.jsp'" role="button">Click Here To Start</a>
+			      </div>
+			    </div>
+			  </div>
 			</div>
-			<div class="tab-pane" id="upcoming">
-				<h3>Upcoming</h3>
-			</div>
+			
 		</div>
+	
 	</jsp:attribute>
 </t:master>
