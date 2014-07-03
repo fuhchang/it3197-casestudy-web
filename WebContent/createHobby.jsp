@@ -9,7 +9,8 @@
 	<jsp:attribute name="jsImports">
 		<!-- Import JS here -->
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript"
+			src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<style>
 #map_canvas {
 	width: 300px;
@@ -18,21 +19,19 @@
 }
 </style>
 		<script>
-		var lat;
-		var lng;
-		var address;
-		var geocoder = new google.maps.Geocoder();
-		var infowindow = new google.maps.InfoWindow();
-			$(document).ready(
-					function() {
-						getLocation();
-						$("#getLocation").on(
-								'click',
-								function() {
-									getLocation();
-								$("#test").append(lat + " " + lng);
-								});
-					});
+			var lat;
+			var lng;
+			var address;
+			var geocoder = new google.maps.Geocoder();
+			var infowindow = new google.maps.InfoWindow();
+			$(document).ready(function() {
+				getLocation();
+				$("#getLocation").on('click', function() {
+					
+					getReverseGeocodingData(lat, lng);
+					$("#test").append(lat + " " + lng);
+				});
+			});
 			function getLocation() {
 				if (navigator.geolocation) {
 					navigator.geolocation.getCurrentPosition(showPosition);
@@ -56,6 +55,7 @@
 			function initialize() {
 				var map_canvas = document.getElementById('map_canvas');
 				var map_options = {
+
 					center : new google.maps.LatLng(la, lg),
 					zoom : 16,
 					mapTypeId : google.maps.MapTypeId.ROADMAP
@@ -68,24 +68,32 @@
 					draggable : true
 
 				});
-				lat = marker.getPosition().lat();
-				lng = marker.getPosition().lng();
+
+				google.maps.event.addListener(marker, 'dragend', function(
+						marker) {
+					var latLng = marker.latLng;
+					lat = latLng.lat();
+					lng = latLng.lng();
+				});
 			}
 
 			function getReverseGeocodingData(lat, lng) {
-			    var latlng = new google.maps.LatLng(lat, lng);
-			    // This is making the Geocode request
-			    var geocoder = new google.maps.Geocoder();
-			    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-			        if (status !== google.maps.GeocoderStatus.OK) {
-			            alert(status);
-			        }
-			        // This is checking to see if the Geoeode Status is OK before proceeding
-			        if (status == google.maps.GeocoderStatus.OK) {
-			            console.log(results);
-			            var address = (results[0].formatted_address);
-			        }
-			    });
+				var latlng = new google.maps.LatLng(lat, lng);
+				// This is making the Geocode request
+				var geocoder = new google.maps.Geocoder();
+				geocoder.geocode({
+					'latLng' : latlng
+				}, function(results, status) {
+					if (status !== google.maps.GeocoderStatus.OK) {
+						alert(status);
+					}
+					// This is checking to see if the Geoeode Status is OK before proceeding
+					if (status == google.maps.GeocoderStatus.OK) {
+						console.log(results);
+						var address = (results[0].formatted_address);
+						alert(address);
+					}
+				});
 			}
 		</script>
 	</jsp:attribute>
@@ -127,4 +135,4 @@
 			</div>
 		</div>
 	</jsp:attribute>
-</t:master>/html>
+</t:master>

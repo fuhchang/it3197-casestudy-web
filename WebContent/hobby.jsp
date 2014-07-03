@@ -15,7 +15,7 @@
 		<h1 class="col-xs-9">Hobby</h1>
 		<div class="col-xs-3 ">
 		<button type="submit" id="addHobbies" class="btn btn-primary">
-  		<span class="glyphicon glyphicon-plus-sign"><a href="createhobby.jsp"></a></span>
+  		<a href="createHobby.jsp"><span class="glyphicon glyphicon-plus-sign"></span></a>
 		</button>
 		</div>
 		</div>
