@@ -1,12 +1,17 @@
 package com.example.CommunityOutreach.model;
 
+import java.io.InputStream;
+
+import com.mysql.jdbc.Blob;
+
 public class Hobby {
 	private int grpID;
 	private String grpName;
 	private String category;
 	private String location;
-	private String Desc;
+	private String grpDesc;
 	private int active;
+	private byte[] photo;
 	public int getGrpID() {
 		return grpID;
 	}
@@ -31,17 +36,37 @@ public class Hobby {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getDesc() {
-		return Desc;
-	}
-	public void setDesc(String desc) {
-		Desc = desc;
-	}
+	
 	public int getActive() {
 		return active;
 	}
 	public void setActive(int active) {
 		this.active = active;
 	}
+	/**
+	 * @return the grpDesc
+	 */
+	public String getGrpDesc() {
+		return grpDesc;
+	}
+	/**
+	 * @param grpDesc the grpDesc to set
+	 */
+	public void setGrpDesc(String grpDesc) {
+		this.grpDesc = grpDesc;
+	}
+	/**
+	 * @return the photo
+	 */
+	public byte[] getPhoto() {
+		return photo;
+	}
+	/**
+	 * @param photo the photo to set
+	 */
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+	
 	
 }
