@@ -55,20 +55,18 @@ public class CreateEventServlet extends HttpServlet {
         
         //int eventID = Integer.parseInt(request.getParameter("eventID"));
         //Real Values
-        /*String name = request.getParameter("name");
-        String type = request.getParameter("type");
-        String password = request.getParameter("password");
-        String contactNo = request.getParameter("contactNo");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");*/
+        String eventName = request.getParameter("eventName");
+        String eventCategory = request.getParameter("eventCategory");
+        String eventDescription = request.getParameter("eventDescription");
+        String eventType = request.getParameter("eventType");
+        String occurence = request.getParameter("occurence");
+        String eventLocation = request.getParameter("eventLocation");
+        //String noOfParticipantsAllowed = request.getParameter("noOfParticipants");
+        int noOfParticipantsAllowed = 0;
         
         //Testing Values
         //System.out.println("Event No: " + eventID);
 		String eventAdminNRIC = "S9512233X";
-		String eventName = "Xy";
-		String eventCategory = "Xy";
-		String eventDescription = "Xy";
-		String eventType = "Xy";
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH,27);
@@ -85,10 +83,6 @@ public class CreateEventServlet extends HttpServlet {
 		calendar2.set(Calendar.HOUR_OF_DAY,13);
 		calendar2.set(Calendar.MINUTE,00);
 		calendar2.set(Calendar.SECOND, 00);
-		
-		String occurence = "Xy";
-		String eventLocation = "Xy";
-		int noOfParticipantsAllowed = 0;
 		
 		EventManager eventManager = new EventManager();
 		UserManager userManager = new UserManager();
