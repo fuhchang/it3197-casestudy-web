@@ -3,6 +3,7 @@ package com.example.CommunityOutreach.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,8 +62,11 @@ public class CreateEventServlet extends HttpServlet {
         String eventType = request.getParameter("eventType");
         String occurence = request.getParameter("occurence");
         String eventLocation = request.getParameter("eventLocation");
-        //String noOfParticipantsAllowed = request.getParameter("noOfParticipants");
         int noOfParticipantsAllowed = 0;
+        if(request.getParameter("noOfParticipants") != null){
+        	noOfParticipantsAllowed = Integer.parseInt(request.getParameter("noOfParticipants"));
+        }
+        
         
         //Testing Values
         //System.out.println("Event No: " + eventID);
