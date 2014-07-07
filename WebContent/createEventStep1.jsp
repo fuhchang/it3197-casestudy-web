@@ -27,7 +27,12 @@
 		            linkType: 'direct',
 		            extensions: ['.jpg', '.jpeg', '.png'],
 		        });
-		        document.getElementById('container').appendChild(button);
+		        var width = $("#googleMap").width();
+				$("#suggestLocation").click(function() {
+					window.open("suggestLocation.jsp", '','width=800px,height=500,resizable=no');
+					window.focus();
+				});
+		        $('#container').append(button);
 		        $("#submitBtn").click(function(e){
 		        	var eventName = $(".form-control").eq(0).val();
 		        	var description = $(".form-control").eq(2).val();
@@ -42,7 +47,7 @@
 		        		e.preventDefault();
 		        	}
 		        	if(location == ""){
-		        		$(".form-group").eq(4).html("<span class='floatLeftText'><label class='col-xs-12 control-label'>Location</label></span><textarea class='form-control' rows='3' placeholder='Enter event location'></textarea>").addClass("has-error");
+		        		$(".form-group").eq(4).html("<span class='floatLeftText'><label class='col-xs-12 control-label'>Location</label></span><textarea id='location' class='form-control' rows='3' placeholder='Enter event location'></textarea><br/><button type='submit' class='btn btn-default' id='suggestLocation' formaction='#'> Suggest Location </button>").addClass("has-error");
 		        		e.preventDefault();
 		        	}
 		        	/*if((noOfParticipants == "") || (noOfParticipants == Nan)){
@@ -69,7 +74,13 @@
 							<br/>
 							<br/>
 							<input type="image" id="selected-image" name="image_url" width="400" height="200"/>
-							<div id="container"></div>
+							<table>
+								<tr>
+									<td><div id="container"></div></td>
+									<td style="padding-left:25px;"></td>
+									<td><input type="file" name="excelPathName" id="uploadBtnExcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/></td>
+								</tr>
+							</table>
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label"> Name</label></span>
@@ -90,16 +101,16 @@
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">Location</label></span>
-							<textarea class="form-control" rows="3" placeholder="Enter event location"></textarea>
+							<textarea id="location" class="form-control" rows="3" placeholder="Enter event location"></textarea>
 							<br/>
-							<a href="suggestLocation.jsp"><button type="submit" class="btn btn-default"> Suggest Location </button></a>
+							<button type="submit" class="btn btn-default" id='suggestLocation' formaction="#"> Suggest Location </button>
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">No. of Participants </label></span>
 							<input class="form-control" type="number" name="gName" placeholder="Enter number of participants (0-999999)" min="0" max="999999"/>
 						</div>
 						<div class="form-group">
-							<a href="event.jsp"><button type="submit" class="btn btn-default"> Cancel </button></a>
+							<button type="submit" class="btn btn-default" formaction="event.jsp"> Cancel </button>
 							<input type="Submit" name="submit" id="submitBtn" value="Next" class="btn btn-default"/>
 						</div>
 					</div>
