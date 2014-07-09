@@ -22,7 +22,77 @@
 		var marker;
 		//Onload handler to fire off the app.
 		
-		google.maps.event.addDomListener(window, 'load', initialize);
+		google.maps.event.addDomListener(window, 'load', initialize1);
+		
+		
+		
+		
+		
+		
+		function initialize1() {
+			  geocoder = new google.maps.Geocoder();			
+			  var latLng = new google.maps.LatLng(1.287778, 103.851944);		 
+			  map = new google.maps.Map(document.getElementById('mapCanvas'), {		 
+			    zoom: 18,		 
+			    center: latLng,		 
+			    mapTypeId: google.maps.MapTypeId.ROADMAP	 
+			  });		 
+			  var infowindow = new google.maps.InfoWindow({
+				   content:"<p><b>Not the location you want?</b></p>" + "<p>\nChange the location by dragging the marker</p>"
+				   });		  
+			  marker = new google.maps.Marker({position: latLng, title: 'Location point', map: map,draggable: true});
+			  infowindow.open(map,marker);
+			  google.maps.event.addListener(marker, 'click', function() {
+				   infowindow.open(map,marker);
+				   });
+		 
+			  // Update current position info.		 
+			  updateMarkerPosition(latLng);		 
+			  geocodePosition(latLng);
+			 
+			  // Add dragging event listeners.		 
+			  google.maps.event.addListener(marker, 'dragstart', function() {		 
+			   // updateMarkerAddress('Dragging...');		 
+			  });
+			 		 		 
+			  google.maps.event.addListener(marker, 'drag', function() {		 
+			   // updateMarkerStatus('Dragging...');		 
+			    updateMarkerPosition(marker.getPosition());		 
+			  });
+			 				 
+			  google.maps.event.addListener(marker, 'dragend', function() {		 
+			   // updateMarkerStatus('Drag ended');	 
+			    geocodePosition(marker.getPosition());		    		 
+			  });		 
+			}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
 		 if (navigator.geolocation) {
 			    navigator.geolocation.getCurrentPosition(initialize, showError);
@@ -33,9 +103,13 @@
 		 function showError(error) {
 			    switch(error.code) {
 			        case error.PERMISSION_DENIED:
-			            alert("User denied the request for Geolocation.");
-			            alert("You must allow to be able to use this service.");
-			            document.getElementById("info").style.visibility="hidden";		
+			            alert("Unable to get your current location.");
+			           // alert("You must allow to be able to use this service.");
+			            //document.getElementById("info").style.visibility="hidden";		
+			          //   marker.setPosition(
+			          //          new google.maps.LatLng(1.287778, 103.851944
+			          //          		)
+			          //      );
 			            break;
 			        case error.POSITION_UNAVAILABLE:
 			            alert("Location information is unavailable.");
