@@ -58,7 +58,7 @@
 		    mapTypeId: google.maps.MapTypeId.ROADMAP	 
 		  });		 
 		  var infowindow = new google.maps.InfoWindow({
-			   content:"<h2>Location Marker.</h2> <p>Not the location you want? Change the location by dragging the marker</p>"
+			   content:"<p><b>Not the location you want?</b></p>" + "<p>\nChange the location by dragging the marker</p>"
 			   });		  
 		  marker = new google.maps.Marker({position: latLng, title: 'Location point', map: map,draggable: true});
 		  infowindow.open(map,marker);
@@ -106,6 +106,9 @@
 			function updateMarkerPosition(latLng) {
 			// document.getElementById('info').innerHTML = [ latLng.lat(),latLng.lng()].join(', ');
 			document.getElementById('info').value = [ latLng.lat(),latLng.lng()].join(', ');
+			document.getElementById('storingLat').value = latLng.lat();
+			document.getElementById('storingLon').value = latLng.lng();
+			
 			//document.getElementById('test').value = [latLng.lat(),latLng.lng()].join(', ');		 
 			}
 			  
@@ -131,7 +134,8 @@
 							 //document.getElementById('info').innerHTML = latitude + ", " + longitude;
 							document.getElementById('info').value = latitude + ", " + longitude;
 				//			document.getElementById('test').value=latitude + ", " + longitude;
-							 					 
+							document.getElementById('storingLat').value = latitude;
+							document.getElementById('storingLon').value = longitude; 					 
 							  // Add dragging event listeners.					 
 							  google.maps.event.addListener(marker, 'dragstart', function() {			 
 							   // updateMarkerAddress('Dragging...');					 
@@ -229,7 +233,7 @@
 							<select class="btn btn-default dropdown-toggle" style="width:100%; height:35px;" name="category">
 								  <option>Select a category</option>
 								  
-								  <option>Feedback(Complain)</option>
+								  <option>Feedback</option>
         						  <option>News Around The Neighbourhood</option>
                                   <option>Location Usage</option>
 							</select>
@@ -283,16 +287,32 @@
 				    <b>Closest matching address:</b>	 
 				<!--    <div id="address"></div>		  
 				    <input type="text" class="form-control" placeholder="" name="title" id="test" style="width:100%;" readonly>	-->
-				    <input type="text" class="form-control" placeholder="" name="title" id="testing" style="width:100%;" readonly>	
+				    <input type="text" class="form-control" placeholder="" name="address" id="testing" style="width:100%;" readonly>	
 				    <br/>
 				 <!--     <b>Location: </b>-->		    
 				  		    
 				 <!--     <div><input type = "text" id="inputCoordinates" style="width:200px" readonly/></div>-->				
 					
-					
+					<input type = "text" class="form-control" id="storingLat" style="width:100%; display:none;" name="storingLat" readonly/>
+					<input type = "text" class="form-control" id="storingLon" style="width:100%; display:none;" name="storingLon" readonly/>
 					 &nbsp<input type="submit" class="btn btn-primary btn-sm" value="Submit" id="submitBtn">
+					
+					<form action="DisplayArticleMainServlet" method="post">
+						<input type="submit" class="btn btn-primary btn-sm" value="Back" id="btn">
+					</form>	
 					</div>
-				</div>			
+				</div>
+				
+					   		
 		 </form>	
 	</jsp:attribute>
 </t:master>
+
+
+<script>
+	$(document).ready(function() {
+		//document.getElementById('storingLat').style.visibility = 'hidden';
+		//document.getElementById('storingLon').style.visibility = 'hidden';
+	});
+
+</script>

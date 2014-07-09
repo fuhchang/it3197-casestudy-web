@@ -21,7 +21,7 @@
 			      <div class="caption">
 			        <p>Have an article to share? Complain to make? Request to give? You came to the right page!</p>
 			        
-			         <p><a href="#" class="btn btn-primary" onclick="location.href='articleSubmission.jsp'" role="button">Click Here To Start</a>
+			         <p><a href="#" class="btn btn-primary" onclick="location.href='articleSubmission.jsp'" role="button">Click Here To Start</a></p>
 			      </div>
 			    </div>
 			  </div>

@@ -11,7 +11,12 @@ public class Article {
 	private String location;
 	private String userNRIC;
 	private int active;
-	private int approved;
+	private String approved;
+	private double dbLat;
+	private double dbLon;
+	private String articleUser;
+	private String articleDate;
+	
 	
 	/**
 	 * Article's default constructor
@@ -30,7 +35,7 @@ public class Article {
 	 * @param active
 	 * @param approved
 	 */
-	public Article(int articleID, String title, String content, Date dateTime,String category, String location, String userNRIC, int active,int approved) {
+	public Article(int articleID, String title, String content, Date dateTime,String category, String location, String userNRIC, int active,String approved, double dbLat, double dbLon) {
 		super();
 		this.articleID = articleID;
 		this.title = title;
@@ -41,6 +46,8 @@ public class Article {
 		this.userNRIC = userNRIC;
 		this.active = active;
 		this.approved = approved;
+		this.dbLat=dbLat;
+		this.dbLon=dbLon;
 	}
 
 	public int getArticleID() {
@@ -107,11 +114,43 @@ public class Article {
 		this.active = active;
 	}
 
-	public int getApproved() {
+	public String getApproved() {
 		return approved;
 	}
 
-	public void setApproved(int approved) {
+	public void setApproved(String approved) {
 		this.approved = approved;
+	}
+
+	public double getDbLat() {
+		return dbLat;
+	}
+
+	public void setDbLat(double dbLat) {
+		this.dbLat = dbLat;
+	}
+
+	public double getDbLon() {
+		return dbLon;
+	}
+
+	public void setDbLon(double dbLon) {
+		this.dbLon = dbLon;
+	}
+
+	public String getArticleDate() {
+		return articleDate;
+	}
+
+	public void setArticleDate(String articleDate) {
+		this.articleDate = articleDate;
+	}
+
+	public String getArticleUser() {
+		return articleUser;
+	}
+
+	public void setArticleUser(String articleUser) {
+		this.articleUser = articleUser;
 	}
 }

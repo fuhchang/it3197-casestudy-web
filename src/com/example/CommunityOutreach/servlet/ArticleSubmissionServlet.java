@@ -1,8 +1,13 @@
 package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.ArticleManager;
+import com.example.CommunityOutreach.model.Article;
+import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class ArticleSubmissionServlet
@@ -44,16 +51,35 @@ public class ArticleSubmissionServlet extends HttpServlet {
 	//	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//	Date date = new Date();
 	//	System.out.println(date);
-		Date currentTime = null;
-		System.out.println(request.getParameter("coordinates"));
-		String location=request.getParameter("coordinates");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MMMM/yyyy HH:mm a");
+		Calendar cal = Calendar.getInstance();
+		String now = dateFormat.format(cal.getTime());
+		
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MMMM/yyyy HH:mm a");
+
+            Date currentTime = null;
+			try {
+				currentTime = simpleDateFormat.parse(now);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		
+		//Date currentTime = null;
+		System.out.println(request.getParameter("address"));
+		String location=request.getParameter("address");
+		
 		String userNRIC = "S9512233X";
 		int active = 1;
-		int approved=0;
+		String approved= "Pending";
+		double dbLat= Double.parseDouble(request.getParameter("storingLat"));
+		double dbLon = Double.parseDouble(request.getParameter("storingLon"));
 		
 		
 		ArticleManager am = new ArticleManager();
-	/*	Article a = new Article(0, title, content, currentTime,category, location, userNRIC, active,approved);
+	/*	Article a = new Article(0, title, content, currentTime,category, location, userNRIC, active,approved,dbLat, dbLon);
 		
 		 boolean articleCreatedCheck = false;
 	        try{
@@ -77,7 +103,12 @@ public class ArticleSubmissionServlet extends HttpServlet {
 	            myObj.addProperty("success", false);
 	            myObj.addProperty("message","Unable to create event successfully.");
 	            System.out.println(myObj.toString());
-	        }*/
+	        }
+	  */      
+	        RequestDispatcher rd = request.getRequestDispatcher("DisplayArticleMainServlet");
+	        rd.forward(request,response);
+	       // RequestDispatcher rd = request.getRequestDispatcher("articleDisplayMain.jsp");
+			//rd.forward(request,response);
 	}
 
 }
