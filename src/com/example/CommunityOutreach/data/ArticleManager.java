@@ -110,7 +110,7 @@ public class ArticleManager {
 		}
 	}
 	
-	/***Display Approved Article***/
+	/***Display Approved Article with category "News Around The Neighbourhood***/
 	public ArrayList<Article> retrieveAllApprovedArticles() {
 		String sql = "SELECT * FROM articles WHERE status = 'Approved' AND category = 'News Around The Neighbourhood'";
 		ArrayList<Article> articlesArrList = new ArrayList<Article>();
@@ -158,7 +158,93 @@ public class ArticleManager {
 	
 	
 	
+	/***Display Pending Article with category "Feedback***/
+	public ArrayList<Article> retrieveAllPendingFeedbackArticles() {
+		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Feedback'";
+		ArrayList<Article> articlesArrList = new ArrayList<Article>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Article article = new Article();
+				article.setArticleID(rs.getInt("articleID"));
+				article.setTitle(rs.getString("title"));
+				article.setContent(rs.getString("content"));
+				
+				Date articleDate = rs.getTimestamp("dateTime");
+				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+				String articleSubmittedDate = df.format(articleDate);
+				// Print what date is today!
+				System.out.println("Article Date: " + articleSubmittedDate);
+				
+				article.setArticleDate(articleSubmittedDate);
+				//article.setDateTime();
+				article.setCategory(rs.getString("category"));
+				article.setLocation(rs.getString("location"));
+				article.setUserNRIC(rs.getString("userNRIC"));
+				article.setActive(rs.getInt("active"));
+				article.setApproved(rs.getString("status"));
+				article.setDbLat(rs.getDouble("lat"));
+				article.setDbLon(rs.getDouble("long"));
+				articlesArrList.add(article);
+					
+				UserManager um = new UserManager();
+				User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+				article.setArticleUser(UserDetail.getName());		
+			}
+			conn.close();
+			return articlesArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
+	/***Display Pending Article with category "Location Usage***/
+	public ArrayList<Article> retrieveAllPendingLocationUsageArticles() {
+		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Location Usage'";
+		ArrayList<Article> articlesArrList = new ArrayList<Article>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Article article = new Article();
+				article.setArticleID(rs.getInt("articleID"));
+				article.setTitle(rs.getString("title"));
+				article.setContent(rs.getString("content"));
+				
+				Date articleDate = rs.getTimestamp("dateTime");
+				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+				String articleSubmittedDate = df.format(articleDate);
+				// Print what date is today!
+				System.out.println("Article Date: " + articleSubmittedDate);
+				
+				article.setArticleDate(articleSubmittedDate);
+				//article.setDateTime();
+				article.setCategory(rs.getString("category"));
+				article.setLocation(rs.getString("location"));
+				article.setUserNRIC(rs.getString("userNRIC"));
+				article.setActive(rs.getInt("active"));
+				article.setApproved(rs.getString("status"));
+				article.setDbLat(rs.getDouble("lat"));
+				article.setDbLon(rs.getDouble("long"));
+				articlesArrList.add(article);
+					
+				UserManager um = new UserManager();
+				User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+				article.setArticleUser(UserDetail.getName());		
+			}
+			conn.close();
+			return articlesArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	
@@ -216,7 +302,7 @@ public class ArticleManager {
 	public boolean editArticle(Article article) {
 		String sql = "UPDATE articles ";
 		sql += "SET title = ? , content = ? , dateTime = ? , category = ? , location = ? ," +
-				" userNRIC = ? , active = ? , status = ? , lat = ?, lon = ? WHERE articleID = ? ";
+				" userNRIC = ? , active = ? , status = ? , lat = ?, long = ? WHERE articleID = ? ";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);

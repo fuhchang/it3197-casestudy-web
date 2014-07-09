@@ -79,7 +79,7 @@ public class ArticleSubmissionServlet extends HttpServlet {
 		
 		
 		ArticleManager am = new ArticleManager();
-	/*	Article a = new Article(0, title, content, currentTime,category, location, userNRIC, active,approved,dbLat, dbLon);
+		Article a = new Article(0, title, content, currentTime,category, location, userNRIC, active,approved,dbLat, dbLon);
 		
 		 boolean articleCreatedCheck = false;
 	        try{
@@ -104,7 +104,7 @@ public class ArticleSubmissionServlet extends HttpServlet {
 	            myObj.addProperty("message","Unable to create event successfully.");
 	            System.out.println(myObj.toString());
 	        }
-	  */      
+	        
 	        RequestDispatcher rd = request.getRequestDispatcher("DisplayArticleMainServlet");
 	        rd.forward(request,response);
 	       // RequestDispatcher rd = request.getRequestDispatcher("articleDisplayMain.jsp");

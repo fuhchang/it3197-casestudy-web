@@ -40,7 +40,7 @@
 		<hr/>			
 			<!--<table class="table table-striped">-->
 			<table class="table table-striped" cellspacing="0" width="100%" id="articleTable">				
-						<thead>
+					<thead>
 						<tr>
 							<th></th>
 							<th>Date Published:</th>
@@ -72,8 +72,8 @@
 							</tr>
 						</c:forEach>
 			   		 </tbody>
-			   		 </table>
-			   		<br/>
+			   </table>
+			   	<br/>
 				<br/>
 		
 		</div>
