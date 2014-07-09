@@ -5658,12 +5658,6 @@ function formatResultsEnhanced(resultObject) {
                     break;
                 }
                 else { break; }
-            case "ADDRESSFLOORNUMBER":
-                if (resultObject[0]["ADDRESSFLOORNUMBER"] != "") {
-                    nameVal += resultObject[0]["ADDRESSFLOORNUMBER"] + " "
-                    break;
-                }
-                else { break; }
             case "ADDRESSBLOCKHOUSENUMBER":
                 if (resultObject[0]["ADDRESSBLOCKHOUSENUMBER"] != "") {
                     nameVal += resultObject[0]["ADDRESSBLOCKHOUSENUMBER"] + " "
