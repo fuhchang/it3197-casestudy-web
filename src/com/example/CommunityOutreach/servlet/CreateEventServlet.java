@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,7 +70,12 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         String eventLocation = request.getParameter("eventLocation");
         int noOfParticipantsAllowed = 0;
         if(request.getParameter("noOfParticipants") != null){
-        	noOfParticipantsAllowed = Integer.parseInt(request.getParameter("noOfParticipants"));
+        	try{
+        		noOfParticipantsAllowed = Integer.parseInt(request.getParameter("noOfParticipants"));
+        	}
+        	catch(Exception e){
+        		noOfParticipantsAllowed = 0;
+        	}
         }
         Date dateTimeFrom = null;
         Date dateTimeTo = null;
@@ -128,6 +134,11 @@ public class CreateEventServlet extends HttpServlet implements Settings{
             myObj.addProperty("message","Unable to create event successfully.");
             out.println(myObj.toString());
         }
+        
+        if(request.getParameter("web").equals("true")){
+        	RequestDispatcher rd = request.getRequestDispatcher("event.jsp");
+        	rd.forward(request, response);
+		}
 	}
 
 }
