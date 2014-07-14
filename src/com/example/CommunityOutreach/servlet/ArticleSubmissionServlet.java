@@ -58,8 +58,8 @@ public class ArticleSubmissionServlet extends HttpServlet {
 		
 		// TODO Auto-generated method stub
 		String title = request.getParameter("title");
-		String category = (request.getParameter("category"));
-		String content = request.getParameter("content");
+	//	String category = (request.getParameter("category"));
+	//	String content = request.getParameter("content");
 	//	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//	Date date = new Date();
 	//	System.out.println(date);
@@ -86,13 +86,23 @@ public class ArticleSubmissionServlet extends HttpServlet {
 		String userNRIC = "S9512233X";
 		int active = 1;
 		String approved= "Pending";
-		double dbLat= Double.parseDouble(request.getParameter("storingLat"));
-		double dbLon = Double.parseDouble(request.getParameter("storingLon"));
+		//double dbLat= Double.parseDouble(request.getParameter("storingLat"));
+		//double dbLon = Double.parseDouble(request.getParameter("storingLon"));
 		
 		
 		ArticleManager am = new ArticleManager();
-		Article a = new Article(0, title, content, currentTime,category, location, userNRIC, active,approved,dbLat, dbLon);
+		Article a = new Article(0, title, "content", currentTime, "category", location, userNRIC, active,approved,1.3, 23.33);
 		
+		boolean articleCreatedCheck = am.createArticle(a);
+		
+		if(articleCreatedCheck){
+			JsonObject myObj = new JsonObject();
+			myObj.addProperty("success", true);
+			myObj.addProperty("message", "Hobby created successfully.");
+			out.println(myObj.toString());
+		}
+		
+		/*
 		 boolean articleCreatedCheck = false;
 	        try{
 	        	articleCreatedCheck = am.createArticle(a);
@@ -116,9 +126,9 @@ public class ArticleSubmissionServlet extends HttpServlet {
 	            myObj.addProperty("message","Unable to create event successfully.");
 	            System.out.println(myObj.toString());
 	        }
-	        
-	        RequestDispatcher rd = request.getRequestDispatcher("DisplayArticleMainServlet");
-	        rd.forward(request,response);
+	        */
+	        //RequestDispatcher rd = request.getRequestDispatcher("DisplayArticleMainServlet");
+	        //rd.forward(request,response);
 	       // RequestDispatcher rd = request.getRequestDispatcher("articleDisplayMain.jsp");
 			//rd.forward(request,response);
 	}
