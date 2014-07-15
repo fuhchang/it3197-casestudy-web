@@ -26,7 +26,7 @@
 		<script src="js/validation/additional-methods.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				var eventType = '<c:out value="${param.noOfParticipants}" />';
+				var eventType = '<c:out value="${param.eventType}" />';
 				alert(eventType);
 				jQuery.validator.addMethod("checkDate", function(value, element) {
 					//Format the date
@@ -73,9 +73,7 @@
 					var dateToString = $("#eventDateTimeTo").val();
 					var dateFrom = new Date(dateFromString);
 					var dateTo = new Date(dateToString);
-					alert(dateFrom-dateTo);
 					var differenceInDay = Math.floor((dateFrom-dateTo)/-86400000); 
-					alert(differenceInDay);
 					var days = -86400000 * differenceInDay;
 					var compare = (dateFrom-dateTo) - days;
 					if(compare <= -1800000){
