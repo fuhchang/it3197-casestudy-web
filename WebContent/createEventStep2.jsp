@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <t:master>
 	<jsp:attribute name="cssImports">
 		<!-- Import CSS here -->
+<<<<<<< OURS
 		<link rel="stylesheet" type="text/css" href="css/datetimepicker.css" />
 		<link rel="stylesheet" type="text/css" href="css/validation/screen.css" />
 		<link rel="stylesheet" type="text/css" href="css/validation/cmxform.css" />
+=======
+		<link rel="stylesheet" href="css/DateTimePicker.css" />
+>>>>>>> THEIRS
 		<style>
 			.floatLeftText{
 				float:left;
@@ -20,12 +23,17 @@
 	</jsp:attribute>
 	<jsp:attribute name="jsImports">
 		<!-- Import JS here -->
+<<<<<<< OURS
 		<script type="text/javascript" src="js/moment.js"></script>
 		<script type="text/javascript" src="js/datetimepicker.js"></script>
 		<script src="js/validation/form-validate.js"></script>
 		<script src="js/validation/additional-methods.js"></script>
+=======
+		<script type="text/javascript" src="js/DateTimePicker.js" charset="UTF-8"></script>
+>>>>>>> THEIRS
 		<script type="text/javascript">
 			$(document).ready(function(){
+<<<<<<< OURS
 				var eventType = '<c:out value="${param.noOfParticipants}" />';
 				alert(eventType);
 				jQuery.validator.addMethod("checkDate", function(value, element) {
@@ -169,22 +177,38 @@
 			        });
 				}
 				
+=======
+				$("#dtBox").DateTimePicker({
+					titleContentDateTime: "Date/Time",
+					setButtonContent: "Set date/time",
+					clearButtonContent: "Reset"
+				});
+				$("#submitBtn").click(function(e){
+					var eventDateTimeForm = $(".form-control").eq(0).val();
+					var eventDateTimeTo = $(".form-control").eq(1).val();
+					if(eventDateTimeForm == ""){
+		        		$(".form-group").eq(0).html("<span class='floatLeftText'><label class='col-xs-12 control-label'>From</label></span><br/><br/><input class='startDateTime1 form-control' type='text' data-field='datetime' data-format='dd-MM-yyyy hh:mm:ss AA' data-startend='start' data-startendelem='.endDateTime1' readonly /> <div id='dtBox'></div>").addClass("has-error");
+		        		e.preventDefault();
+		        	}
+					if(eventDateTimeTo == ""){
+		        		$(".form-group").eq(1).html("<span class='floatLeftText'><label class='col-xs-12 control-label'>To</label></span><br/><br/><input class='endDateTime1 form-control' type='text' data-field='datetime' data-format='dd-MM-yyyy hh:mm:ss AA'  data-startend='end' data-startendelem='.startDateTime1' readonly />").addClass("has-error");
+		        		e.preventDefault();
+		        	}
+				});
+>>>>>>> THEIRS
 			});
 		</script>
 	</jsp:attribute>
 	
 	<jsp:attribute name="content">
+<<<<<<< OURS
 		<form method="post" id="createEventStep2Form" action="createEvent" >
+=======
+		<form method="post" action="createEventStep2.jsp">
+>>>>>>> THEIRS
 			<div id="currentForm" class="form-horizontal" role="form">
 				<div class="panel panel-primary">
 				<div class="panel-heading">
-					<input type="hidden" name="web" value="true" />
-					<input type="hidden" name="eventType" id="eventType" value="<c:out value="${param.eventType}" />"/>
-					<input type="hidden" name="eventName" id="eventName" value="<c:out value="${param.eventName}" />"/>
-					<input type="hidden" name="eventCategory" id="eventCategory" value="<c:out value="${param.eventCategory}" />"/>
-					<input type="hidden" name="eventDescription" id="eventDescription" value="<c:out value="${param.eventDescription}" />"/>
-					<input type="hidden" name="eventLocation" id="eventLocation" value="<c:out value="${param.eventLocation}" />"/>
-					<input type="hidden" id="noOfParticipants" id="noOfParticipants" name="noOfParticipants" value="<c:out value="${param.noOfParticipants}" />"/>
 					Create Event
 					<br/>
 					Step 2: Please fill in the event schedule
@@ -194,17 +218,26 @@
 							<span class="floatLeftText"><label class="col-xs-12 control-label">From</label></span>
 							<br/>
 							<br/>
+<<<<<<< OURS
                     		<input class="form-control" id="eventDateTimeFrom" name="eventDateTimeFrom" type="text" readonly/>
+=======
+							<input class="startDateTime1 form-control" type="text" data-field="datetime" data-format="dd-MM-yyyy hh:mm:ss AA" data-startend="start" data-startendelem=".endDateTime1" readonly /> 
+							<div id="dtBox"></div>
+>>>>>>> THEIRS
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">To</label></span>
 							<br/>
 							<br/>
+<<<<<<< OURS
                     		<input class="form-control" id="eventDateTimeTo"  name="eventDateTimeTo" type="text" readonly/>
+=======
+							<input class="endDateTime1 form-control" type="text" data-field="datetime" data-format="dd-MM-yyyy hh:mm:ss AA"  data-startend="end" data-startendelem=".startDateTime1" readonly />
+>>>>>>> THEIRS
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">Repeat the event</label></span>
-							<select class="form-control" id="occurence" name="occurence">
+							<select class="form-control" id="gType">
 								<option> Once </option>
 								<option> Daily </option>
 								<option> Weekly </option>
@@ -213,8 +246,13 @@
 							</select>
 						</div>
 						<div class="form-group">
+<<<<<<< OURS
 							<a href="createEventStep1.jsp"><button type="button" id="cancelBtn" class="btn btn-default"> Previous </button></a>
 							<input type="submit" name="submit" id="submitBtn" value="Create Event" class="btn btn-default"/>
+=======
+							<a href="createEventStep1.jsp"><button type="submit" class="btn btn-default"> Previous </button></a>
+							<input type="Submit" name="submit" id="submitBtn" value="Create Event" class="btn btn-default"/>
+>>>>>>> THEIRS
 						</div>
 					</div>
 				</div>
