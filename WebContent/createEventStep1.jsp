@@ -5,7 +5,8 @@
 <t:master>
 	<jsp:attribute name="cssImports">
 		<!-- Import CSS here -->
-		<link rel="stylesheet" type="text/css" href="css/bootstrapValidator.css" />
+		<link rel="stylesheet" type="text/css" href="css/validation/screen.css" />
+		<link rel="stylesheet" type="text/css" href="css/validation/cmxform.css" />
 		<style>
 			.floatLeftText{
 				float:left;
@@ -18,7 +19,8 @@
 	<jsp:attribute name="jsImports">
 		<!-- Import JS here -->
 		<script type="text/javascript" src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="cqvf3nim3klslqb"></script>
-		<script type="text/javascript" src="js/bootstrapValidator.js"></script>
+		<script src="js/validation/form-validate.js"></script>
+		<script src="js/validation/additional-methods.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				
@@ -40,55 +42,36 @@
 					window.focus();
 				});
 		        $('#container').append(button);
-		        $('#createEventStep1Form').bootstrapValidator({
-		        	submitButtons: null,
-		        	live: 'enabled',
-		        	excluded: ':disabled',
-		            feedbackIcons: {
-		                valid: 'glyphicon glyphicon-ok',
-		                invalid: 'glyphicon glyphicon-remove',
-		                validating: 'glyphicon glyphicon-refresh'
+	            $("#submitBtn").click(function(e){
+	            	$('#createEventStep1Form').validate();
+	            });
+		        $('#createEventStep1Form').validate({
+		            rules: {
+		                eventName: {
+		                    required: true
+		                },
+		                eventDescription: {
+		                    required: true,
+		                },
+		                eventLocation: {
+		                    required: true
+		                }
 		            },
-		        	fields: {
-		        		eventName: {
-		        			trigger: 'keyup',
-		        			message: 'Event name is not valid',
-		        			validators: {
-		        				notEmpty: {
-		        					message: 'Please enter a name for the event'
-		        				}
-		        			},
-		        		},
-		        		eventDescription: {
-		        			trigger: 'keyup',
-		        			message: 'Event description is not valid',
-		        			validators: {
-		        				notEmpty: {
-		        					message: 'Please enter a description for the event'
-		        				}
-		        			},
-		        		},
-			        	eventLocation: {
-			        		trigger: 'keyup',
-			        		onStatus: function(e, data) {
-		                        $('#createEventStep1Form').validate();
-		                    },
-			        		message: 'Event location is not valid',
-			        		validators: {
-			                    callback: {
-			                        message: 'Please enter a location for the event',
-			                        callback: function(value, validator) {
-			                        	if(value.length > 0){
-				                            return true;	
-			                        	}
-			                        	else{
-			                        		return false;
-			                        	}
-			                        }
-			                    }
-			        		},
-			        	}
-					},        		
+		            highlight: function(element) {
+		                $(element).closest('.form-group').addClass('has-error');
+		            },
+		            unhighlight: function(element) {
+		                $(element).closest('.form-group').removeClass('has-error');
+		            },
+		            errorElement: 'span',
+		            errorClass: 'help-block',
+		            errorPlacement: function(error, element) {
+		                if(element.parent('.input-group').length) {
+		                    error.insertAfter(element.parent());
+		                } else {
+		                    error.insertAfter(element);
+		                }
+		            }
 		        });
 			});
 		</script>
@@ -143,11 +126,11 @@
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">No of participants</label></span>
 							<select class="form-control" id="gType" name="noOfParticipants">
-								<option> 0 - 99 </option>
-								<option> 100 - 499 </option>
-								<option> 500 - 999 </option>
-								<option> 1000 - 9999 </option>
-								<option> 10000 - 99999 </option>
+								<option value="99"> 0 - 99 </option>
+								<option value="499"> 100 - 499 </option>
+								<option value="999"> 500 - 999 </option>
+								<option value="9999"> 1000 - 9999 </option>
+								<option value="99999"> 10000 - 99999 </option>
 							</select>
 						</div>
 						<div class="form-group">

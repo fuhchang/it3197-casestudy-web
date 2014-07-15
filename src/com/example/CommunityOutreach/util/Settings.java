@@ -14,4 +14,6 @@ public interface Settings {
 	SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd MMM yyyy h:mm:ss a");
 	//E.g. Jul 27, 2014 9:00:00 AM
 	SimpleDateFormat sqlDateTimeFormatter = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss aa");
+	SimpleDateFormat webSqlDateTimeFormatter = new SimpleDateFormat("MM/dd/yyyy h:mm aa");
 }
+

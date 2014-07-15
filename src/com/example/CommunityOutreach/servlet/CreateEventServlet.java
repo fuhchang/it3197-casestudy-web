@@ -2,6 +2,7 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,8 +81,24 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         Date dateTimeFrom = null;
         Date dateTimeTo = null;
         try {
-        	dateTimeFrom = sqlDateTimeFormatter.parse(eventDateTimeFrom);
-	        dateTimeTo = sqlDateTimeFormatter.parse(eventDateTimeFrom);
+        	System.out.println(request.getParameter("web"));
+        	if(request.getParameter("web").equals("true")){
+        		Calendar cFrom = Calendar.getInstance();
+        		dateTimeFrom = webSqlDateTimeFormatter.parse(eventDateTimeFrom);
+        		cFrom.setTime(dateTimeFrom);
+        		cFrom.set(Calendar.SECOND, 0);
+        		dateTimeFrom = cFrom.getTime();
+        		
+        		Calendar cTo = Calendar.getInstance();
+        		dateTimeTo = webSqlDateTimeFormatter.parse(eventDateTimeTo);
+        		cTo.set(Calendar.SECOND, 0);
+        		cTo.setTime(dateTimeTo);
+        		dateTimeTo = cTo.getTime();
+        	}
+        	else{
+        		dateTimeFrom = sqlDateTimeFormatter.parse(eventDateTimeFrom);
+        		dateTimeTo = sqlDateTimeFormatter.parse(eventDateTimeTo);
+        	}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
