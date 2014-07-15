@@ -14,11 +14,9 @@
 		<div class="col-xs-12">
 		<h1 class="col-xs-9">Events</h1>
 		<div class="col-xs-1 ">
-		<a href="createEventStep1.jsp">
-			<button type="submit" id="addHobbies" class="btn btn-primary">
-  				<span class="glyphicon glyphicon-plus-sign"></span> Create Event
-			</button>
-		</a>
+		<button type="submit" id="addHobbies" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  			<span class="glyphicon glyphicon-plus-sign"></span> Create Event
+		</button>
 		</div>
 		</div>
 		<ul class="nav nav-tabs text-center" id="tabs">
@@ -33,6 +31,27 @@
 			<div class="tab-pane" id="all">
 				<h3>All</h3>
 			</div>
+		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Select type of event</h4>
+		      </div>
+		      <div class="modal-body">
+		        Please select a type of event
+		        <br/>
+		        <br/>
+		      	<form method="post" action="createEventStep1.jsp">
+			  		<input type="submit" class="btn btn-default" name="typeOfEvent" value="Big Event" />
+		        	<input type="submit" class="btn btn-default" name="typeOfEvent" value="Small Event" />
+		        </form>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 	</jsp:attribute>
 </t:master>
