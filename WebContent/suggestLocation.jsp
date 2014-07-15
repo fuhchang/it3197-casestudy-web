@@ -9,7 +9,6 @@
 		<!-- CSS Import -->
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/master.css" />
-		<link rel="stylesheet" type="text/css" href="css/bootstrapValidator.css" />
 		<!-- Import CSS here -->
 		<style>
 			#googleMap {
@@ -27,7 +26,6 @@
 		<script src="js/master.js"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 		<script src="js/oneMap.js"></script>
-		<script type="text/javascript" src="js/bootstrapValidator.js"></script>
    		<script type="text/JavaScript">
 	   		$(document).ready(function(){
 	   			var mapProp = {
@@ -116,7 +114,6 @@
 				
 				$(".selectLocation").click(function(){
 					var location = $(".selectedlocation").html();
-					$(window.opener.document).find("#location").html("");
 					$(window.opener.document).find("#location").html(location);
 					window.close();
 				});
