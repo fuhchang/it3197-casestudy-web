@@ -26,7 +26,7 @@ public class HobbyManager {
 			hobby.setGrpID(0);
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			/*
+			
 			try {
 				File file = new File("/storage/emulated/0/WhatsApp/Media/WhatsApp/Images/IMG-20140704-WA0001.jpg");
 				FileInputStream fs = new FileInputStream(file);
@@ -38,17 +38,17 @@ public class HobbyManager {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			*/
+			
 			ps.setInt(1, hobby.getGrpID());
 			ps.setString(2, hobby.getGrpName());
 			ps.setString(3, hobby.getCategory());
 			ps.setString(4, hobby.getLocation());
 			ps.setString(5, hobby.getGrpDesc());
 			ps.setInt(6, active);
-			ps.setString(7, "");
+			
 			
 			ps.executeUpdate();
-			result=true;
+			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,9 +64,7 @@ public class HobbyManager {
 		}
 		
 		return result;
-	}
-	
-	public ArrayList<Hobby> retrieveAllHobby(){
+	}public ArrayList<Hobby> retrieveAllHobby(){
 		ArrayList<Hobby> hobbyList = new ArrayList<Hobby>();
 		String sql = "SELECT * FROM hobbies_group WHERE active = 1";
 		
@@ -100,38 +98,5 @@ public class HobbyManager {
 		return hobbyList;
 	}
 	
-	
-	public Hobby retrieveHobby(int id){
-		String sql = "SELECT * FROM hobbies_group WHERE groupID = " + id;
-		
-		Hobby hobby = new Hobby();
-		
-		try {
-			Connection conn = dbController.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			
-			while(rs.next()){
-				hobby.setGrpID(rs.getInt("groupID"));
-				hobby.setGrpName(rs.getString("groupName"));
-				hobby.setCategory(rs.getString("category"));
-				hobby.setGrpDesc(rs.getString("description"));
-				hobby.setLocation(rs.getString("location"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return hobby;
-	}
 	
 }

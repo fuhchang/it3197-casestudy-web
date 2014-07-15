@@ -1,21 +1,11 @@
 package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.example.CommunityOutreach.data.HobbyManager;
-import com.example.CommunityOutreach.model.Hobby;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
  * Servlet implementation class ViewGroupServlet
@@ -37,17 +27,9 @@ public class ViewGroupServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int id = Integer.parseInt(request.getParameter("id"));
-		HobbyManager hobbyManager = new HobbyManager();
-		Hobby hobby = hobbyManager.retrieveHobby(id);
+		String name = request.getParameter("name");
 		
-		request.setAttribute("GrpName", hobby.getGrpName());
-		request.setAttribute("category", hobby.getCategory());
-		request.setAttribute("GrpDesc", hobby.getGrpDesc());
-		
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("");
-		requestDispatcher.forward(request, response);
+		System.out.println(name);
 	}
 
 	/**

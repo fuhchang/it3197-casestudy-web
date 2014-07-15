@@ -1,11 +1,9 @@
 package com.example.CommunityOutreach.servlet;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,6 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.example.CommunityOutreach.data.HobbyManager;
 import com.example.CommunityOutreach.model.Hobby;
-import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class CreateHobbyServlet
@@ -32,59 +29,41 @@ import com.google.gson.JsonObject;
 @WebServlet("/CreateHobbyServlet")
 public class CreateHobbyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CreateHobbyServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public CreateHobbyServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		response.setContentType("text/html");
-		response.setHeader("Cache-control", "no-cache, no-store");
-		response.setHeader("Pragma", "no-cache");
-		response.setHeader("Expires", "-1");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-		response.setHeader("Access-Control-Max-Age", "86400");
+		
 		String title = request.getParameter("gtitle");
 		String category = request.getParameter("gType");
 		String grpDesc = request.getParameter("gDesc");
 		String loc = request.getParameter("gLoc");
-
+		
 		Hobby hobby = new Hobby();
 		hobby.setGrpName(title);
 		hobby.setCategory(category);
 		hobby.setLocation(loc);
 		hobby.setGrpDesc(grpDesc);
 		HobbyManager hobbyManager = new HobbyManager();
-		boolean result = hobbyManager.createHobby(hobby);
-
-		if (result) {
-			JsonObject myObj = new JsonObject();
-			myObj.addProperty("success", true);
-			myObj.addProperty("message", "Hobby created successfully.");
-			out.println(myObj.toString());
-		}
+		hobbyManager.createHobby(hobby);
+		
 	}
 
 }
