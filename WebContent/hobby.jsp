@@ -56,7 +56,7 @@
 				<tr class="col-sm-4">
 				
 					<td>
-					<a href="ViewGroupServlet?name=${item.grpName}">
+					<a href="ViewGroupServlet?id=${item.grpID}">
 					<div class="col-sm-4 portfolio-item">
                     <img class="img-responsive" src="http://placehold.it/250x100" id="img">
 					 <h3 name="gName">${item.grpName}</a>
