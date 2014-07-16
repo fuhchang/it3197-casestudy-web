@@ -9,6 +9,8 @@ public class Hobby {
 	private String grpName;
 	private String category;
 	private String location;
+	private double Lat;
+	private double Lng;
 	private String grpDesc;
 	private int active;
 	private byte[] photo;
@@ -66,6 +68,30 @@ public class Hobby {
 	 */
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
+	}
+	/**
+	 * @return the lng
+	 */
+	public double getLng() {
+		return Lng;
+	}
+	/**
+	 * @param lng the lng to set
+	 */
+	public void setLng(double lng) {
+		Lng = lng;
+	}
+	/**
+	 * @return the lat
+	 */
+	public double getLat() {
+		return Lat;
+	}
+	/**
+	 * @param lat the lat to set
+	 */
+	public void setLat(double lat) {
+		Lat = lat;
 	}
 	
 	

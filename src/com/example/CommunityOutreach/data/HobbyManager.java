@@ -20,7 +20,7 @@ public class HobbyManager {
 		int active = 1;
 		boolean result = false;
 		String sql = "INSERT INTO hobbies_group ";
-		sql += "VALUES(?,?,?,?,?,?,?)";
+		sql += "VALUES(?,?,?,?,?,?,?,?)";
 		try {
 			Connection conn = dbController.getConnection();
 			hobby.setGrpID(0);
@@ -42,10 +42,11 @@ public class HobbyManager {
 			ps.setInt(1, hobby.getGrpID());
 			ps.setString(2, hobby.getGrpName());
 			ps.setString(3, hobby.getCategory());
-			ps.setString(4, hobby.getLocation());
-			ps.setString(5, hobby.getGrpDesc());
-			ps.setInt(6, active);
-			ps.setString(7, "");
+			ps.setDouble(4, hobby.getLat());
+			ps.setDouble(5, hobby.getLng());
+			ps.setString(6, hobby.getGrpDesc());
+			ps.setInt(7, active);
+			ps.setString(8, "");
 			
 			ps.executeUpdate();
 			result=true;
@@ -81,7 +82,8 @@ public class HobbyManager {
 				hobby.setGrpName(rs.getString("groupName"));
 				hobby.setCategory(rs.getString("category"));
 				hobby.setGrpDesc(rs.getString("description"));
-				hobby.setLocation(rs.getString("location"));
+				hobby.setLat(rs.getDouble("Lat"));
+				hobby.setLng(rs.getDouble("Lng"));
 				hobbyList.add(hobby);
 			}
 		} catch (IllegalAccessException e) {
@@ -94,7 +96,7 @@ public class HobbyManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catchAl block
 			e.printStackTrace();
 		}
 		return hobbyList;
@@ -117,6 +119,8 @@ public class HobbyManager {
 				hobby.setCategory(rs.getString("category"));
 				hobby.setGrpDesc(rs.getString("description"));
 				hobby.setLocation(rs.getString("location"));
+				hobby.setLat(rs.getDouble("Lat"));
+				hobby.setLng(rs.getDouble("Lng"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -2,6 +2,7 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.File;
 
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,14 +30,14 @@ import com.google.gson.JsonObject;
 /**
  * Servlet implementation class CreateHobbyServlet
  */
-@WebServlet("/CreateHobbyServlet")
-public class CreateHobbyServlet extends HttpServlet {
+@WebServlet("/CreateHobbyWebServlet")
+public class CreateHobbyWebServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CreateHobbyServlet() {
+	public CreateHobbyWebServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -57,15 +58,7 @@ public class CreateHobbyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		response.setContentType("text/html");
-		response.setHeader("Cache-control", "no-cache, no-store");
-		response.setHeader("Pragma", "no-cache");
-		response.setHeader("Expires", "-1");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-		response.setHeader("Access-Control-Max-Age", "86400");
+	
 		String title = request.getParameter("gtitle");
 		String category = request.getParameter("gType");
 		String grpDesc = request.getParameter("gDesc");
@@ -79,12 +72,6 @@ public class CreateHobbyServlet extends HttpServlet {
 		HobbyManager hobbyManager = new HobbyManager();
 		boolean result = hobbyManager.createHobby(hobby);
 
-		if (result) {
-			JsonObject myObj = new JsonObject();
-			myObj.addProperty("success", true);
-			myObj.addProperty("message", "Hobby created successfully.");
-			out.println(myObj.toString());
-		}
 	}
 
 }
