@@ -1,42 +1,29 @@
 package com.example.CommunityOutreach.servlet.cs;
 
-import java.io.File;
-
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.http.fileupload.FileItemFactory;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-
-import com.example.CommunityOutreach.data.HobbyManager;
-import com.example.CommunityOutreach.model.Hobby;
+import com.example.CommunityOutreach.data.PostManager;
+import com.example.CommunityOutreach.model.HobbyPost;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class CreateHobbyServlet
+ * Servlet implementation class CreatePostServlet
  */
-@WebServlet("/CreateHobbyServlet")
-public class CreateHobbyServlet extends HttpServlet {
+@WebServlet("/CreatePostServlet")
+public class CreatePostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CreateHobbyServlet() {
+	public CreatePostServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -57,6 +44,7 @@ public class CreateHobbyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		boolean result;
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
 		response.setHeader("Cache-control", "no-cache, no-store");
@@ -66,22 +54,22 @@ public class CreateHobbyServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST");
 		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		response.setHeader("Access-Control-Max-Age", "86400");
-		String title = request.getParameter("gtitle");
-		String category = request.getParameter("gType");
-		String grpDesc = request.getParameter("gDesc");
-		String Lat = request.getParameter("gLat");
-		String Lng = request.getParameter("gLng");
 
-		Hobby hobby = new Hobby();
-		hobby.setGrpName(title);
-		hobby.setCategory(category);
-		if(Lat != "" && Lng !=""){
-		hobby.setLat(Double.parseDouble(Lat));
-		hobby.setLng(Double.parseDouble(Lng));
+		String grpID = request.getParameter("grpID");
+		String postContent = request.getParameter("postContent");
+		String postLat = request.getParameter("postLat");
+		String postLng = request.getParameter("postLng");
+		
+		HobbyPost post = new HobbyPost();
+		post.setGrpID(Integer.parseInt(grpID));
+		System.out.println(grpID);
+		post.setContent(postContent);
+		if (postLat != "" && postLng != "") {
+			post.setLat(Double.parseDouble(postLat));
+			post.setLng(Double.parseDouble(postLng));
 		}
-		hobby.setGrpDesc(grpDesc);
-		HobbyManager hobbyManager =  new HobbyManager();
-		boolean result = hobbyManager.createHobby(hobby);
+		PostManager postmanager = new PostManager();
+		result = postmanager.createPost(post);
 
 		if (result) {
 			JsonObject myObj = new JsonObject();

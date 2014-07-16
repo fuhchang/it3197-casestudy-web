@@ -1,0 +1,85 @@
+package com.example.CommunityOutreach.data;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.example.CommunityOutreach.controller.DBController;
+import com.example.CommunityOutreach.model.Hobby;
+import com.example.CommunityOutreach.model.HobbyPost;
+
+public class PostManager {
+	private DBController dbController = new DBController();
+	
+	public boolean createPost(HobbyPost post){
+		int active = 1;
+		boolean result = false;
+		String sql = "INSERT INTO post ";
+		sql += "VALUES(?,?,?,?,?,?)";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			ps.setInt(1, 0);
+			ps.setString(2,	dateFormat.format(date));
+			ps.setString(3, post.getContent());
+			ps.setDouble(4, post.getLat());
+			ps.setDouble(5, post.getLng());
+			System.out.println(post.getGrpID());
+			ps.setInt(6, post.getGrpID());
+
+			ps.executeUpdate();
+			result=true;
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<HobbyPost> retrievePost(int id){
+		ArrayList<HobbyPost> postList = new ArrayList<HobbyPost>();
+		String sql = "select * from post where groupID = ?";
+		Connection conn;
+		try {
+			conn = dbController.getConnection();
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()){
+				HobbyPost post = new HobbyPost();
+				post.setPostID(rs.getInt("postID"));
+				post.setPostID(rs.getInt("groupID"));
+				post.setLat(rs.getDouble("Lat"));
+				post.setLng(rs.getDouble("Lng"));
+				post.setContent(rs.getString("content"));
+				post.setDatetime(rs.getDate("dateTime"));
+				postList.add(post);
+			}
+		} catch (IllegalAccessException | InstantiationException
+				| ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return postList;
+		
+	}
+}

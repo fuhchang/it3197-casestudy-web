@@ -205,7 +205,7 @@
 
 	<jsp:attribute name="content">
 	<br>	
-			<form action="CreateHobbyServlet" method="post">
+			<form action="CreateHobbyWebServlet" method="post">
 			<div class="panel panel-info">
 			<div class="panel-heading">
 				<h2>Create Group Form</h2>
