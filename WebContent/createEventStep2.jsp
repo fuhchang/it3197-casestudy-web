@@ -27,7 +27,40 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var eventType = '<c:out value="${param.eventType}" />';
-				alert(eventType);
+				jQuery.validator.addMethod("checkTodayStartDate", function(value, element) {
+					//Format the date
+					var dateFromString = $("#eventDateTimeFrom").val().substr(0,11);
+					var dateFrom = new Date(dateFromString);
+					
+					var today = new Date();
+					var m = today.getMonth();
+					var d = today.getDate();
+					var y = today.getYear() + 1900;
+					var todayDate = new Date(y,m,d);
+					if(dateFrom - todayDate > 0){
+						return true;
+					}
+					else{
+						return false;
+					}
+				}, "Please select another starting date after today.");
+				jQuery.validator.addMethod("checkTodayEndingDate", function(value, element) {
+					//Format the date
+					var dateToString = $("#eventDateTimeTo").val().substr(0,11);
+					var dateTo = new Date(dateToString);
+					
+					var today = new Date();
+					var m = today.getMonth();
+					var d = today.getDate();
+					var y = today.getYear() + 1900;
+					var todayDate = new Date(y,m,d);
+					if(dateTo - todayDate > 0){
+						return true;
+					}
+					else{
+						return false;
+					}
+				}, "Please select another end date after today.");
 				jQuery.validator.addMethod("checkDate", function(value, element) {
 					//Format the date
 					var dateFromString = $("#eventDateTimeFrom").val().substr(0,11);
@@ -40,7 +73,7 @@
 					else{
 						return false;
 					}
-				}, "Please select another date after today.");
+				}, "Please select another date after starting date.");
 				jQuery.validator.addMethod("checkSimilarDate", function(value, element) {
 					//Format the date
 					var dateFromString = $("#eventDateTimeFrom").val().substr(0,11);
@@ -73,7 +106,7 @@
 					var dateToString = $("#eventDateTimeTo").val();
 					var dateFrom = new Date(dateFromString);
 					var dateTo = new Date(dateToString);
-					var differenceInDay = Math.floor((dateFrom-dateTo)/-86400000); 
+					var differenceInDay = Math.floor((dateFrom-dateTo)/-86400000);
 					var days = -86400000 * differenceInDay;
 					var compare = (dateFrom-dateTo) - days;
 					if(compare <= -1800000){
@@ -103,10 +136,12 @@
 			            rules: {
 			            	eventDateTimeFrom: {
 			                    required: true,
+			                    checkTodayStartDate: "",
 			                },
 			                eventDateTimeTo: {
 			                    required: true,
 			                    checkDate: "",
+			                    checkTodayEndingDate: "",
 			                    checkBigEventTime: ""
 			                }
 			            },
@@ -142,9 +177,11 @@
 			            rules: {
 			            	eventDateTimeFrom: {
 			                    required: true,
+			                    checkTodayStartDate: "",
 			                },
 			                eventDateTimeTo: {
 			                    required: true,
+			                    checkTodayEndingDate: "",
 			                    checkSimilarDate: "",
 			                    checkTime: ""
 			                }
