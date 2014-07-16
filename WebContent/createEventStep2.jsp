@@ -169,7 +169,7 @@
 		            $('#eventDateTimeTo').datetimepicker({
 		            	pick12HourFormat: true,
 		            });
-		            $("#form-group").eq(2).hide();
+		            $("div #occurence").hide();
 		            $("#submitBtn").click(function(e){
 		            	$('#createEventStep2Form').validate();
 		            });
@@ -237,7 +237,7 @@
 							<br/>
                     		<input class="form-control" id="eventDateTimeTo"  name="eventDateTimeTo" type="text" readonly/>
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="occurence">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">Repeat the event</label></span>
 							<select class="form-control" id="occurence" name="occurence">
 								<option> Once </option>
