@@ -54,13 +54,11 @@ public class CreateRiddleServlet extends HttpServlet {
 		String userNRIC = request.getParameter("userNRIC");
 		UserManager userManager = new UserManager();
 		User user = userManager.retrieveUser(userNRIC);
-		System.out.println(userNRIC);
 		
 		// Riddle
 		Riddle riddle = new Riddle();
 		riddle.setUser(user);
 		riddle.setRiddleTitle(request.getParameter("riddleTitle"));
-		System.out.println("servlet: " + request.getParameter("riddleTitle"));
 		riddle.setRiddleContent(request.getParameter("riddleContent"));
 		riddle.setRiddleStatus(request.getParameter("riddleStatus"));
 		riddle.setRiddlePoint(Integer.parseInt(request.getParameter("riddlePoint")));
