@@ -54,6 +54,8 @@ public class CreateRiddleServlet extends HttpServlet {
 		String userNRIC = request.getParameter("userNRIC");
 		UserManager userManager = new UserManager();
 		User user = userManager.retrieveUser(userNRIC);
+
+		RiddleManager riddleManager = new RiddleManager();
 		
 		// Riddle
 		Riddle riddle = new Riddle();
@@ -62,16 +64,17 @@ public class CreateRiddleServlet extends HttpServlet {
 		riddle.setRiddleContent(request.getParameter("riddleContent"));
 		riddle.setRiddleStatus(request.getParameter("riddleStatus"));
 		riddle.setRiddlePoint(Integer.parseInt(request.getParameter("riddlePoint")));
+		boolean riddleResult = riddleManager.createRiddle(riddle);
 		
 		// Answer
-		RiddleAnswer riddleAns = new RiddleAnswer();
-		riddleAns.setUser(user);
-		riddleAns.setRiddleAnswer(request.getParameter("riddleAnswer"));
-		riddleAns.setRiddleAnswerStatus(request.getParameter("riddleAnswerStatus"));
-		
-		RiddleManager riddleManager = new RiddleManager();
-		boolean riddleResult = riddleManager.createRiddle(riddle);
-		boolean answerResult = riddleManager.createCorrectRiddleAns(riddleAns);
+		boolean answerResult = false;
+		for(int i = 0; i < 4; i++) {
+			RiddleAnswer riddleAns = new RiddleAnswer();
+			riddleAns.setUser(user);
+			riddleAns.setRiddleAnswer(request.getParameter("riddleAnswer"+i));
+			riddleAns.setRiddleAnswerStatus(request.getParameter("riddleAnswerStatus"+i));
+			answerResult = riddleManager.createRiddleAns(riddleAns);
+		}
 
 		if (riddleResult && answerResult) {
 			JsonObject myObj = new JsonObject();

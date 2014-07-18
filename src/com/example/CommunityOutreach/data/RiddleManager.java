@@ -53,36 +53,6 @@ public class RiddleManager {
 		return result;
 	}
 	
-	public boolean createCorrectRiddleAns(RiddleAnswer answer) {
-		boolean result = false;
-		
-		String sql = "INSERT INTO riddle_answer ";
-		sql += "VALUES(?, ?, ?, ?, ?)";
-		try {
-			Connection conn = dbController.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			
-			ps.setInt(1, 0);
-			ps.setInt(2, generatedID);
-			ps.setString(3, answer.getUser().getNric());
-			ps.setString(4, answer.getRiddleAnswer());
-			ps.setString(5, answer.getRiddleAnswerStatus());
-			
-			ps.executeUpdate();
-			result = true;
-			
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
 	public boolean createRiddleAns(RiddleAnswer answer) {
 		boolean result = false;
 		
@@ -93,7 +63,7 @@ public class RiddleManager {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, 0);
-			ps.setInt(2, answer.getRiddle().getRiddleID());
+			ps.setInt(2, generatedID);
 			ps.setString(3, answer.getUser().getNric());
 			ps.setString(4, answer.getRiddleAnswer());
 			ps.setString(5, answer.getRiddleAnswerStatus());
