@@ -14,6 +14,9 @@
 			#currentForm{
 				margin-top:25px;
 			}
+			#location{
+				display:inline;
+			}
 		</style>
 	</jsp:attribute>
 	<jsp:attribute name="jsImports">
@@ -38,7 +41,8 @@
 		        });
 				$("#suggestLocation").click(function(e) {
 					e.preventDefault();
-					window.open("suggestLocation.jsp", '','width=800px,height=500,resizable=no');
+					var eventCategory = $('#eventCategory').val();
+					window.open("suggestLocation.jsp?category="+ eventCategory + "", '','width=1000px,height=500,resizable=no');
 					window.focus();
 				});
 		        $('#container').append(button);
@@ -106,7 +110,7 @@
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">Category</label></span>
-							<select class="form-control" id="gType" name="eventCategory">
+							<select class="form-control" id="eventCategory" name="eventCategory">
 								<option> Arts </option>
 								<option> Education</option>
 								<option> Family </option>
@@ -119,9 +123,13 @@
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">Location</label></span>
-							<textarea id="location" class="form-control" name="eventLocation" rows="3" placeholder="Enter event location"></textarea>
 							<br/>
-							<button type="submit" class="btn btn-default" id='suggestLocation' formaction="#"  data-bind="jqueryui: 'button'"> Suggest Location </button>
+							<div id="location">
+								<textarea class="form-control floatLeftText" name="eventLocation" rows="3" placeholder="Enter event location"></textarea>
+							</div>
+							<br/>
+							<br/>
+							<button type="submit" class="btn btn-default help-block" id='suggestLocation' formaction="#"  data-bind="jqueryui: 'button'"> Suggest Location </button>
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">No of participants</label></span>

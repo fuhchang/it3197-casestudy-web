@@ -9,6 +9,7 @@
  * Date: 2009-02-19 17:34:21 -0500 (Thu, 19 Feb 2009)
  * Revision: 6246
  */
+//add index on convert coordinate, add themename in getmashupdata and change global one map token
 (function(){
 
 var 
@@ -5562,7 +5563,7 @@ function ExtracLayerInfo(callback) {
 }
 
 
-function MashupData(oneMap) {
+function MashupData() {
     this.token = "";
     this.themeName = "";
     this.outputFields = "";
@@ -5816,7 +5817,7 @@ function GetMashupData(callback) {
         else {
             outPutResults.lineThickness = '1';
         }
-        callback(outPutResults);
+        callback(outPutResults,themename);
     });
 
 }
@@ -6678,7 +6679,7 @@ function CoordConvertor() {
     this.ConvertCoordinate = ConvertCoordinate
 }
 
-function ConvertCoordinate(inputXYList, inputSR, outputSR, callback) {debugger;
+function ConvertCoordinate(i,inputXYList, inputSR, outputSR, callback) {debugger;
 	var host2= "http://tasks.arcgisonline.com/";
 	var gsvc = new esri.tasks.GeometryService(host + "arcgis/rest/services/Utilities/Geometry/GeometryServer");
     var graphic
@@ -6692,7 +6693,7 @@ function ConvertCoordinate(inputXYList, inputSR, outputSR, callback) {debugger;
         gsvc.project([geomPoint], nsr, function(outXY) {
 		
 		var xy = outXY[0].x + "," + outXY[0].y;
-		callback(outXY[0].x + "," + outXY[0].y)
+		callback(i,outXY[0].x + "," + outXY[0].y)
 		 //callback(outXY[0].geometry.x + "," + outXY[0].geometry.y)
 			//added for lat - long
 			//callback(outXY[0].geometry.y + "," + outXY[0].geometry.x)
@@ -6790,4 +6791,6 @@ callback(outPutResults);
 
 /// Don't write anything below this
  
-var _OneMapGlobalToken='';document.write('<link rel="stylesheet" type="text/css" href="http://t1.onemap.sg/om_js/arcgis_js_api/library/2.8/arcgis/js/dojo/dijit/themes/tundra/tundra.css"/>');document.write('<script type="text/javascript" src="http://t1.onemap.sg/om_js/arcgis_js_api/library/2.8/arcgis/js/default.js"></script>');var _OneMapGlobalToken='qo/s2TnSUmfLz+32CvLC4RMVkzEFYjxqyti1KhByvEacEdMWBpCuSSQ+IFRT84QjGPBCuz/cBom8PfSm3GjEsGc8PkdEEOEr';var projSys='';
+var _OneMapGlobalToken='';document.write('<link rel="stylesheet" type="text/css" href="http://t1.onemap.sg/om_js/arcgis_js_api/library/2.8/arcgis/js/dojo/dijit/themes/tundra/tundra.css"/>');document.write('<script type="text/javascript" src="http://t1.onemap.sg/om_js/arcgis_js_api/library/2.8/arcgis/js/default.js"></script>');
+//Localhost token
+var _OneMapGlobalToken='xkg8VRu6Ol+gMH+SUamkRIEB7fKzhwMvfMo/2U8UJcFhdvR4yN1GutmUIA3A6r3LDhot215OVVkZvNRzjl28TNUZgYFSswOi';var projSys='';
