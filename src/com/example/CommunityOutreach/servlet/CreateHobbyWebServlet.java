@@ -26,6 +26,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.example.CommunityOutreach.data.HobbyManager;
 import com.example.CommunityOutreach.model.Hobby;
+import com.example.CommunityOutreach.model.User;
 import com.google.gson.JsonObject;
 
 /**
@@ -64,14 +65,16 @@ public class CreateHobbyWebServlet extends HttpServlet {
 		String category = request.getParameter("gType");
 		String grpDesc = request.getParameter("gDesc");
 		String loc = request.getParameter("gLoc");
-
+		String nric = request.getParameter("nric");
 		Hobby hobby = new Hobby();
+		User user = new User();
+		user.setNric(nric);
 		hobby.setGrpName(title);
 		hobby.setCategory(category);
 		hobby.setLocation(loc);
 		hobby.setGrpDesc(grpDesc);
 		HobbyManager hobbyManager = new HobbyManager();
-		boolean result = hobbyManager.createHobby(hobby);
+		boolean result = hobbyManager.createHobby(hobby, user);
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("RetrieveAllHobbyServlet");

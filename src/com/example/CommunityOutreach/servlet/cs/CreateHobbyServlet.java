@@ -23,7 +23,10 @@ import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.example.CommunityOutreach.data.HobbyManager;
+import com.example.CommunityOutreach.data.HobbyMembersManager;
 import com.example.CommunityOutreach.model.Hobby;
+import com.example.CommunityOutreach.model.HobbyMembers;
+import com.example.CommunityOutreach.model.User;
 import com.google.gson.JsonObject;
 
 /**
@@ -71,24 +74,37 @@ public class CreateHobbyServlet extends HttpServlet {
 		String grpDesc = request.getParameter("gDesc");
 		String Lat = request.getParameter("gLat");
 		String Lng = request.getParameter("gLng");
-
+		String nric = request.getParameter("nric");
 		Hobby hobby = new Hobby();
+		User user = new User();
 		hobby.setGrpName(title);
 		hobby.setCategory(category);
-		if(Lat != "" && Lng !=""){
-		hobby.setLat(Double.parseDouble(Lat));
-		hobby.setLng(Double.parseDouble(Lng));
+		user.setNric(nric);
+		if (Lat != "" && Lng != "") {
+			hobby.setLat(Double.parseDouble(Lat));
+			hobby.setLng(Double.parseDouble(Lng));
 		}
 		hobby.setGrpDesc(grpDesc);
-		HobbyManager hobbyManager =  new HobbyManager();
-		boolean result = hobbyManager.createHobby(hobby);
-
+		HobbyManager hobbyManager = new HobbyManager();
+		boolean result = hobbyManager.createHobby(hobby, user);
 		if (result) {
-			JsonObject myObj = new JsonObject();
-			myObj.addProperty("success", true);
-			myObj.addProperty("message", "Hobby created successfully.");
-			out.println(myObj.toString());
+			int grpID = hobbyManager.getLastHobbyID(nric);
+			HobbyMembersManager memberManager = new HobbyMembersManager();
+
+			HobbyMembers members = new HobbyMembers();
+			members.setUserNRIC(nric);
+			members.setActive(1);
+			members.setRole("admin");
+			members.setGroupID(grpID);
+			boolean resultMember = memberManager.createHobbyMember(members);
+			if (result == true && resultMember == true) {
+				JsonObject myObj = new JsonObject();
+				myObj.addProperty("success", true);
+				myObj.addProperty("message", "Hobby created successfully.");
+				out.println(myObj.toString());
+			}
 		}
+
 	}
 
 }

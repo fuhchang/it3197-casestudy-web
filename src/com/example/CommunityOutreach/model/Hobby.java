@@ -14,6 +14,7 @@ public class Hobby {
 	private String grpDesc;
 	private int active;
 	private byte[] photo;
+	private String adminNric;
 	public int getGrpID() {
 		return grpID;
 	}
@@ -92,6 +93,18 @@ public class Hobby {
 	 */
 	public void setLat(double lat) {
 		Lat = lat;
+	}
+	/**
+	 * @return the adminNric
+	 */
+	public String getAdminNric() {
+		return adminNric;
+	}
+	/**
+	 * @param adminNric the adminNric to set
+	 */
+	public void setAdminNric(String adminNric) {
+		this.adminNric = adminNric;
 	}
 	
 	

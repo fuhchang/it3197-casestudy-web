@@ -14,16 +14,16 @@ import com.example.CommunityOutreach.model.HobbyPost;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class CreatePostServlet
+ * Servlet implementation class DelPostServlet
  */
-@WebServlet("/CreatePostServlet")
-public class CreatePostServlet extends HttpServlet {
+@WebServlet("/DelPostServlet")
+public class DelPostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CreatePostServlet() {
+	public DelPostServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -44,7 +44,6 @@ public class CreatePostServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		boolean result;
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
 		response.setHeader("Cache-control", "no-cache, no-store");
@@ -54,24 +53,13 @@ public class CreatePostServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST");
 		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		response.setHeader("Access-Control-Max-Age", "86400");
-		
-		String postTitle = request.getParameter("postTitle");
-		String grpID = request.getParameter("grpID");
-		String postContent = request.getParameter("postContent");
-		String postLat = request.getParameter("postLat");
-		String postLng = request.getParameter("postLng");
-		String nric = request.getParameter("posterNric");
+
+		String postID = request.getParameter("postID");
+
 		HobbyPost post = new HobbyPost();
-		post.setGrpID(Integer.parseInt(grpID));
-		post.setPostTitle(postTitle);
-		post.setContent(postContent);
-		post.setNric(nric);
-		if (postLat != "" && postLng != "") {
-			post.setLat(Double.parseDouble(postLat));
-			post.setLng(Double.parseDouble(postLng));
-		}
-		PostManager postmanager = new PostManager();
-		result = postmanager.createPost(post);
+		post.setPostID(Integer.parseInt(postID));
+		PostManager pm = new PostManager();
+		boolean result = pm.delPost(post.getPostID());
 
 		if (result) {
 			JsonObject myObj = new JsonObject();
@@ -79,6 +67,7 @@ public class CreatePostServlet extends HttpServlet {
 			myObj.addProperty("message", "Hobby created successfully.");
 			out.println(myObj.toString());
 		}
+
 	}
 
 }

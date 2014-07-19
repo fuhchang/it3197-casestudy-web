@@ -36,10 +36,6 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 		HobbyManager hm = new HobbyManager();
 		ArrayList<Hobby> hobbyList = hm.retrieveAllHobby();
 		
-		for(int i=0; i<hobbyList.size();i++){
-			System.out.println(hobbyList.get(i).getGrpName());
-			System.out.println(hobbyList.get(i).getGrpDesc());
-		}
 		if(hobbyList.size() > 0){
 			request.setAttribute("hobbyList", hobbyList);		
 			}

@@ -20,7 +20,7 @@ public class PostManager {
 		int active = 1;
 		boolean result = false;
 		String sql = "INSERT INTO post ";
-		sql += "VALUES(?,?,?,?,?,?)";
+		sql += "VALUES(?,?,?,?,?,?,?,?)";
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -31,9 +31,9 @@ public class PostManager {
 			ps.setString(3, post.getContent());
 			ps.setDouble(4, post.getLat());
 			ps.setDouble(5, post.getLng());
-			System.out.println(post.getGrpID());
 			ps.setInt(6, post.getGrpID());
-
+			ps.setString(7, post.getNric());
+			ps.setString(8, post.getPostTitle());
 			ps.executeUpdate();
 			result=true;
 		} catch (IllegalAccessException e) {
@@ -66,11 +66,13 @@ public class PostManager {
 			while(rs.next()){
 				HobbyPost post = new HobbyPost();
 				post.setPostID(rs.getInt("postID"));
-				post.setPostID(rs.getInt("groupID"));
+				post.setGrpID(rs.getInt("groupID"));
 				post.setLat(rs.getDouble("Lat"));
 				post.setLng(rs.getDouble("Lng"));
 				post.setContent(rs.getString("content"));
 				post.setDatetime(rs.getDate("dateTime"));
+				post.setNric(rs.getString("userNRIC"));
+				post.setPostTitle(rs.getString("postTitle"));
 				postList.add(post);
 			}
 		} catch (IllegalAccessException | InstantiationException
@@ -81,5 +83,34 @@ public class PostManager {
 		
 		return postList;
 		
+	}
+	
+	public boolean delPost(int id){
+		String sql = "DELETE FROM post where postID = ?";
+		Connection conn;
+		boolean result = false;
+		
+		try {
+			conn = dbController.getConnection();
+			PreparedStatement preparedStatement;
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
+			result = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	
 	}
 }
