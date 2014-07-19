@@ -9,7 +9,8 @@
  * Date: 2009-02-19 17:34:21 -0500 (Thu, 19 Feb 2009)
  * Revision: 6246
  */
-//add index on convert coordinate, add themename in getmashupdata and change global one map token
+//add index on convert coordinate, add themename in getmashupdata 
+//change global one map token and css + script src 
 (function(){
 
 var 
@@ -3341,7 +3342,7 @@ jQuery.extend({
 	},
 
 	getJSON: function( url, data, callback ) {
-		return jQuery.get(url, data, callback, "json");
+		return jQuery.get(url, data, callback, "jsonp");
 	},
 
 	post: function( url, data, callback, type ) {

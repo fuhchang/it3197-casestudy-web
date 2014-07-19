@@ -77,8 +77,12 @@
 		  	<div class="col-xs-4">
 		  		<br/>
 		  		<br/>
+		  		<table>
+		  			<tr><td class='selectedName'></td></tr>
+		  			<tr><td class='selectedlocation'></td></tr>
+		  			<tr><td class='selectedHyperlink'></td></tr>
+		  		</table>
 				<button class="btn btn-default selectLocation"> Select Location</button>
-				<p class="selectedlocation"></p>
 			</div>
 			<br/>
 		</div>

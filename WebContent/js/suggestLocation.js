@@ -3,7 +3,7 @@ $(document).ready(function() {
 						center : new google.maps.LatLng(1.3450, 103.8250),
 						zoom : 11,
 						minZoom : 11,
-						maxZoom : 15,
+						maxZoom : 20,
 						mapTypeId : google.maps.MapTypeId.ROADMAP
 					};
 					var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
@@ -14,9 +14,9 @@ $(document).ready(function() {
 					var temp = [];
 					var iconName = "";
 					var category = window.location.href.slice(window.location.href.indexOf('=') + 1);
-					var prev_window = false;
 					var markerClusterer = null;
 					
+					refreshMap();
 					$("#family").hide();
 					$("#forLegend .Eldercare").hide();
 					$("#forLegend span .Eldercare").hide();
@@ -131,6 +131,7 @@ $(document).ready(function() {
 							var l = Ladda.create(document.querySelector('#' + themeName));
 							l.start();
 							$(".btn").attr("disabled","disabled");
+							//$(".list-group-item").addClass("disabled");
 							$("#legend").show();
 							$("#" + themeName).addClass("active disabled");
 							$("#forLegend ." + themeName).show();
@@ -159,7 +160,7 @@ $(document).ready(function() {
 						}
 						$("." + themeName).attr("src",iconName);
 						themeNames.push(themeName);
-						$(".btn").attr("disabled",false);
+
 						for(var i=0;i<results.length;i++){
 							GetCords(i,results[i].XY.toString());
 						}
@@ -180,44 +181,28 @@ $(document).ready(function() {
 						var y = outXY.substr(outXY.indexOf(",") + 1, outXY.length);
 						
 						var image = iconName;
-						var html = "<h5>" + result[index][0] + "</h5>"
-								+ "<p>" + result[index][2] + "</p>"
-								+ "<p style='margin-top:-10px;'>"
-								+ result[index][1] + "</p>"
-								+ "<p> For more information: <a href='"
-								+ result[index][3] + "'>"
-								+ result[index][3] + "</a></p>";
 						var address = result[index][2] + "\n"
 								+ result[index][1];
-						createMarker(index, y, x, html, image, address);
+						createMarker(index, y, x, image, address);
 					}
 					
 					//To create a marker into the map
-					function createMarker(index, lat, lon, html, image, address) {
+					function createMarker(index, lat, lon, image, address) {
 						var newmarker = new google.maps.Marker({
 							position : new google.maps.LatLng(lat, lon),
 							map : map,
 							icon : image
 						});
 
-						newmarker['infowindow'] = new google.maps.InfoWindow({
-							content : html
-						});
-
 						google.maps.event.addListener(newmarker, 'click',function() {
-							if (!prev_window) {
-							} else {
-								prev_window.close();
-							}
-							this['infowindow'].open(map, this);
-							prev_window = this['infowindow'];
 							$(".selectedlocation").html(address);
+							$(".selectedName").html(result[index][0]);
+							$(".selectedHyperlink").html(result[index][3]);
+							$(".btn").attr("disabled","disabled");
 						});
 						markers.push(newmarker);
 
 						refreshMap();
-						if(index < temp.length){
-						}
 					}
 					
 					//To refresh the map
@@ -228,7 +213,12 @@ $(document).ready(function() {
 						markerClusterer = new MarkerClusterer(map, markers,{
 							maxZoom:15,
 						});
+						alert(temp.length);
 						temp = [];
+						$(".list-group-item").removeClass("disabled");
+						for(var i = 0;i<themeNames.length;i++){
+							$("#" + themeNames[i]).addClass("disabled");
+						}
 					}
 
 });
