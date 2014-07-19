@@ -42,7 +42,7 @@
 				$("#suggestLocation").click(function(e) {
 					e.preventDefault();
 					var eventCategory = $('#eventCategory').val();
-					window.open("suggestLocation.jsp?category="+ eventCategory + "", '','width=1000px,height=500,resizable=no');
+					window.open("suggestLocation.jsp?category="+ eventCategory + "", '','width=1000px,height=650px,resizable=no');
 					window.focus();
 				});
 		        $('#container').append(button);
