@@ -2,7 +2,9 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,13 +18,14 @@ import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.EventParticipants;
 import com.example.CommunityOutreach.model.User;
+import com.example.CommunityOutreach.util.Settings;
 import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class CreateEventParticipantServlet
  */
 @WebServlet("/createEventParticipant")
-public class CreateEventParticipantServlet extends HttpServlet {
+public class CreateEventParticipantServlet extends HttpServlet implements Settings{
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -55,31 +58,31 @@ public class CreateEventParticipantServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
-        String userNRIC = request.getParameter("nric");
-        //Real Values
-        /*String name = request.getParameter("name");
-        String type = request.getParameter("type");
-        String password = request.getParameter("password");
-        String contactNo = request.getParameter("contactNo");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");*/
+        String userNRIC = request.getParameter("userNRIC");
         
-        //Testing Values
-        System.out.println("NRIC: " + userNRIC);
-		int eventID = 7;
+		int eventID = 0;
+        if(request.getParameter("eventID") != null){
+        	try{
+        		eventID = Integer.parseInt(request.getParameter("eventID"));
+        	}
+        	catch(Exception e){
+        		eventID = 0;
+        	}
+        }
 		
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_MONTH,27);
-		calendar.set(Calendar.MONTH,6);
-		calendar.set(Calendar.YEAR,2014);
-		calendar.set(Calendar.HOUR_OF_DAY,9);
-		calendar.set(Calendar.MINUTE,00);
-		calendar.set(Calendar.SECOND, 00);
+		String eventDateTimeFrom = request.getParameter("eventDateTimeFrom");
+		Date dateTimeFrom = null;
+		try {
+			dateTimeFrom = sqlDateTimeFormatter.parse(eventDateTimeFrom);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
         UserManager userManager = new UserManager();
 		EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
 		EventManager eventManager = new EventManager();
-        EventParticipants eventParticipant = new EventParticipants(eventID,userNRIC,calendar.getTime(),0);
+        EventParticipants eventParticipant = new EventParticipants(eventID,userNRIC,dateTimeFrom,0);
         User checkUser = userManager.retrieveUser(userNRIC);
         Event checkEvent = eventManager.retrieveEvent(eventID);
         EventParticipants checkEventParticipants= eventParticipantsManager.retrieveEventParticipant(eventID,userNRIC);
