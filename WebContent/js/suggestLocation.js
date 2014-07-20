@@ -24,19 +24,30 @@ $(document).ready(function() {
 					$("#forLegend span .Family").hide();
 					$("#forLegend .VoluntaryWelfareOrgs").hide();
 					$("#forLegend span .VoluntaryWelfareOrgs").hide();
+					$("#forLegend .suggestLocation").hide();
+					$("#forLegend span .suggestLocation").hide();
 					$("#legend").hide();
+					$(".panel-body").hide();
+					$("#down").show();
+					$("#up").hide();
 					
 					if((category == "Family") || (category == "Family#")){
 						$("#family").show();
 					}
 
-					var x,y;
+					var x = "";
+					var y = "";
 					 // Try HTML5 geolocation
 					if(navigator.geolocation) {
-						navigator.geolocation.getCurrentPosition(function(position) {
-							y = position.coords.latitude;
-							x = position.coords.longitude;
-						});
+						navigator.geolocation.getCurrentPosition(showPosition);
+					}
+
+					
+					function showPosition(position) {
+					    y = position.coords.latitude;
+					    x = position.coords.longitude;
+
+						alert(y + "," + x);
 					}
 					
 					$("#Eldercare").click(function(e){
@@ -52,12 +63,14 @@ $(document).ready(function() {
 					});
 					
 					$(".deselectAllThemes").click(function(){
-						if(themeNames.length < 0){
+						if(themeNames.length <= 0){
 							alert("Please select a theme.");
 							return;
 						}
 						else{
 							$("#legend").hide();
+							$("#forLegend .suggestLocation").show();
+							$("#forLegend span .suggestLocation").show();
 							if((category == "Family") || (category == "Family#")){
 								$("#Eldercare").removeClass("active disabled");
 								$("#forLegend .Eldercare").hide();
@@ -79,10 +92,93 @@ $(document).ready(function() {
 							}
 						}
 					});
-
+					
+					$("#down").click(function(){
+						$(".panel-body").slideDown();
+						$("#down").hide();
+						$("#up").show();
+					});
+					
+					$("#up").click(function(){
+						$(".panel-body").slideUp();
+						$("#down").show();
+						$("#up").hide();
+					});
+					var suggestMarker = null;
 					$(".suggestLocation").click(function() {
-						var closest = find_closest_marker(1.4414288,103.8021278);
-						alert(result[closest][0]);
+						if(themeNames.length <= 0){
+							alert("Please select a theme.");
+							return;
+						}
+						else{
+							$("#legend").show();
+							$("#forLegend .suggestLocation").show();
+							$("#forLegend span .suggestLocation").show();
+							for(var i=0;i<themeNames.length;i++){
+								displayTheme(themeNames[i]);
+							}
+							if(suggestMarker != null){
+								suggestMarker.setVisible(false);
+							}
+							var closest = find_closest_marker(y,x);
+							
+						    var coord = result[closest][4];
+						    
+							var x = coord.substr(0, coord.indexOf(","));
+							var y = coord.substr(coord.indexOf(",") + 1, coord.length);
+							
+							/*var name = result[closest][0];
+							for(var i=0;i<result.length;i++){
+								if(result[i][0] == name){
+									markers[i].setVisible(false);
+								}
+							}*/
+							
+							suggestMarker = new google.maps.Marker({
+						        position : new google.maps.LatLng(y,x),
+						        map: map,
+						        icon: "images/suggest.gif",
+						    });
+							var name = result[closest][0];
+							var address = result[closest][2] + "\n"
+									+ result[closest][1];
+							var hyperLink = result[closest][3];
+							
+							google.maps.event.addListener(suggestMarker, 'click',function() {
+								$(".selectedlocation").html(address);
+								$(".selectedName").html(name);
+								$(".selectedHyperlink").html(hyperLink);
+								$(".btn").attr("disabled",false);
+							});
+							markers[closest].setVisible(false);
+						    markers.splice(closest,1,suggestMarker);
+
+							refreshMap();
+						}
+					});
+					
+					$(".refreshMap").click(function(){
+						if((category == "Family") || (category == "Family#")){
+							$("#Eldercare").removeClass("active disabled");
+							$("#forLegend .Eldercare").hide();
+							$("#forLegend span .Eldercare").hide();
+							$("#Family").removeClass("active disabled");
+							$("#forLegend .Family").hide();
+							$("#forLegend span .Family").hide();
+							$("#VoluntaryWelfareOrgs").removeClass("active disabled");
+							$("#forLegend .VoluntaryWelfareOrgs").hide();
+							$("#forLegend span .VoluntaryWelfareOrgs").hide();
+							markerClusterer.clearMarkers();
+							for(var i = 0;i<markers.length;i++){
+								markers[i].setVisible(false);
+							}
+							markers = [];
+							result = [];
+							temp = [];
+						}
+						for(var i=0;i<themeNames.length;i++){
+							displayTheme(themeNames[i]);
+						}
 					});
 					
 					$(".selectLocation").click(function() {
@@ -147,6 +243,7 @@ $(document).ready(function() {
 					//To retrieve the results based on the theme from One Map and convert coordinates
 					function getResult(mashupResults,themeName){
 						var results = mashupResults.results;
+						var initial = result.length;
 						for (var i = 0; i < results.length; i++) {
 							var name = mashupResults.results[i].NAME.toString();
 							var postalCode = mashupResults.results[i].ADDRESSPOSTALCODE.toString();
@@ -160,16 +257,14 @@ $(document).ready(function() {
 						}
 						$("." + themeName).attr("src",iconName);
 						themeNames.push(themeName);
-
-						for(var i=0;i<results.length;i++){
-							GetCords(i,results[i].XY.toString());
-						}
+						for(var i=initial;i<result.length;i++){
+							GetCords(i,result[i][4]);
+						};
 					}
 					
 					//To convert coordinates from SVY21 to WGS84 for Google Maps
 					function GetCords(i, xy) {
 						var inXYList = xy;
-
 						var CoordConvertorObj = new CoordConvertor();
 						CoordConvertorObj.ConvertCoordinate(i,inXYList, 3414, 4326, showVals);
 					}
@@ -179,15 +274,17 @@ $(document).ready(function() {
 						// X = Longtitude, Y = Latitude
 						var x = outXY.substr(0, outXY.indexOf(","));
 						var y = outXY.substr(outXY.indexOf(",") + 1, outXY.length);
-						
+						result[index][4] = x + "," + y;
 						var image = iconName;
+						var name = result[index][0];
+						var hyperLink = result[index][3];
 						var address = result[index][2] + "\n"
 								+ result[index][1];
-						createMarker(index, y, x, image, address);
+						createMarker(index, y, x, image, name, address, hyperLink);
 					}
 					
 					//To create a marker into the map
-					function createMarker(index, lat, lon, image, address) {
+					function createMarker(index, lat, lon, image, name, address, hyperLink) {
 						var newmarker = new google.maps.Marker({
 							position : new google.maps.LatLng(lat, lon),
 							map : map,
@@ -196,9 +293,9 @@ $(document).ready(function() {
 
 						google.maps.event.addListener(newmarker, 'click',function() {
 							$(".selectedlocation").html(address);
-							$(".selectedName").html(result[index][0]);
-							$(".selectedHyperlink").html(result[index][3]);
-							$(".btn").attr("disabled","disabled");
+							$(".selectedName").html(name);
+							$(".selectedHyperlink").html(hyperLink);
+							$(".btn").attr("disabled",false);
 						});
 						markers.push(newmarker);
 
@@ -213,7 +310,6 @@ $(document).ready(function() {
 						markerClusterer = new MarkerClusterer(map, markers,{
 							maxZoom:15,
 						});
-						alert(temp.length);
 						temp = [];
 						$(".list-group-item").removeClass("disabled");
 						for(var i = 0;i<themeNames.length;i++){

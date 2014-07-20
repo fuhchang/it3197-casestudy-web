@@ -42,12 +42,17 @@
 		<div id="googleMap" style="width:95%;height:380px;"></div>
 		<div id="legend">
 		  Legend:
+		  <div id="forLegend" class='suggestLocation' style="margin-bottom:5px;margin-top:5px;"><img src='images/suggest.gif' class="suggestLocation" /><span class="suggestLocation" style="font-size:14px;margin-left:5px;">Recommended Location</span></div>
 		  <div id="forLegend" class='Eldercare' style="margin-bottom:5px;margin-top:5px;"><img class="Eldercare"/><span class="Eldercare" style="font-size:14px;margin-left:5px;">Elder Care Services</span></div>
 		  <div id="forLegend" class='Family' style="margin-bottom:5px;margin-top:5px;"><img class="Family"/><span class="Family" style="font-size:14px;margin-left:5px;">Family Services</span></div>
 		  <div id="forLegend" class='VoluntaryWelfareOrgs' style="margin-bottom:5px;margin-top:5px;"><img class="VoluntaryWelfareOrgs"/><span class="VoluntaryWelfareOrgs" style="font-size:14px;margin-left:5px;">Voluntary Welfare Organizations</span></div>
 		</div>
-		<div class="row panel panel-primary" style="margin-left:3%;margin-right:3%;margin-top:1%;">
-			<div class="panel-heading">Selection</div>
+		<div class="row panel panel-primary" style="margin-left:2.5%;margin-right:2.5%;margin-top:1%;">
+			<div class="panel-heading">
+				Themes & Options
+				<span id='down' class="glyphicon glyphicon-chevron-down" style='float:right;'></span>
+				<span id='up' class="glyphicon glyphicon-chevron-up" style='float:right;'></span>
+			</div>
 			<div class="panel-body">
 			  	<div class="col-xs-6">
 					<p>Theme(s): </p>
@@ -69,12 +74,13 @@
 					<div>
 						<a class='list-group-item suggestLocation'> Suggest Location </a>
 						<a class='list-group-item deselectAllThemes'> Deselect All Theme(s) </a>
+						<a class='list-group-item refreshMap'> Refresh Map </a>
 					</div>
 			  	</div>
 			</div>
 		</div>
-		<div class="row" style="margin-left:20px">
-		  	<div class="col-xs-4">
+		<div class="row" style="margin-left:2.5%;">
+		  	<div class="col-xs-4" style='padding-left:0;'>
 		  		<br/>
 		  		<br/>
 		  		<table>
