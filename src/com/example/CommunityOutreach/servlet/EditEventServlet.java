@@ -2,7 +2,9 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,13 +16,14 @@ import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.User;
+import com.example.CommunityOutreach.util.Settings;
 import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class EditEventServlet
  */
 @WebServlet("/editEvent")
-public class EditEventServlet extends HttpServlet {
+public class EditEventServlet extends HttpServlet implements Settings{
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -53,49 +56,63 @@ public class EditEventServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
-        int eventID;
-        if((request.getParameter("eventID") == null) || (request.getParameter("eventID").equals(""))){
-        	eventID = 0;
+        int eventID = 0;
+        if(request.getParameter("eventID") != null){
+        	try{
+        		eventID = Integer.parseInt(request.getParameter("eventID"));
+        	}
+        	catch(Exception e){
+        		eventID = 0;
+        	}
         }
-        else{
-        	eventID = Integer.parseInt(request.getParameter("eventID"));
+        String eventName = request.getParameter("eventName");
+        String eventCategory = request.getParameter("eventCategory");
+        String eventDescription = request.getParameter("eventDescription");
+        String eventType = request.getParameter("eventType");
+        String occurence = request.getParameter("occurence");
+        String eventDateTimeFrom = request.getParameter("eventDateTimeFrom");
+        String eventDateTimeTo = request.getParameter("eventDateTimeTo");
+        String eventLocation = request.getParameter("eventLocation");
+        int noOfParticipantsAllowed = 0;
+        if(request.getParameter("noOfParticipants") != null){
+        	try{
+        		noOfParticipantsAllowed = Integer.parseInt(request.getParameter("noOfParticipants"));
+        	}
+        	catch(Exception e){
+        		noOfParticipantsAllowed = 0;
+        	}
         }
-        //Real Values
-        /*String name = request.getParameter("name");
-        String password = request.getParameter("password");
-        String contactNo = request.getParameter("contactNo");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");*/
-        
+        Date dateTimeFrom = null;
+        Date dateTimeTo = null;
+        try {
+        	System.out.println(request.getParameter("web"));
+        	if(request.getParameter("web").equals("true")){
+        		Calendar cFrom = Calendar.getInstance();
+        		dateTimeFrom = webSqlDateTimeFormatter.parse(eventDateTimeFrom);
+        		cFrom.setTime(dateTimeFrom);
+        		cFrom.set(Calendar.SECOND, 0);
+        		dateTimeFrom = cFrom.getTime();
+        		
+        		Calendar cTo = Calendar.getInstance();
+        		dateTimeTo = webSqlDateTimeFormatter.parse(eventDateTimeTo);
+        		cTo.set(Calendar.SECOND, 0);
+        		cTo.setTime(dateTimeTo);
+        		dateTimeTo = cTo.getTime();
+        	}
+        	else{
+        		dateTimeFrom = sqlDateTimeFormatter.parse(eventDateTimeFrom);
+        		dateTimeTo = sqlDateTimeFormatter.parse(eventDateTimeTo);
+        	}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         //Testing Values
+        //System.out.println("Event No: " + eventID);
 		String eventAdminNRIC = "S9512233X";
-		String eventName = "Tx";
-		String eventCategory = "Tx";
-		String eventDescription = "Tx";
-		String eventType = "Tx";
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_MONTH,27);
-		calendar.set(Calendar.MONTH,6);
-		calendar.set(Calendar.YEAR,2014);
-		calendar.set(Calendar.HOUR_OF_DAY,9);
-		calendar.set(Calendar.MINUTE,00);
-		calendar.set(Calendar.SECOND, 00);
-		
-		Calendar calendar2 = Calendar.getInstance();
-		calendar2.set(Calendar.DAY_OF_MONTH,27);
-		calendar2.set(Calendar.MONTH,6);
-		calendar2.set(Calendar.YEAR,2014);
-		calendar2.set(Calendar.HOUR_OF_DAY,13);
-		calendar2.set(Calendar.MINUTE,00);
-		calendar2.set(Calendar.SECOND, 00);
-		
-		String occurence = "Xy";
-		String eventLocation = "Xy";
-		int noOfParticipantsAllowed = 0;
         
         EventManager eventManager = new EventManager();
-        Event event = new Event(eventID,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,calendar.getTime(),calendar2.getTime(),occurence,eventLocation,noOfParticipantsAllowed,1);
+        Event event = new Event(eventID,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1);
         Event checkEvent = eventManager.retrieveEvent(eventID);
         if((checkEvent == null) || (eventID == 0)){
             JsonObject myObj = new JsonObject();
