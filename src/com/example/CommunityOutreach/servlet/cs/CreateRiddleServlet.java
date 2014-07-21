@@ -70,7 +70,6 @@ public class CreateRiddleServlet extends HttpServlet {
 		boolean answerResult = false;
 		for(int i = 0; i < 4; i++) {
 			RiddleAnswer riddleAns = new RiddleAnswer();
-			riddleAns.setUser(user);
 			riddleAns.setRiddleAnswer(request.getParameter("riddleAnswer"+i));
 			riddleAns.setRiddleAnswerStatus(request.getParameter("riddleAnswerStatus"+i));
 			answerResult = riddleManager.createRiddleAns(riddleAns);
