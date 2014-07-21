@@ -81,7 +81,7 @@ public class EventParticipantsManager {
 	}
 	
 	/**
-	 * This method is to retrieve a event based on eventID
+	 * This method is to retrieve a event participant based on eventID
 	 * @param eventID
 	 * @return Event
 	 */
@@ -110,7 +110,7 @@ public class EventParticipantsManager {
 	}
 	
 	/**
-	 * This method is to retrieve a event based on user's nric
+	 * This method is to retrieve a event participant based on user's nric
 	 * @param userNRIC
 	 * @return Event
 	 */

@@ -2,6 +2,7 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,7 +64,8 @@ public class DeleteEventParticipantServlet extends HttpServlet {
         }
         System.out.println("Event No: " + eventID);
         String userNRIC = request.getParameter("userNRIC");
-
+        String newEventAdminNRIC = request.getParameter("newEventAdminNRIC");
+        
         UserManager userManager = new UserManager();
         User checkUser = userManager.retrieveUser(userNRIC);
         EventManager eventManager = new EventManager();
@@ -85,12 +87,14 @@ public class DeleteEventParticipantServlet extends HttpServlet {
             out.println(myObj.toString());
             return;
         }
-        if(checkEventParticipant == null){
-        	JsonObject myObj = new JsonObject();
-            myObj.addProperty("success", false);
-            myObj.addProperty("message","This is no record of such event participants.");
-            out.println(myObj.toString());
-            return;
+        if(!userNRIC.equals(checkEvent.getEventAdminNRIC())){
+	        if(checkEventParticipant == null){
+	        	JsonObject myObj = new JsonObject();
+	            myObj.addProperty("success", false);
+	            myObj.addProperty("message","This is no record of such event participants.");
+	            out.println(myObj.toString());
+	            return;
+	        }
         }
         
         if(checkEvent.getActive() == 0){
@@ -109,19 +113,94 @@ public class DeleteEventParticipantServlet extends HttpServlet {
         }
         else{
 	        boolean isEventObsoleted = false;
+	        boolean isEventUpdated = false;
+	        boolean isEventParticipantsDeleted = false;
 	        try{
-	        	isEventObsoleted = eventManager.obsoleteEvent(eventID);
-	        	if(!isEventObsoleted){
-	        		JsonObject myObj = new JsonObject();
-	                myObj.addProperty("success", false);
-	                myObj.addProperty("message","Unable to delete event participant successfully.");
-	                out.println(myObj.toString());
+	        	System.out.println(eventID);
+	        	ArrayList<EventParticipants> eventParticipantsArrList = eventParticipantsManager.retrieveAllEventParticipants();
+	        	ArrayList<EventParticipants> tempArrList = new ArrayList<EventParticipants>();
+	        	for(int i=0;i<eventParticipantsArrList.size();i++){
+	        		if(eventParticipantsArrList.get(i).getEventID() == eventID){
+	        			tempArrList.add(eventParticipantsArrList.get(i));
+	        		}
+	        	}
+	        	System.out.println(tempArrList.size());
+	        	if((tempArrList.size() < 2) && (userNRIC.equals(checkEvent.getEventAdminNRIC()))){
+	        		if(tempArrList.size() == 1){
+	        			checkEvent.setEventAdminNRIC(tempArrList.get(0).getUserNRIC());
+	        			isEventUpdated = eventManager.editEvent(checkEvent);
+	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, checkEvent.getEventAdminNRIC());
+	        			if((isEventUpdated) && (isEventParticipantsDeleted)){
+	        				JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", true);
+	    	                myObj.addProperty("message","Event participant deleted successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	        			}
+	        			else{
+	        				JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", false);
+	    	                myObj.addProperty("message","Unable to delete event participant successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	        			}
+	        		}
+	        		else if(tempArrList.size() == 0){
+	    	        	isEventObsoleted = eventManager.obsoleteEvent(eventID);
+	    	        	isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, userNRIC);
+	    	        	if((!isEventObsoleted) || (!isEventParticipantsDeleted)){
+	    	        		JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", false);
+	    	                myObj.addProperty("message","Unable to delete event participant successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	    	        	}
+	    	        	else{
+	    	                JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", true);
+	    	                myObj.addProperty("message","Event participant deleted successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	    	        	}
+	        		}
 	        	}
 	        	else{
-	                JsonObject myObj = new JsonObject();
-	                myObj.addProperty("success", true);
-	                myObj.addProperty("message","Event participant deleted successfully.");
-	                out.println(myObj.toString());
+	        		if(userNRIC.equals(checkEvent.getEventAdminNRIC())){
+	        			checkEvent.setEventAdminNRIC(tempArrList.get(0).getUserNRIC());
+	        			isEventUpdated = eventManager.editEvent(checkEvent);
+	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, checkEvent.getEventAdminNRIC());
+	        			if((isEventUpdated) && (isEventParticipantsDeleted)){
+	        				JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", true);
+	    	                myObj.addProperty("message","Event participant deleted successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	        			}
+	        			else{
+	        				JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", false);
+	    	                myObj.addProperty("message","Unable to delete event participant successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	        			}
+	        		}
+	        		else{
+		        		isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, userNRIC);
+	    	        	if(!isEventParticipantsDeleted){
+	    	        		JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", false);
+	    	                myObj.addProperty("message","Unable to delete event participant successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	    	        	}
+	    	        	else{
+	    	                JsonObject myObj = new JsonObject();
+	    	                myObj.addProperty("success", true);
+	    	                myObj.addProperty("message","Event participant deleted successfully.");
+	    	                out.println(myObj.toString());
+	    	                return;
+	    	        	}
+	        		}
 	        	}
 	        }
 	        catch(Exception ex){
