@@ -85,7 +85,7 @@ public class ArticleManager {
 				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
 				String articleSubmittedDate = df.format(articleDate);
 				// Print what date is today!
-				System.out.println("Article Date: " + articleSubmittedDate);
+				//System.out.println("Article Date: " + articleSubmittedDate);
 				
 				article.setArticleDate(articleSubmittedDate);
 				//article.setDateTime();
@@ -95,7 +95,7 @@ public class ArticleManager {
 				article.setActive(rs.getInt("active"));
 				article.setApproved(rs.getString("status"));
 				article.setDbLat(rs.getDouble("lat"));
-				article.setDbLon(rs.getDouble("long"));
+				article.setDbLon(rs.getDouble("lng"));
 				articlesArrList.add(article);
 					
 				UserManager um = new UserManager();
@@ -110,9 +110,9 @@ public class ArticleManager {
 		}
 	}
 	
-	/***Display Approved Article with category "News Around The Neighbourhood***/
+	/***Display Approved Article with category "News Around The Neighbourhood"***/
 	public ArrayList<Article> retrieveAllApprovedArticles() {
-		String sql = "SELECT * FROM articles WHERE status = 'Approved' AND category = 'News Around The Neighbourhood'";
+		String sql = "SELECT * FROM articles WHERE status = 'Approved' AND category = 'News Around The Neighbourhood' ORDER BY dateTime DESC";
 		ArrayList<Article> articlesArrList = new ArrayList<Article>();
 		try {
 			Connection conn = dbController.getConnection();
@@ -129,7 +129,7 @@ public class ArticleManager {
 				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
 				String articleSubmittedDate = df.format(articleDate);
 				// Print what date is today!
-				System.out.println("Article Date: " + articleSubmittedDate);
+				//System.out.println("Article Date: " + articleSubmittedDate);
 				
 				article.setArticleDate(articleSubmittedDate);
 				//article.setDateTime();
@@ -139,7 +139,7 @@ public class ArticleManager {
 				article.setActive(rs.getInt("active"));
 				article.setApproved(rs.getString("status"));
 				article.setDbLat(rs.getDouble("lat"));
-				article.setDbLon(rs.getDouble("long"));
+				article.setDbLon(rs.getDouble("lng"));
 				articlesArrList.add(article);
 					
 				UserManager um = new UserManager();
@@ -155,12 +155,98 @@ public class ArticleManager {
 	}
 	
 	
+	/***Display Pending Article with category "News Around The Neighbourhood"***/
+	public ArrayList<Article> retrieveAllPendingLatestArticles() {
+		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'News Around The Neighbourhood' ORDER BY dateTime DESC";
+		ArrayList<Article> articlesArrList = new ArrayList<Article>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Article article = new Article();
+				article.setArticleID(rs.getInt("articleID"));
+				article.setTitle(rs.getString("title"));
+				article.setContent(rs.getString("content"));
+				
+				Date articleDate = rs.getTimestamp("dateTime");
+				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+				String articleSubmittedDate = df.format(articleDate);
+				// Print what date is today!
+				//System.out.println("Article Date: " + articleSubmittedDate);
+				
+				article.setArticleDate(articleSubmittedDate);
+				//article.setDateTime();
+				article.setCategory(rs.getString("category"));
+				article.setLocation(rs.getString("location"));
+				article.setUserNRIC(rs.getString("userNRIC"));
+				article.setActive(rs.getInt("active"));
+				article.setApproved(rs.getString("status"));
+				article.setDbLat(rs.getDouble("lat"));
+				article.setDbLon(rs.getDouble("lng"));
+				articlesArrList.add(article);
+					
+				UserManager um = new UserManager();
+				User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+				article.setArticleUser(UserDetail.getName());		
+			}
+			conn.close();
+			return articlesArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/***Display Confirmed Article with category "Feedback"***/
+	public ArrayList<Article> retrieveAllConfirmedFeedbackArticles() {
+		String sql = "SELECT * FROM articles WHERE status = 'Confirmed' AND category = 'Feedback' ORDER BY dateTime DESC";
+		ArrayList<Article> articlesArrList = new ArrayList<Article>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Article article = new Article();
+				article.setArticleID(rs.getInt("articleID"));
+				article.setTitle(rs.getString("title"));
+				article.setContent(rs.getString("content"));
+				
+				Date articleDate = rs.getTimestamp("dateTime");
+				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+				String articleSubmittedDate = df.format(articleDate);
+				// Print what date is today!
+				//System.out.println("Article Date: " + articleSubmittedDate);
+				
+				article.setArticleDate(articleSubmittedDate);
+				//article.setDateTime();
+				article.setCategory(rs.getString("category"));
+				article.setLocation(rs.getString("location"));
+				article.setUserNRIC(rs.getString("userNRIC"));
+				article.setActive(rs.getInt("active"));
+				article.setApproved(rs.getString("status"));
+				article.setDbLat(rs.getDouble("lat"));
+				article.setDbLon(rs.getDouble("lng"));
+				articlesArrList.add(article);
+					
+				UserManager um = new UserManager();
+				User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+				article.setArticleUser(UserDetail.getName());	
+			}
+			conn.close();
+			return articlesArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
-	
-	/***Display Pending Article with category "Feedback***/
+	/***Display Pending Article with category "Feedback"***/
 	public ArrayList<Article> retrieveAllPendingFeedbackArticles() {
-		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Feedback'";
+		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Feedback' ORDER BY dateTime DESC";
 		ArrayList<Article> articlesArrList = new ArrayList<Article>();
 		try {
 			Connection conn = dbController.getConnection();
@@ -177,7 +263,7 @@ public class ArticleManager {
 				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
 				String articleSubmittedDate = df.format(articleDate);
 				// Print what date is today!
-				System.out.println("Article Date: " + articleSubmittedDate);
+				//System.out.println("Article Date: " + articleSubmittedDate);
 				
 				article.setArticleDate(articleSubmittedDate);
 				//article.setDateTime();
@@ -187,7 +273,7 @@ public class ArticleManager {
 				article.setActive(rs.getInt("active"));
 				article.setApproved(rs.getString("status"));
 				article.setDbLat(rs.getDouble("lat"));
-				article.setDbLon(rs.getDouble("long"));
+				article.setDbLon(rs.getDouble("lng"));
 				articlesArrList.add(article);
 					
 				UserManager um = new UserManager();
@@ -202,9 +288,9 @@ public class ArticleManager {
 		}
 	}
 	
-	/***Display Pending Article with category "Location Usage***/
+	/***Display Pending Article with category "Location Usage"***/
 	public ArrayList<Article> retrieveAllPendingLocationUsageArticles() {
-		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Location Usage'";
+		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Location Usage' ORDER BY dateTime DESC";
 		ArrayList<Article> articlesArrList = new ArrayList<Article>();
 		try {
 			Connection conn = dbController.getConnection();
@@ -221,7 +307,7 @@ public class ArticleManager {
 				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
 				String articleSubmittedDate = df.format(articleDate);
 				// Print what date is today!
-				System.out.println("Article Date: " + articleSubmittedDate);
+				//System.out.println("Article Date: " + articleSubmittedDate);
 				
 				article.setArticleDate(articleSubmittedDate);
 				//article.setDateTime();
@@ -231,7 +317,7 @@ public class ArticleManager {
 				article.setActive(rs.getInt("active"));
 				article.setApproved(rs.getString("status"));
 				article.setDbLat(rs.getDouble("lat"));
-				article.setDbLon(rs.getDouble("long"));
+				article.setDbLon(rs.getDouble("lng"));
 				articlesArrList.add(article);
 					
 				UserManager um = new UserManager();
@@ -247,6 +333,95 @@ public class ArticleManager {
 	}
 	
 	
+	/***Display Confirmed Article with category "Location Usage"***/
+	public ArrayList<Article> retrieveAllConfirmedLocationArticles() {
+		String sql = "SELECT * FROM articles WHERE status = 'Confirmed' AND category = 'Location Usage' ORDER BY dateTime DESC";
+		ArrayList<Article> articlesArrList = new ArrayList<Article>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Article article = new Article();
+				article.setArticleID(rs.getInt("articleID"));
+				article.setTitle(rs.getString("title"));
+				article.setContent(rs.getString("content"));
+				
+				Date articleDate = rs.getTimestamp("dateTime");
+				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+				String articleSubmittedDate = df.format(articleDate);
+				// Print what date is today!
+				//System.out.println("Article Date: " + articleSubmittedDate);
+				
+				article.setArticleDate(articleSubmittedDate);
+				//article.setDateTime();
+				article.setCategory(rs.getString("category"));
+				article.setLocation(rs.getString("location"));
+				article.setUserNRIC(rs.getString("userNRIC"));
+				article.setActive(rs.getInt("active"));
+				article.setApproved(rs.getString("status"));
+				article.setDbLat(rs.getDouble("lat"));
+				article.setDbLon(rs.getDouble("lng"));
+				articlesArrList.add(article);
+					
+				UserManager um = new UserManager();
+				User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+				article.setArticleUser(UserDetail.getName());		
+			}
+			conn.close();
+			return articlesArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
+	/***Display Pending Article with category "Feedback" AND "Location Usage"***/
+	public ArrayList<Article> retrieveAllPendingOfficerArticles() {
+		String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category <> 'News Around The Neighbourhood' ORDER BY dateTime DESC";
+		ArrayList<Article> articlesArrList = new ArrayList<Article>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Article article = new Article();
+				article.setArticleID(rs.getInt("articleID"));
+				article.setTitle(rs.getString("title"));
+				article.setContent(rs.getString("content"));
+				
+				Date articleDate = rs.getTimestamp("dateTime");
+				DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+				String articleSubmittedDate = df.format(articleDate);
+				// Print what date is today!
+				//System.out.println("Article Date: " + articleSubmittedDate);
+				
+				article.setArticleDate(articleSubmittedDate);
+				//article.setDateTime();
+				article.setCategory(rs.getString("category"));
+				article.setLocation(rs.getString("location"));
+				article.setUserNRIC(rs.getString("userNRIC"));
+				article.setActive(rs.getInt("active"));
+				article.setApproved(rs.getString("status"));
+				article.setDbLat(rs.getDouble("lat"));
+				article.setDbLon(rs.getDouble("lng"));
+				articlesArrList.add(article);
+					
+				UserManager um = new UserManager();
+				User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+				article.setArticleUser(UserDetail.getName());		
+			}
+			conn.close();
+			return articlesArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	
@@ -276,7 +451,7 @@ public class ArticleManager {
 				article.setActive(rs.getInt("active"));
 				article.setApproved(rs.getString("status"));
 				article.setDbLat(rs.getDouble("lat"));
-				article.setDbLon(rs.getDouble("long"));
+				article.setDbLon(rs.getDouble("lng"));
 				
 				
 				UserManager um = new UserManager();
@@ -302,7 +477,7 @@ public class ArticleManager {
 	public boolean editArticle(Article article) {
 		String sql = "UPDATE articles ";
 		sql += "SET title = ? , content = ? , dateTime = ? , category = ? , location = ? ," +
-				" userNRIC = ? , active = ? , status = ? , lat = ?, long = ? WHERE articleID = ? ";
+				" userNRIC = ? , active = ? , status = ? , lat = ?, lng = ? WHERE articleID = ? ";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -358,6 +533,27 @@ public class ArticleManager {
 		}
 	}
 	
+	
+	public boolean confirmFeedbackArticle(int articleID, String status) {
+		String sql = "UPDATE articles SET status = '"+ status +"' WHERE articleID = " + articleID;
+		try {
+			Connection conn = dbController.getConnection();
+			conn.setAutoCommit(false);
+			
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			System.out.println(ps1);
+			ps1.executeUpdate();
+			
+			conn.setAutoCommit(true);
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static void main(String args[]){
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH,30);
@@ -370,5 +566,129 @@ public class ArticleManager {
 		/*createArticle(article);*/
 		//System.out.println(editArticle(article));
 		//obsoleteArticle(1);
+		
+		
 	}
+	
+	 public static float distFrom(float lat1, float lng1, float lat2, float lng2) {
+		 double earthRadius = 6371; //kilometers
+		    double dLat = Math.toRadians(lat2-lat1);
+		    double dLng = Math.toRadians(lng2-lng1);
+		    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+		               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+		               Math.sin(dLng/2) * Math.sin(dLng/2);
+		    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		    float dist = (float) (earthRadius * c);
+
+		    return dist;
+		    }
+	 
+	 
+
+		
+		
+		
+		
+	/*	double earthRadius = 6371; //kilometers
+	    double dLat = Math.toRadians(1.36991135967923-1.3871626);
+	    double dLng = Math.toRadians(103.85165950555734-103.89699930000006);
+	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	               Math.cos(Math.toRadians(1.3871626)) * Math.cos(Math.toRadians(1.36991135967923)) *
+	               Math.sin(dLng/2) * Math.sin(dLng/2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    float dist = (float) (earthRadius * c);
+	    System.out.println();
+	    System.out.println();
+	    System.out.println(dist);
+	    System.out.println();
+	    System.out.println();
+	    //1.3871626, 103.89699930000006
+	  	//1.36991135967923, 103.85165950555734
+		*/
+		
+	 
+	 /***Display Approved Article with category "News Around The Neighbourhood" within specified distance***/
+		public ArrayList<Article> retrieveAllApprovedArticlesWithinDistance(double currentLat, double currentLon, int selectedDist) {
+			String sql = "SELECT * FROM articles WHERE status = 'Approved' AND category = 'News Around The Neighbourhood' ORDER BY dateTime DESC";
+			ArrayList<Article> articlesArrList = new ArrayList<Article>();
+			try {
+				Connection conn = dbController.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				System.out.println(ps);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					
+					
+					
+					double earthRadius = 6371; //kilometers
+				    double dLat = Math.toRadians(rs.getDouble("lat")-currentLat);
+				    double dLng = Math.toRadians(rs.getDouble("lng")-currentLon);
+				    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				               Math.cos(Math.toRadians(currentLat)) * Math.cos(Math.toRadians(rs.getDouble("lat"))) *
+				               Math.sin(dLng/2) * Math.sin(dLng/2);
+				    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+				    double dist = (double) (earthRadius * c);
+					
+				    double roundedDist = Math.floor(dist * 1000) / 1000.0;
+					
+				    System.out.println();
+				    System.out.println(rs.getString("title"));
+				    System.out.println(dist);
+				    System.out.println();
+				    System.out.println();
+					
+					
+					
+					
+					Article article = new Article();
+					article.setArticleID(rs.getInt("articleID"));
+					article.setTitle(rs.getString("title"));
+					article.setContent(rs.getString("content"));
+					
+					Date articleDate = rs.getTimestamp("dateTime");
+					DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+					String articleSubmittedDate = df.format(articleDate);
+					// Print what date is today!
+					//System.out.println("Article Date: " + articleSubmittedDate);
+					
+					article.setArticleDate(articleSubmittedDate);
+					//article.setDateTime();
+					article.setCategory(rs.getString("category"));
+					article.setLocation(rs.getString("location"));
+					article.setUserNRIC(rs.getString("userNRIC"));
+					article.setActive(rs.getInt("active"));
+					article.setApproved(rs.getString("status"));
+					article.setDbLat(rs.getDouble("lat"));
+					article.setDbLon(rs.getDouble("lng"));
+					
+					
+					
+					if(currentLat == 0 && currentLon==0){
+						article.setDist("-");
+						articlesArrList.add(article);
+					}
+					else if(selectedDist==0){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					else if(dist<=selectedDist){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					
+					
+					UserManager um = new UserManager();
+					User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+					article.setArticleUser(UserDetail.getName());		
+				}
+				conn.close();
+				return articlesArrList;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+	 
 }

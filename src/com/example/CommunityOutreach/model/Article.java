@@ -17,6 +17,8 @@ public class Article {
 	private String articleUser;
 	private String articleDate;
 	
+	private double distToSort;
+	private String dist;
 	
 	/**
 	 * Article's default constructor
@@ -152,5 +154,21 @@ public class Article {
 
 	public void setArticleUser(String articleUser) {
 		this.articleUser = articleUser;
+	}
+
+	public double getDistToSort() {
+		return distToSort;
+	}
+
+	public void setDistToSort(double distToSort) {
+		this.distToSort = distToSort;
+	}
+
+	public String getDist() {
+		return dist;
+	}
+
+	public void setDist(String dist) {
+		this.dist = dist;
 	}
 }

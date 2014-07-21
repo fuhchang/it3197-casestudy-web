@@ -1,4 +1,4 @@
-package com.example.CommunityOutreach.servlet;
+package com.example.CommunityOutreach.servlet.cs;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,14 +24,14 @@ import com.google.gson.JsonObject;
 /**
  * Servlet implementation class DisplayArticleMainServlet
  */
-@WebServlet("/DisplayArticleMainServlet")
-public class DisplayArticleMainServlet extends HttpServlet {
+@WebServlet("/DisplayArticleMainServletCS")
+public class DisplayArticleMainServletCS extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayArticleMainServlet() {
+    public DisplayArticleMainServletCS() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -61,33 +61,20 @@ public class DisplayArticleMainServlet extends HttpServlet {
         response.setHeader("Access-Control-Max-Age", "86400");
 		
 		
-        
-        
-       // double currentLat = Double.parseDouble(request.getParameter("currentLat"));
-		//double currentLon = Double.parseDouble(request.getParameter("currentLon"));
-		//int distSelected = Integer.parseInt(request.getParameter("distSelected"));
-		
-		//System.out.println(currentLat);
-		//System.out.println(currentLon);
-		//System.out.println(distSelected);
-        
-        
-        
 		
 		
 		ArticleManager am = new ArticleManager();
-		List<Article> artList = am.retrieveAllApprovedArticlesWithinDistance(0, 0, 0);
+		List<Article> artList = am.retrieveAllApprovedArticles();
 	/*	for(int i=0; i<artList.size();i++){
 			artList.get(i).getTitle();
 			System.out.println();
 			System.out.println(artList.get(i).getTitle());
 		}*/
-	//	System.out.println(artList.size());
+		System.out.println(artList.size());
 		request.setAttribute("artList", artList);
-		request.setAttribute("selectedDist", 0);
 		
 		
-	/*	if((artList.size() == 0) || (artList == null)){
+		if((artList.size() == 0) || (artList == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
             myObj.addProperty("message", "Unable to retrieve articles.");
@@ -97,19 +84,19 @@ public class DisplayArticleMainServlet extends HttpServlet {
             Gson gson = new Gson();
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", true);
-        	JsonElement eventObj;
-        	JsonArray eventArray = new JsonArray();
+        	JsonElement articleObj;
+        	JsonArray articleArray = new JsonArray();
             for(int i=0;i<artList.size();i++){
-            	eventObj = gson.toJsonTree(artList.get(i));
-            	eventArray.add(eventObj);
-            	myObj.add("artList", eventArray);
+            	articleObj = gson.toJsonTree(artList.get(i));
+            	articleArray.add(articleObj);
+            	myObj.add("artList", articleArray);
             }
             out.println(myObj.toString());
         }
-        out.close();*/
+        out.close();
 		
-        RequestDispatcher rd = request.getRequestDispatcher("articleDisplayMainMobileView.jsp");
-		rd.forward(request,response);
+       // RequestDispatcher rd = request.getRequestDispatcher("articleDisplayMain.jsp");
+	//	rd.forward(request,response);
 		
 		
 		

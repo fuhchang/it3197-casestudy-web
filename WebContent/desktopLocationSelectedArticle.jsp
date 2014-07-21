@@ -45,12 +45,11 @@
 			google.maps.event.addDomListener(window, 'load', initialize);			
 		</script>
 		<br />	 
-		<div class="panel panel-info" Style="width:100%;margin:0px auto;">
+		<div class="panel panel-info" Style="width:500px;margin:0px auto;">
 			<div class="panel-heading">
 				<!--  <h1 class="panel-title">Latest News From Around The Neighbourhood</h1>-->
-				<h3>${articleTitle}</h3>
-				<!-- <h4 class="text-warning"><b>Author: ${articleUserName} </b><label class="pull-right">${articleDate }</label></h4>	-->
-				<h4 class="text-warning"><b>Author: ${articleUserName} </b><br/><label>${articleDate }</label></h4>
+				<h2>${articleTitle}</h2>
+				<h4 class="text-warning"><b>Author: ${articleUserName} </b><label class="pull-right">${articleDate }</label></h4>				
 			</div>			
 			<div class="panel-body" Style="margin:0px auto;" >
 				<p>${articleContent}</p>
@@ -60,10 +59,35 @@
 					<div id="map-canvas"></div>
 				</div>	
 			</div>
-			
-			<form action="DisplayArticleMainServlet" method="post">
-				&nbsp&nbsp&nbsp&nbsp<input type="submit" class="btn btn-primary btn-sm" value="Back" id="btn">
-			</form>
+			<form action="DesktopLatestSelectedArticle" method="post">
+				<!-- <div class="checkbox">
+				 &nbsp <label>
+				   <input type="checkbox" value="Yes" name="chkBox" style="margin-left:2px;">
+				    Is this feedback legitimate?
+				  </label>
+				</div>-->
+				
+				
+			<!--  	&nbsp&nbsp&nbsp&nbsp<select class="btn btn-default dropdown-toggle" style="width:300px;" name="legit">
+								  <option>Post to Main Page</option>
+								  <option>Discard</option>
+				</select>-->
+				
+				<input type = "text" class="form-control" id="idArticle" style="width:100%;display:none;" name="idArticle" value = "${idArticle}"/>
+				
+				<table>
+					<tbody>
+						<tr>
+							<td>&nbsp&nbsp&nbsp&nbsp<a type="submit"  class="btn btn-primary btn-sm" href="ArticleResponse?id=${idArticle}&decision=Approved" id="" name="article-content-id">Accept and Inform Applicant</a></td>
+							<td>&nbsp<a type="submit"  class="btn btn-primary btn-sm" href="ArticleResponse?id=${idArticle}&decision=Discard" id="" name="article-content-id">Reject and Inform Applicant</a></td>
+						
+							</form>	
+							<form action="DesktopLocationArticle" method="post">
+								<td>&nbsp<input type="submit" class="btn btn-primary btn-sm" value="Back" id="btn"></td>
+							</form>
+						</tr>
+					</tbody>
+				</table>
 		</div>
 		<br/>
 	</jsp:attribute>

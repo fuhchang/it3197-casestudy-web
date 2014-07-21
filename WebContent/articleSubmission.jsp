@@ -21,37 +21,6 @@
 		var map;
 		var marker;
 		//Onload handler to fire off the app.
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
 		 if (navigator.geolocation) {
 			    navigator.geolocation.getCurrentPosition(initialize, showError);
 			} else { 
@@ -321,7 +290,15 @@
 	
  	<form action="ArticleSubmissionServlet" method="post">
 		 <h1></h1>
-	
+			 <div style="background-color:#F6E3CE; color:#045FB4 ;">
+							
+					<button class="close" aria-hidden=true" type="button" data-dismiss="alert">${articleclose}</button>
+					
+					<h3 style="margin-left:5px;">${articleErrorTitle}</h3>
+					<p style="margin-left:5px;">${articleErrorMessage}</p>
+							
+			</div>
+			
 				
 				
 				<div class="panel panel-info">
@@ -332,7 +309,7 @@
 					
 						<div class="input-group">
 		  					<span class="input-group-addon">Title: </span>
-		 					<input type="text" class="form-control" placeholder="" name="title">
+		 					<input type="text" value="${titletitle}" class="form-control" placeholder="" name="title">
 						</div>
 				
 				
@@ -340,21 +317,22 @@
 				
 						
 		 			
-				
-							<select class="btn btn-default dropdown-toggle" style="width:100%; height:35px;" name="category">
-								  <option>Select a category</option>
+					<!--  	<div class="input-group">
+		  					<span class="input-group-addon">Category: </span>-->
+							<select class="btn btn-default dropdown-toggle" style="width:100%;" id = "cat" name="category">
+								<!--<option>Select a category</option>-->
 								  
 								  <option>Feedback</option>
         						  <option>News Around The Neighbourhood</option>
                                   <option>Location Usage</option>
 							</select>
-						
+						<!--  </div>-->
 						
 						<br/>
 						<br/>
 						
 						
-							<textarea cols="50" placeholder="Place your content here..." style="width:100%; height:350px;" name="content"></textarea>
+							<textarea cols="50" placeholder="Enter a brief description..." id="cont" style="width:100%; height:350px;" name="content" value="${contentcontent}"></textarea>
 						
 						
 						<br/>
@@ -406,24 +384,42 @@
 					
 					<input type = "text" class="form-control" id="storingLat" style="width:100%; display:none;" name="storingLat" readonly/>
 					<input type = "text" class="form-control" id="storingLon" style="width:100%; display:none;" name="storingLon" readonly/>
-					 &nbsp<input type="submit" class="btn btn-primary btn-sm" value="Submit" id="submitBtn">
 					
-					<form action="DisplayArticleMainServlet" method="post">
-						<input type="submit" class="btn btn-primary btn-sm" value="Back" id="btn">
+					<table>
+						<tbody>
+						<tr>
+						
+					<td> &nbsp<input type="submit" class="btn btn-primary btn-sm" value="Submit" id="submitBtn"></td>
 					</form>	
+					
+		 			<form action="DisplayArticleMainServlet" method="post">
+						<td>&nbsp<input type="submit" class="btn btn-primary btn-sm" value="Back" id="btn"></td>
+					</form>	
+					</tr>	
+					</tbody>	
+					</table>	
 					</div>
 				</div>
 				
 					   		
-		 </form>	
+		 
 	</jsp:attribute>
 </t:master>
 
 
 <script>
+
+	
 	$(document).ready(function() {
 		//document.getElementById('storingLat').style.visibility = 'hidden';
 		//document.getElementById('storingLon').style.visibility = 'hidden';
+		//$('#cat')$("#salesrep").val("${catcat}");
+		document.getElementById("cont").value = "${contentcontent}";
+
+		
+		
+		
+		
 	});
 
 </script>

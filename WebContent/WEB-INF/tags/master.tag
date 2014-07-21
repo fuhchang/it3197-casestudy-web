@@ -38,6 +38,10 @@
 						<li><a href="riddle.jsp">Riddle</a></li>
 						<li><a href="profile.jsp">Profile</a></li>
 						<li><a href="setting.jsp">Setting</a></li>
+						
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="DesktopLatestArticle">Town Council - Articles</a></li>
 					</ul>
 				</div>
 			</div>
