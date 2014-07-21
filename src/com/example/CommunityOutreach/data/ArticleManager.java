@@ -14,11 +14,6 @@ import com.example.CommunityOutreach.controller.DBController;
 import com.example.CommunityOutreach.model.Article;
 import com.example.CommunityOutreach.model.User;
 
-/**
- * This is the data access manager for Article
- * @author Lee Zhuo Xun
- *
- */
 public class ArticleManager {
 	private static DBController dbController = new DBController();
 	
@@ -691,4 +686,263 @@ public class ArticleManager {
 			}
 		}
 	 
+		
+		/***Display Approved Article with category "Feedback" AND "Location Usage" within specified distance***/
+		public ArrayList<Article> retrieveAllPendingArticlesWithinDistance(double currentLat, double currentLon, int selectedDist) {
+			String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category <> 'News Around The Neighbourhood' ORDER BY dateTime DESC";
+			ArrayList<Article> articlesArrList = new ArrayList<Article>();
+			try {
+				Connection conn = dbController.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				System.out.println(ps);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					
+					
+					
+					double earthRadius = 6371; //kilometers
+				    double dLat = Math.toRadians(rs.getDouble("lat")-currentLat);
+				    double dLng = Math.toRadians(rs.getDouble("lng")-currentLon);
+				    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				               Math.cos(Math.toRadians(currentLat)) * Math.cos(Math.toRadians(rs.getDouble("lat"))) *
+				               Math.sin(dLng/2) * Math.sin(dLng/2);
+				    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+				    double dist = (double) (earthRadius * c);
+					
+				    double roundedDist = Math.floor(dist * 1000) / 1000.0;
+					
+				    System.out.println();
+				    System.out.println(rs.getString("title"));
+				    System.out.println(dist);
+				    System.out.println();
+				    System.out.println();
+					
+					
+					
+					
+					Article article = new Article();
+					article.setArticleID(rs.getInt("articleID"));
+					article.setTitle(rs.getString("title"));
+					article.setContent(rs.getString("content"));
+					
+					Date articleDate = rs.getTimestamp("dateTime");
+					DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+					String articleSubmittedDate = df.format(articleDate);
+					// Print what date is today!
+					//System.out.println("Article Date: " + articleSubmittedDate);
+					
+					article.setArticleDate(articleSubmittedDate);
+					//article.setDateTime();
+					article.setCategory(rs.getString("category"));
+					article.setLocation(rs.getString("location"));
+					article.setUserNRIC(rs.getString("userNRIC"));
+					article.setActive(rs.getInt("active"));
+					article.setApproved(rs.getString("status"));
+					article.setDbLat(rs.getDouble("lat"));
+					article.setDbLon(rs.getDouble("lng"));
+					
+					
+					
+					if(currentLat == 0 && currentLon==0){
+						article.setDist("-");
+						articlesArrList.add(article);
+					}
+					else if(selectedDist==0){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					else if(dist<=selectedDist){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					
+					
+					UserManager um = new UserManager();
+					User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+					article.setArticleUser(UserDetail.getName());		
+				}
+				conn.close();
+				return articlesArrList;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		
+		
+		/***Display Approved Article with category "Feedback" within specified distance***/
+		public ArrayList<Article> retrieveAllPendingFeedbackArticlesWithinDistance(double currentLat, double currentLon, int selectedDist) {
+			String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Feedback' ORDER BY dateTime DESC";
+			ArrayList<Article> articlesArrList = new ArrayList<Article>();
+			try {
+				Connection conn = dbController.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				System.out.println(ps);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					
+					
+					
+					double earthRadius = 6371; //kilometers
+				    double dLat = Math.toRadians(rs.getDouble("lat")-currentLat);
+				    double dLng = Math.toRadians(rs.getDouble("lng")-currentLon);
+				    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				               Math.cos(Math.toRadians(currentLat)) * Math.cos(Math.toRadians(rs.getDouble("lat"))) *
+				               Math.sin(dLng/2) * Math.sin(dLng/2);
+				    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+				    double dist = (double) (earthRadius * c);
+					
+				    double roundedDist = Math.floor(dist * 1000) / 1000.0;
+					
+				    System.out.println();
+				    System.out.println(rs.getString("title"));
+				    System.out.println(dist);
+				    System.out.println();
+				    System.out.println();
+					
+					
+					
+					
+					Article article = new Article();
+					article.setArticleID(rs.getInt("articleID"));
+					article.setTitle(rs.getString("title"));
+					article.setContent(rs.getString("content"));
+					
+					Date articleDate = rs.getTimestamp("dateTime");
+					DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+					String articleSubmittedDate = df.format(articleDate);
+					// Print what date is today!
+					//System.out.println("Article Date: " + articleSubmittedDate);
+					
+					article.setArticleDate(articleSubmittedDate);
+					//article.setDateTime();
+					article.setCategory(rs.getString("category"));
+					article.setLocation(rs.getString("location"));
+					article.setUserNRIC(rs.getString("userNRIC"));
+					article.setActive(rs.getInt("active"));
+					article.setApproved(rs.getString("status"));
+					article.setDbLat(rs.getDouble("lat"));
+					article.setDbLon(rs.getDouble("lng"));
+					
+					
+					
+					if(currentLat == 0 && currentLon==0){
+						article.setDist("-");
+						articlesArrList.add(article);
+					}
+					else if(selectedDist==0){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					else if(dist<=selectedDist){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					
+					
+					UserManager um = new UserManager();
+					User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+					article.setArticleUser(UserDetail.getName());		
+				}
+				conn.close();
+				return articlesArrList;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		
+		/***Display Approved Article with category "Feedback" within specified distance***/
+		public ArrayList<Article> retrieveAllPendingLocationArticlesWithinDistance(double currentLat, double currentLon, int selectedDist) {
+			String sql = "SELECT * FROM articles WHERE status = 'Pending' AND category = 'Location Usage' ORDER BY dateTime DESC";
+			ArrayList<Article> articlesArrList = new ArrayList<Article>();
+			try {
+				Connection conn = dbController.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				System.out.println(ps);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					
+					
+					
+					double earthRadius = 6371; //kilometers
+				    double dLat = Math.toRadians(rs.getDouble("lat")-currentLat);
+				    double dLng = Math.toRadians(rs.getDouble("lng")-currentLon);
+				    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				               Math.cos(Math.toRadians(currentLat)) * Math.cos(Math.toRadians(rs.getDouble("lat"))) *
+				               Math.sin(dLng/2) * Math.sin(dLng/2);
+				    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+				    double dist = (double) (earthRadius * c);
+					
+				    double roundedDist = Math.floor(dist * 1000) / 1000.0;
+					
+				    System.out.println();
+				    System.out.println(rs.getString("title"));
+				    System.out.println(dist);
+				    System.out.println();
+				    System.out.println();
+					
+					
+					
+					
+					Article article = new Article();
+					article.setArticleID(rs.getInt("articleID"));
+					article.setTitle(rs.getString("title"));
+					article.setContent(rs.getString("content"));
+					
+					Date articleDate = rs.getTimestamp("dateTime");
+					DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
+					String articleSubmittedDate = df.format(articleDate);
+					// Print what date is today!
+					//System.out.println("Article Date: " + articleSubmittedDate);
+					
+					article.setArticleDate(articleSubmittedDate);
+					//article.setDateTime();
+					article.setCategory(rs.getString("category"));
+					article.setLocation(rs.getString("location"));
+					article.setUserNRIC(rs.getString("userNRIC"));
+					article.setActive(rs.getInt("active"));
+					article.setApproved(rs.getString("status"));
+					article.setDbLat(rs.getDouble("lat"));
+					article.setDbLon(rs.getDouble("lng"));
+					
+					
+					
+					if(currentLat == 0 && currentLon==0){
+						article.setDist("-");
+						articlesArrList.add(article);
+					}
+					else if(selectedDist==0){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					else if(dist<=selectedDist){
+						article.setDist(Double.toString(roundedDist));
+						article.setDistToSort(roundedDist);
+						articlesArrList.add(article);
+					}
+					
+					
+					UserManager um = new UserManager();
+					User UserDetail = um.retrieveUser(rs.getString("userNRIC"));
+					article.setArticleUser(UserDetail.getName());		
+				}
+				conn.close();
+				return articlesArrList;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		
+		
+		
 }

@@ -46,6 +46,7 @@ public class TCDisplaySelectedArticle extends HttpServlet {
 		String user = articleDetail.getUserNRIC();
 		String content = articleDetail.getContent();
 		String location = articleDetail.getLocation();
+		String category=articleDetail.getCategory();
 		Date articleDate = articleDetail.getDateTime();
 		DateFormat df = new SimpleDateFormat("E, dd MMMM yyyy - hh:mm a");
 		String articleSubmittedDate = df.format(articleDate);
@@ -56,6 +57,7 @@ public class TCDisplaySelectedArticle extends HttpServlet {
 		double dbLon = articleDetail.getDbLon();
 		
 		System.out.println(title);
+		request.setAttribute("category",category);
 		request.setAttribute("idArticle", idArticle);
 		request.setAttribute("articleTitle", title);
 		request.setAttribute("articleUserName", articleUserName);

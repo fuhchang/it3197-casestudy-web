@@ -30,42 +30,41 @@
 		<script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
 	    <script>
 	    
-	   
-
-		 /*   if (navigator.geolocation) {
-		        navigator.geolocation.getCurrentPosition(initialize);
-		    } else { 
-		        x.innerHTML = "Geolocation is not supported by this browser.";
-		    }
-	    */
-	    
-		//	function initialize(position) {
 			
 	    	function initialize(){
-	    	
-			// alert("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 			  var myLatlng = new google.maps.LatLng(1.3667, 103.8);			
 			  var mapOptions = {
-			    zoom: 11,
+			    zoom: 10,
 			    center: myLatlng,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP 
 			  }
 			  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);		
 			  
-			//  var me = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			  var me = new google.maps.LatLng(${currentLat}, ${currentLon});
 			  
 			
 			//var myMarker1 = new google.maps.Marker({position: me, icon: 'http://maps.google.com/mapfiles/ms/icons/red-pushpin.png',map: map });
 				//var myMarker1 = new google.maps.Marker({position: me, icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',map: map });
 			
-				//var myMarker1 = new google.maps.Marker({position: me, icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',map: map });
+				var myMarker1 = new google.maps.Marker({position: me, icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',map: map });
 			  
-			  <c:forEach items="${artList}" var="item">
+			  <c:forEach items="${fbList}" var="item">
 			  		var testing = new google.maps.LatLng(${item.dbLat},${item.dbLon});
 			  		var marker = new google.maps.Marker({
 					      position: testing,
 					      title: '${item.title}',
 					      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+					      map: map			
+					  });
+			  		 
+			  	</c:forEach>
+			  	
+			  	 <c:forEach items="${locList}" var="item">
+			  		var testing = new google.maps.LatLng(${item.dbLat},${item.dbLon});
+			  		var marker = new google.maps.Marker({
+					      position: testing,
+					      title: '${item.title}',
+					      icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 					      map: map			
 					  });
 			  		 
@@ -82,6 +81,20 @@
 					infowindow.open(map,myMarker1);
 				});
 			  	
+				
+				var circle = {
+				          strokeColor: "blue",
+				          strokeOpacity: 0.8,
+				          strokeWeight: 2,
+				          fillColor: "blue",
+				          fillOpacity: 0.35,
+				          map: map,
+				          center: new google.maps.LatLng(${currentLat}, ${currentLon}),
+				          radius: ${distSelected}*1000
+				        };
+				        cityCircle = new google.maps.Circle(circle);
+				
+				
 				
 			/*
 				  var flightPlanCoordinates = [
@@ -117,148 +130,52 @@
 	
 	<br />
 	 
-	<div class="panel panel-info" Style="width:850px;margin:0px auto;">
-		<div class="panel-heading">
-			<!--  <h1 class="panel-title">Latest News From Around The Neighbourhood</h1>-->
-			<a type="submit" href="PendingArticlesServlet" id="" name="article-content-id">.</a>
-			<h1>Pending Latest News Submissions</h1>
-				
-		</div>
 	
 		
-	
-	
-		<ul class="nav nav-tabs" role="tablist" style="margin-left:5px;">
-			
-		  <li class="active"><a href="DesktopLatestArticle">Latest News</a></li>
-		  <li><a href="DesktopFeedbackArticle">Feedbacks</a></li>
-		  <li><a href="DesktopLocationArticle">Location Requests</a></li>
-		  <li><a href="DesktopDeleteLatestArticle">Remove Articles From Main Page</a></li>
-		</ul>
 		
-		<br/>
-		
-		<div class="panel-body" Style="width:800px;margin:0px auto; border:1px solid black;" >
-		<form action="DesktopLatestArticle" method="post">
-		<button type="submit" class="pull-right btn btn-primary btn-sm"value="Refresh" id="btn" style="margin-left:5px;">Refresh</button>
-		
-		<!--  <a class=" pull-right btn btn-primary btn-sm" onclick="location.href='articleSubmission.jsp'">Submit Article</a>-->
-		
-		<div Style="width:100%; height:300px;margin:0px auto;" >
-				<p style="font-size:200%">Article Locations:</p>
-					<div id="map-canvas"></div>
+		<div Style="width:100%; height:400px;margin:0px auto;" >
+					<form action="PendingArticlesServlet2" method="post">
+					
+					<input type = "text" class="form-control" id="currentLat" style="width:100%;display:none;" name="currentLat" value="${currentLat }"/>
+					<input type = "text" class="form-control" id="currentLon" style="width:100%;display:none;" name="currentLon" value="${currentLon}"/>
+					<input type = "text" class="form-control" id="distSelected" style="width:100%;display:none;" name="distSelected" value="${distSelected}"/>
+					
+					
+						<input type="submit" class="pull-right btn btn-primary btn-sm" value="Back" id="btn">
+					</form>
+					
+					
+					
+					 <div style="margin-bottom:5px;"><img id="icon" style="width:30px;height:30px;" src="resources/article_blue.png"> - Location Requests</div>
+					 
+					 <div style="margin-bottom:5px;"><img id="icon" style="width:30px;height:30px;" src="resources/article_green.png"> - Feedbacks </div>
+					
+					
+					
+					
+					<div id="map-canvas" style="border:1px solid black"></div>
+					<br/>
 		</div>	
-		<hr/>
 		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
-		<br/>
-		<hr/>			
-			<!--<table class="table table-striped">-->
-			<table class="table table-striped" cellspacing="0" width="100%" id="articleTable">	
-			
-				<thead>
-					<tr>
-						<th></th>
-						<th>ID:</th>
-						<th>Article:</th>
-						<th>Category:</th>
-						<th>Status:</th>
-						<th></th>
-					</tr>
-				
-				
-				
-				
-				
-				</thead>	
-				<tbody>
-					<c:forEach items="${artList}" var="item">
-							<tr>
-							 	<td width="3%"><span class="glyphicon glyphicon-globe" style="margin-top:150%;"></span></td>
-							 	<td>${item.articleID }</td>
-								<td>
-									<b><u>${item.title}</u></b>
-									<br/>
-									Posted By: ${item.articleUser}
-									<br/>
-									${item.articleDate}
-								
-									
-								
-									
-								
-									
-								</td>
-								<td>${item.category }</td>
-								<td>${item.approved }</td>
-								<td>
-									<a type="submit" href="DesktopLatestSelectedArticle?id=${item.articleID }" id="" name="article-content-id"><u>Read</u></a>
-								</td>	
-							</tr>
-						</c:forEach>
-				
-				
-				</tbody>		
-			<!--  		<thead>
-						<tr>
-							<th></th>
-							<th>Date Published:</th>
-							<th>Article Title:</th>	
-							<th>Author:</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${artList}" var="item">
-							<tr>
-								<td>
-									<ul><li></li></ul>
-								</td>
-									
-								<td>
-									${item.articleDate}
-								</td>
-								<td>
-									${item.title}
-								</td>
-									
-								<td>
-									${item.articleUser}
-								</td>
-								<td>
-									<a type="submit" href="DisplaySelectedArticle?id=${item.articleID }" id="" name="article-content-id"><u>Read</u></a>
-								</td>	
-							</tr>
-						</c:forEach>
-			   		 </tbody>-->
-			   </table>
-			   	<br/>
-				<br/>
-		
-		</div>
-		<br/>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		</form>
 	</jsp:attribute>
 </t:master>
 
 <script>
 	$(document).ready(function() {
-		$('#articleTable').dataTable();
+		//$('#articleTable').dataTable();
 	} );
 
 </script>

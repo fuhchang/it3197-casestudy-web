@@ -164,11 +164,11 @@
   				
   				<div class="input-group" style="margin-top:10px;">
 		  					<span class="input-group-addon">Latitude: </span>
-		 					<input type = "text" class="form-control" id="currentLat" style="width:100%;" name="currentLat"/>
+		 					<input type = "text" class="form-control" id="currentLat" style="width:100%;" name="currentLat" readonly/>
 				</div>
 				<div class="input-group" style="margin-top:10px;">
 		  					<span class="input-group-addon">Longitude: </span>
-		 					<input type = "text" class="form-control" id="currentLon" style="width:100%;" name="currentLon"/>
+		 					<input type = "text" class="form-control" id="currentLon" style="width:100%;" name="currentLon" readonly/>
 				</div>
   				
 				<!-- <input type = "text" class="form-control" id="test" style="width:100%;;" name="test"/>-->

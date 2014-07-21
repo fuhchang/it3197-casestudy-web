@@ -120,13 +120,13 @@ public class ArticleSubmissionServlet extends HttpServlet {
 		        	if(!articleCreatedCheck){
 		        		JsonObject myObj = new JsonObject();
 		                myObj.addProperty("success", false);
-		                myObj.addProperty("message","Unable to create event successfully.");
+		                myObj.addProperty("message","Unable to create article successfully.");
 		                out.println(myObj.toString());
 		        	}
 		        	else{
 		                JsonObject myObj = new JsonObject();
 		                myObj.addProperty("success", true);
-		                myObj.addProperty("message","Event created successfully.");
+		                myObj.addProperty("message","Article created successfully.");
 		                out.println(myObj.toString());
 		        	}
 		        }
@@ -134,7 +134,7 @@ public class ArticleSubmissionServlet extends HttpServlet {
 		        	ex.printStackTrace();
 		    		JsonObject myObj = new JsonObject();
 		            myObj.addProperty("success", false);
-		            myObj.addProperty("message","Unable to create event successfully.");
+		            myObj.addProperty("message","Unable to create article successfully.");
 		            out.println(myObj.toString());
 		        }
 			    

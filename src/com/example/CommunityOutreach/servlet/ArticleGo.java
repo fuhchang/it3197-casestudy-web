@@ -1,7 +1,6 @@
 package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.CommunityOutreach.data.ArticleManager;
-import com.example.CommunityOutreach.model.Article;
-
 /**
- * Servlet implementation class PendingArticlesServlet
+ * Servlet implementation class ArticleGo
  */
-@WebServlet("/PendingArticlesServlet")
-public class PendingArticlesServlet extends HttpServlet {
+@WebServlet("/ArticleGo")
+public class ArticleGo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PendingArticlesServlet() {
+    public ArticleGo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +29,7 @@ public class PendingArticlesServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request,response);
+		doPost(request,response);	
 	}
 
 	/**
@@ -42,18 +38,19 @@ public class PendingArticlesServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		ArticleManager am = new ArticleManager();
-		List<Article> artList = am.retrieveAllPendingArticlesWithinDistance(0, 0, 0);
+		String yourLat = request.getParameter("currentLat");
+		String yourLon = request.getParameter("currentLon");
 		
-		request.setAttribute("artList", artList);
-		request.setAttribute("selectedDist", 0);
+		String artLat = request.getParameter("dbLat");
+		String artLon = request.getParameter("dbLon");
 		
-		//List<Article> luList = am.retrieveAllPendingLocationUsageArticles();
-		
-		//request.setAttribute("luList", luList);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("pendingArticles.jsp");
-		rd.forward(request,response);
+		double currentLat = Double.parseDouble(yourLat);
+		double currentLon = Double.parseDouble(yourLon);
+		double dbLat = Double.parseDouble(artLat);
+		double dbLon = Double.parseDouble(artLon);
+
+		String link = "http://maps.google.com/maps?saddr=" + currentLat + "," + currentLon + "&daddr=" + dbLat +"," + dbLon;
+		response.sendRedirect(link);
 	}
 
 }
