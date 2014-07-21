@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
@@ -113,6 +114,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		UserManager userManager = new UserManager();
         Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1);
         User user = userManager.retrieveUser(eventAdminNRIC);
+        EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
         
         if(user == null){
     		JsonObject myObj = new JsonObject();
@@ -141,10 +143,25 @@ public class CreateEventServlet extends HttpServlet implements Settings{
                 out.println(myObj.toString());
         	}
         	else{
-                JsonObject myObj = new JsonObject();
-                myObj.addProperty("success", true);
-                myObj.addProperty("message","Event created successfully.");
-                out.println(myObj.toString());
+        		ArrayList<Event> eventArrList = eventManager.retrieveAllEvents();
+        		int eventID = eventArrList.get(eventArrList.size()-1).getEventID();
+        		Calendar todayDate = Calendar.getInstance();
+        		EventParticipants eventParticipants = new EventParticipants(eventID,eventAdminNRIC,todayDate.getTime(),0);
+        		boolean isEventParticipantsCreated = eventParticipantsManager.createEventParticipant(eventParticipants);
+        		if(isEventParticipantsCreated){
+        			JsonObject myObj = new JsonObject();
+        			myObj.addProperty("success", true);
+        			myObj.addProperty("message","Event created successfully.");
+        			out.println(myObj.toString());
+        			return;
+        		}
+        		else{
+        			JsonObject myObj = new JsonObject();
+        			myObj.addProperty("success", false);
+        			myObj.addProperty("message","Unable to create event successfully.");
+        			out.println(myObj.toString());
+        			return;
+        		}
         	}
         }
         catch(Exception ex){
