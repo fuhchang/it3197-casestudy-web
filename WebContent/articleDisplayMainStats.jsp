@@ -123,10 +123,10 @@
 		
 		
 		<div Style="width:100%; height:400px;margin:0px auto;" >
-					<form action="DisplayArticleMainServlet" method="post">
+					<form action="DisplayArticleMainServlet2" method="post">
 					
 					<input type = "text" class="form-control" id="currentLat" style="width:100%;display:none;" name="currentLat" value="${currentLat }"/>
-					<input type = "text" class="form-control" id="currentLon" style="width:100%;display:none;" name="currentLon" value="${currentLat}"/>
+					<input type = "text" class="form-control" id="currentLon" style="width:100%;display:none;" name="currentLon" value="${currentLon}"/>
 					<input type = "text" class="form-control" id="distSelected" style="width:100%;display:none;" name="distSelected" value="${distSelected}"/>
 					
 					

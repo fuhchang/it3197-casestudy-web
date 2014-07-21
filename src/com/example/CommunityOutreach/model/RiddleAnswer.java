@@ -3,16 +3,14 @@ package com.example.CommunityOutreach.model;
 public class RiddleAnswer {
 	private int riddleAnswerID;
 	private Riddle riddle;
-	private User user;
 	private String riddleAnswer;
 	private String riddleAnswerStatus;
 	
 	public RiddleAnswer(){}
 	
-	public RiddleAnswer(int riddleAnswerID, Riddle riddle, User user, String riddleAnswer, String riddleAnswerStatus){
+	public RiddleAnswer(int riddleAnswerID, Riddle riddle, String riddleAnswer, String riddleAnswerStatus){
 		this.riddleAnswerID = riddleAnswerID;
 		this.riddle = riddle;
-		this.user = user;
 		this.riddleAnswer = riddleAnswer;
 		this.riddleAnswerStatus = riddleAnswerStatus;
 	}
@@ -28,12 +26,6 @@ public class RiddleAnswer {
 	}
 	public void setRiddle(Riddle riddle) {
 		this.riddle = riddle;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	public String getRiddleAnswer() {
 		return riddleAnswer;

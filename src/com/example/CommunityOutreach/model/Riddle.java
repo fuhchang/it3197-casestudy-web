@@ -19,11 +19,8 @@ public class Riddle {
 		this.riddlePoint = riddlePoint;
 	}
 	
-	//For testing purposes
-	public Riddle(int riddleID, String riddleTitle, String riddleContent){
+	public Riddle(int riddleID){
 		this.riddleID = riddleID;
-		this.riddleTitle = riddleTitle;
-		this.riddleContent = riddleContent;
 	}
 	
 	public int getRiddleID() {
