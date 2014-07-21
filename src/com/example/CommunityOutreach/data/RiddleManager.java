@@ -114,6 +114,35 @@ public class RiddleManager {
 		return riddleList;
 	}
 	
+	public ArrayList<RiddleAnswer> retrieveAllRiddleAnswers() {
+		ArrayList<RiddleAnswer> riddleAnsList = new ArrayList<RiddleAnswer>();
+		
+		String sql = "SELECT * FROM riddle_answer";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				RiddleAnswer riddleAns = new RiddleAnswer();
+				riddleAns.setRiddleAnswerID(rs.getInt("riddleAnswerID"));
+				riddleAns.setRiddle(new Riddle(rs.getInt("riddleID")));
+				riddleAns.setRiddleAnswer(rs.getString("riddleAnswer"));
+				riddleAns.setRiddleAnswerStatus(rs.getString("riddleAnswerStatus"));
+				riddleAnsList.add(riddleAns);
+			}
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return riddleAnsList;
+	}
+	
 	public RiddleAnswer[] retrieveRiddleAnswers(int riddleID) {
 		RiddleAnswer[] riddleAnswers = new RiddleAnswer[4];
 		int i = 0;

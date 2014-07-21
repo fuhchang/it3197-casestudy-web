@@ -2,6 +2,7 @@ package com.example.CommunityOutreach.servlet.cs;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,9 +56,9 @@ public class RetrieveAllRiddleAnswerServlet extends HttpServlet {
         response.setHeader("Access-Control-Max-Age", "86400");
         
         RiddleManager riddleManager = new RiddleManager();
-        RiddleAnswer[] riddleAnsList = riddleManager.retrieveRiddleAnswers(Integer.parseInt(request.getParameter("riddleID")));
+        ArrayList<RiddleAnswer> riddleAnsList = riddleManager.retrieveAllRiddleAnswers();
 
-        if(riddleAnsList.length == 0 || riddleAnsList == null) {
+        if(riddleAnsList.size() == 0 || riddleAnsList == null) {
         	JsonObject myObj = new JsonObject();
         	myObj.addProperty("success", false);
         	myObj.addProperty("message", "Unable to retrieve riddle answers.");
@@ -70,8 +71,8 @@ public class RetrieveAllRiddleAnswerServlet extends HttpServlet {
         	JsonElement obj;
         	JsonArray jsonArr = new JsonArray();
         	
-        	for(int i = 0; i < riddleAnsList.length; i++) {
-        		obj = gson.toJsonTree(riddleAnsList[i]);
+        	for(int i = 0; i < riddleAnsList.size(); i++) {
+        		obj = gson.toJsonTree(riddleAnsList.get(i));
         		jsonArr.add(obj);
         		myObj.add("riddleAnsList", jsonArr);
         	}
