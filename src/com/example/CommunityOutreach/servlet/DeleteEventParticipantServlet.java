@@ -127,7 +127,12 @@ public class DeleteEventParticipantServlet extends HttpServlet {
 	        	System.out.println(tempArrList.size());
 	        	if((tempArrList.size() < 2) && (userNRIC.equals(checkEvent.getEventAdminNRIC()))){
 	        		if(tempArrList.size() == 1){
-	        			checkEvent.setEventAdminNRIC(tempArrList.get(0).getUserNRIC());
+	        			if((newEventAdminNRIC.equals("")) || (newEventAdminNRIC == null)){
+	        				checkEvent.setEventAdminNRIC(tempArrList.get(0).getUserNRIC());
+	        			}
+	        			else{
+	        				checkEvent.setEventAdminNRIC(newEventAdminNRIC);
+	        			}
 	        			isEventUpdated = eventManager.editEvent(checkEvent);
 	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, checkEvent.getEventAdminNRIC());
 	        			if((isEventUpdated) && (isEventParticipantsDeleted)){
@@ -166,7 +171,12 @@ public class DeleteEventParticipantServlet extends HttpServlet {
 	        	}
 	        	else{
 	        		if(userNRIC.equals(checkEvent.getEventAdminNRIC())){
-	        			checkEvent.setEventAdminNRIC(tempArrList.get(0).getUserNRIC());
+	        			if((newEventAdminNRIC.equals("")) || (newEventAdminNRIC == null)){
+	        				checkEvent.setEventAdminNRIC(tempArrList.get(0).getUserNRIC());
+	        			}
+	        			else{
+	        				checkEvent.setEventAdminNRIC(newEventAdminNRIC);
+	        			}
 	        			isEventUpdated = eventManager.editEvent(checkEvent);
 	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, checkEvent.getEventAdminNRIC());
 	        			if((isEventUpdated) && (isEventParticipantsDeleted)){
