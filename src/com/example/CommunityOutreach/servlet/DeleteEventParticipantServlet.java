@@ -120,7 +120,7 @@ public class DeleteEventParticipantServlet extends HttpServlet {
 	        	ArrayList<EventParticipants> eventParticipantsArrList = eventParticipantsManager.retrieveAllEventParticipants();
 	        	ArrayList<EventParticipants> tempArrList = new ArrayList<EventParticipants>();
 	        	for(int i=0;i<eventParticipantsArrList.size();i++){
-	        		if(eventParticipantsArrList.get(i).getEventID() == eventID){
+	        		if((eventParticipantsArrList.get(i).getEventID() == eventID) && (!eventParticipantsArrList.get(i).getUserNRIC().equals(checkEvent.getEventAdminNRIC()))){
 	        			tempArrList.add(eventParticipantsArrList.get(i));
 	        		}
 	        	}
@@ -134,7 +134,7 @@ public class DeleteEventParticipantServlet extends HttpServlet {
 	        				checkEvent.setEventAdminNRIC(newEventAdminNRIC);
 	        			}
 	        			isEventUpdated = eventManager.editEvent(checkEvent);
-	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, checkEvent.getEventAdminNRIC());
+	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, userNRIC);
 	        			if((isEventUpdated) && (isEventParticipantsDeleted)){
 	        				JsonObject myObj = new JsonObject();
 	    	                myObj.addProperty("success", true);
@@ -178,7 +178,7 @@ public class DeleteEventParticipantServlet extends HttpServlet {
 	        				checkEvent.setEventAdminNRIC(newEventAdminNRIC);
 	        			}
 	        			isEventUpdated = eventManager.editEvent(checkEvent);
-	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, checkEvent.getEventAdminNRIC());
+	        			isEventParticipantsDeleted = eventParticipantsManager.deleteEventParticipants(eventID, userNRIC);
 	        			if((isEventUpdated) && (isEventParticipantsDeleted)){
 	        				JsonObject myObj = new JsonObject();
 	    	                myObj.addProperty("success", true);

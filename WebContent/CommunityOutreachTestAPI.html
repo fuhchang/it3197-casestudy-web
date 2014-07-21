@@ -96,6 +96,7 @@
 		<button>Edit event participant</button>
 	</form>		
 	<form action="deleteEventParticipant" method="post">
+		<input type="hidden" name="newEventAdminNRIC" value="" required/>
 		NRIC: <input type="text" name="userNRIC" required/>
 		Event No: <input type="number" name="eventID" required/>
 		<br/>

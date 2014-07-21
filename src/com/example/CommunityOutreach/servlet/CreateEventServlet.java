@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.EventManager;
+import com.example.CommunityOutreach.data.EventParticipantsManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.model.EventParticipants;
 import com.example.CommunityOutreach.model.User;
 import com.example.CommunityOutreach.util.Settings;
 import com.google.gson.JsonObject;
@@ -111,6 +113,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		UserManager userManager = new UserManager();
         Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1);
         User user = userManager.retrieveUser(eventAdminNRIC);
+        
         if(user == null){
     		JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
