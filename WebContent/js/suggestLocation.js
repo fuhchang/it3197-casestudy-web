@@ -39,15 +39,12 @@ $(document).ready(function() {
 					var y = "";
 					 // Try HTML5 geolocation
 					if(navigator.geolocation) {
-						navigator.geolocation.getCurrentPosition(showPosition);
+						navigator.geolocation.watchPosition(showPosition);
 					}
 
-					
 					function showPosition(position) {
-					    y = position.coords.latitude;
-					    x = position.coords.longitude;
-
-						alert(y + "," + x);
+					    y = parseInt(position.coords.latitude);
+					    x = parseInt(position.coords.longitude);
 					}
 					
 					$("#Eldercare").click(function(e){
@@ -120,8 +117,13 @@ $(document).ready(function() {
 							if(suggestMarker != null){
 								suggestMarker.setVisible(false);
 							}
-							var closest = find_closest_marker(y,x);
+							//y,x
+							var currentX = new String(x);
+							var currentY = new String(y); 
 							
+							//alert(parseInt(y) + "," + parseInt(x));
+							var closest = find_closest_marker(parseInt(1.3795579999999998),parseInt(103.84971129999997));
+							alert(closest);
 						    var coord = result[closest][4];
 						    
 							var x = coord.substr(0, coord.indexOf(","));
@@ -189,7 +191,6 @@ $(document).ready(function() {
 					});
 					
 					//Self-declared functions
-					
 					function find_closest_marker( lat1, lon1 ) {    
 					    var pi = Math.PI;
 					    var R = 6371; //equatorial radius
@@ -308,7 +309,7 @@ $(document).ready(function() {
 							markerClusterer.clearMarkers();
 						}
 						markerClusterer = new MarkerClusterer(map, markers,{
-							maxZoom:15,
+							maxZoom:10,
 						});
 						temp = [];
 						$(".list-group-item").removeClass("disabled");

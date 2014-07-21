@@ -14,12 +14,12 @@
 		<!-- Import CSS here -->
 		<style>
 			#googleMap {
-				margin-top: 20px;
-				margin-left: 25px;
+				margin-top: 1%;
+				margin-left: 1%;
 			}
 			#legend {
 			    background: white;
-			 	padding: 15px;
+			 	padding: 2%;
 			 	display:block;
 			}
 			a{
@@ -39,7 +39,7 @@
    		<script type="text/javascript" src="js/markerCluster.js"></script>
 	</head>
 	<body>
-		<div id="googleMap" style="width:95%;height:380px;"></div>
+		<div id="googleMap" style="width:98%;height:380px;"></div>
 		<div id="legend">
 		  Legend:
 		  <div id="forLegend" class='suggestLocation' style="margin-bottom:5px;margin-top:5px;"><img src='images/suggest.gif' class="suggestLocation" /><span class="suggestLocation" style="font-size:14px;margin-left:5px;">Recommended Location</span></div>
@@ -47,7 +47,7 @@
 		  <div id="forLegend" class='Family' style="margin-bottom:5px;margin-top:5px;"><img class="Family"/><span class="Family" style="font-size:14px;margin-left:5px;">Family Services</span></div>
 		  <div id="forLegend" class='VoluntaryWelfareOrgs' style="margin-bottom:5px;margin-top:5px;"><img class="VoluntaryWelfareOrgs"/><span class="VoluntaryWelfareOrgs" style="font-size:14px;margin-left:5px;">Voluntary Welfare Organizations</span></div>
 		</div>
-		<div class="row panel panel-primary" style="margin-left:2.5%;margin-right:2.5%;margin-top:1%;">
+		<div class="row panel panel-primary" style="margin-left:1%;margin-right:1%;margin-top:1%;">
 			<div class="panel-heading">
 				Themes & Options
 				<span id='down' class="glyphicon glyphicon-chevron-down" style='float:right;'></span>
@@ -79,7 +79,7 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="row" style="margin-left:2.5%;">
+		<div class="row" style="margin-left:1%;">
 		  	<div class="col-xs-4" style='padding-left:0;'>
 		  		<br/>
 		  		<br/>
