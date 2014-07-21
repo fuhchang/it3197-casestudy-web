@@ -18,7 +18,7 @@
 			    <div class="thumbnail">
 			      <img id="icon" src="resources/wewantyou.jpg">
 			      <div class="caption">
-			        <p>Have an article to share? Feedback to give? Request to make? You came to the right place!</p>			        
+			        <p><b>Have an article to share? Feedback to give? Request to make? You came to the right place!</b></p>			        
 			         <p><a href="#" class="btn btn-primary" onclick="location.href='DisplayArticleMainServlet'" role="button">Click Here To Continue</a></p>
 			      </div>
 			    </div>
