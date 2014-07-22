@@ -57,7 +57,7 @@ public class RiddleManager {
 		boolean result = false;
 		
 		String sql = "INSERT INTO riddle_answer ";
-		sql += "VALUES(?, ?, ?, ?, ?)";
+		sql += "VALUES(?, ?, ?, ?)";
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -142,26 +142,51 @@ public class RiddleManager {
 		}
 		return riddleAnsList;
 	}
-	
-	public RiddleAnswer[] retrieveRiddleAnswers(int riddleID) {
-		RiddleAnswer[] riddleAnswers = new RiddleAnswer[4];
-		int i = 0;
+
+	public boolean updateRiddle(Riddle riddle){
+		String sql = "UPDATE riddle set userNRIC = ?, riddleTitle = ?, riddleContent = ?, riddleStatus = ?, riddlePoint = ?";
+		boolean result = false;
 		
-		String sql = "SELECT * FROM riddle_answer WHERE riddleID = ?";
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, riddleID);
-			ResultSet rs = ps.executeQuery();
 			
-			while(rs.next()) {
-				RiddleAnswer riddleAns = new RiddleAnswer();
-				riddleAns.setRiddleAnswerID(rs.getInt("riddleAnswerID"));
-				riddleAns.setRiddleAnswer(rs.getString("riddleAnswer"));
-				riddleAns.setRiddleAnswerStatus(rs.getString("riddleAnswerStatus"));
-				riddleAnswers[i] = riddleAns;
-				i++;
-			}
+			ps.setString(1, riddle.getUser().getNric());
+			ps.setString(2, riddle.getRiddleTitle());
+			ps.setString(3, riddle.getRiddleContent());
+			ps.setString(4, riddle.getRiddleStatus());
+			ps.setInt(5, riddle.getRiddlePoint());
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public boolean updateRiddleAns(Riddle riddle, RiddleAnswer answer) {
+		boolean result = false;
+		
+		String sql = "UPDATE riddle_answer set riddleID = ?, riddleAnswer = ?, riddleAnswerStatus = ? WHERE riddleAnswerID = ?";
+		
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, riddle.getRiddleID());
+			ps.setString(2, answer.getRiddleAnswer());
+			ps.setString(3, answer.getRiddleAnswerStatus());
+			ps.setInt(4, answer.getRiddleAnswerID());
+			
+			ps.executeUpdate();
+			result = true;
+			
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -171,6 +196,54 @@ public class RiddleManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return riddleAnswers;
+		return result;
+	}
+
+	public boolean deleteRiddle(int riddleID){
+		boolean result = false;
+		
+		String sql = "DELETE FROM riddle WHERE riddleID = ?";
+		
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, riddleID);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public boolean deleteRiddleAns(int riddleID){
+		boolean result = false;
+		
+		String sql = "DELETE FROM riddle_answer WHERE riddleID = ?";
+		
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, riddleID);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
