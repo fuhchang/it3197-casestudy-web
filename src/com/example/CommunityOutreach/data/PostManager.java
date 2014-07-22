@@ -55,7 +55,7 @@ public class PostManager {
 	
 	public ArrayList<HobbyPost> retrievePost(int id){
 		ArrayList<HobbyPost> postList = new ArrayList<HobbyPost>();
-		String sql = "select * from post where groupID = ?";
+		String sql = "select * from post where groupID = ? ORDER BY postID DESC";
 		Connection conn;
 		try {
 			conn = dbController.getConnection();

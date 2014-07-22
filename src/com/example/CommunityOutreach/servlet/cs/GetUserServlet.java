@@ -55,7 +55,7 @@ public class GetUserServlet extends HttpServlet {
         response.setHeader("Access-Control-Max-Age", "86400");
         
         UserManager getUser = new UserManager();
-        userList.addAll(getUser.retrieveAllUsers());
+        userList = getUser.retrieveAllUsers();
         
         if(userList.size() ==0){
         	JsonObject myObj = new JsonObject();

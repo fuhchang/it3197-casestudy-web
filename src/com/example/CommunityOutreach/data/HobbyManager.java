@@ -71,7 +71,7 @@ public class HobbyManager {
 	
 	public ArrayList<Hobby> retrieveAllHobby(){
 		ArrayList<Hobby> hobbyList = new ArrayList<Hobby>();
-		String sql = "SELECT * FROM hobbies_group";
+		String sql = "SELECT * FROM hobbies_group ORDER BY groupID";
 		
 		try {
 			Connection conn = dbController.getConnection();
@@ -123,7 +123,6 @@ public class HobbyManager {
 				hobby.setGrpName(rs.getString("groupName"));
 				hobby.setCategory(rs.getString("category"));
 				hobby.setGrpDesc(rs.getString("description"));
-				hobby.setLocation(rs.getString("location"));
 				hobby.setLat(rs.getDouble("Lat"));
 				hobby.setLng(rs.getDouble("Lng"));
 			}

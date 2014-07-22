@@ -16,11 +16,12 @@
 
 	<jsp:attribute name="content">
 		<div class="col-xs-12">
-		<h1 class="col-xs-9">Hobby</h1>
-		<div class="col-xs-3 ">
-		<button type="submit" id="addHobbies" class="btn btn-primary">
-  		<a href="createHobby.jsp"><span
-						class="glyphicon glyphicon-plus-sign"></span></a>
+		<h1 class="col-xs-7">Hobby</h1>
+		<div class="col-xs-1 ">
+		<input type="hidden" name="userName" value="${userName}" /> 
+		<input type="hidden" name="userName" value="${password}" /> 
+		<button type="submit" id="addHobbies" class="btn btn-defaul" data-toggle="modal" data-target="#myModal">
+  			<a href="createHobby.jsp"><span class="glyphicon glyphicon-plus-sign"></span> Create Hobby</a>
 		</button>
 		</div>
 		</div>
@@ -28,7 +29,7 @@
 			<li class="col-xs-6"><a href="#joined" data-toggle="tab">Joined</a></li>
 			<li class="col-xs-6"><a href="#all" data-toggle="tab">All</a></li>
 		</ul>
-
+		
 		<div class="tab-content">
 			<div class="tab-pane" id="joined">
 					<table class="table table-striped">
@@ -59,8 +60,7 @@
 					<a href="ViewGroupServlet?id=${item.grpID}">
 					<div class="col-sm-4 portfolio-item">
                     <img class="img-responsive" src="http://placehold.it/250x100" id="img">
-					 <h3 name="gName">${item.grpName}</a>
-                		</h3>
+					 <h3 name="gName">${item.grpName}</h3>
 					<textarea name="summernote" id="summernote" cols="27" rows="7"
 											readonly>${item.grpDesc}</textarea>
 	
