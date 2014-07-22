@@ -77,7 +77,7 @@ public class ArticleSubmissionServletCS extends HttpServlet {
 
 		String location=request.getParameter("address");
 		
-		String userNRIC = "S9512233X";
+		String userNRIC = request.getParameter("usernric");
 		int active = 1;
 		String approved= "Pending";
 		double dbLat= Double.parseDouble(request.getParameter("storingLat"));
