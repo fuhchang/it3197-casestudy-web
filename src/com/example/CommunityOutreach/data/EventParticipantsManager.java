@@ -81,28 +81,28 @@ public class EventParticipantsManager {
 	}
 	
 	/**
-	 * This method is to retrieve a event participant based on eventID
+	 * This method is to retrieve all event participant based on eventID
 	 * @param eventID
-	 * @return Event
+	 * @return ArrayList<EventParticipants>
 	 */
-	public EventParticipants retrieveEventParticipant(int eventID) {
+	public ArrayList<EventParticipants> retrieveEventParticipant(int eventID) {
 		String sql = "SELECT * FROM event_participants WHERE eventID = " + eventID ;
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			System.out.println(ps);
 			ResultSet rs = ps.executeQuery();
-			EventParticipants eventParticipant = new EventParticipants();
-			if (rs.next()) {
+			ArrayList<EventParticipants>  eventParticipantArrList = new ArrayList<EventParticipants>();
+			while (rs.next()) {
+				EventParticipants eventParticipant = new EventParticipants();
 				eventParticipant.setEventID(rs.getInt("eventID"));
 				eventParticipant.setUserNRIC(rs.getString("userNRIC"));
 				eventParticipant.setDateTimeJoined(rs.getTimestamp("dateTimeJoined"));
 				eventParticipant.setCheckIn(rs.getInt("checkIn"));
-			} else {
-				return null;
+				eventParticipantArrList.add(eventParticipant);
 			}
 			conn.close();
-			return eventParticipant;
+			return eventParticipantArrList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -112,26 +112,26 @@ public class EventParticipantsManager {
 	/**
 	 * This method is to retrieve a event participant based on user's nric
 	 * @param userNRIC
-	 * @return Event
+	 * @return ArrayList<EventParticipants>
 	 */
-	public EventParticipants retrieveEventParticipant(String userNRIC) {
+	public ArrayList<EventParticipants> retrieveEventParticipant(String userNRIC) {
 		String sql = "SELECT * FROM event_participants WHERE userNRIC = '" + userNRIC + "'";
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			System.out.println(ps);
 			ResultSet rs = ps.executeQuery();
-			EventParticipants eventParticipant = new EventParticipants();
-			if (rs.next()) {
+			ArrayList<EventParticipants>  eventParticipantArrList = new ArrayList<EventParticipants>();
+			while (rs.next()) {
+				EventParticipants eventParticipant = new EventParticipants();
 				eventParticipant.setEventID(rs.getInt("eventID"));
 				eventParticipant.setUserNRIC(rs.getString("userNRIC"));
 				eventParticipant.setDateTimeJoined(rs.getTimestamp("dateTimeJoined"));
 				eventParticipant.setCheckIn(rs.getInt("checkIn"));
-			} else {
-				return null;
-			}
+				eventParticipantArrList.add(eventParticipant);
+			} 
 			conn.close();
-			return eventParticipant;
+			return eventParticipantArrList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

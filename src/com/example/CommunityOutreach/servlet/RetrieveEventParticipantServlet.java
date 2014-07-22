@@ -2,6 +2,7 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.EventParticipantsManager;
+import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.EventParticipants;
+import com.example.CommunityOutreach.model.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -65,9 +69,12 @@ public class RetrieveEventParticipantServlet extends HttpServlet {
         System.out.println("Event No: " + eventID);
         
         EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
+        EventManager eventManager = new EventManager();
+        UserManager userManager = new UserManager();
         EventParticipants checkEventParticipants;
-        EventParticipants checkEventParticipantsEvent;
-        EventParticipants checkEventParticipantsNRIC;
+        Event checkEventParticipantsEvent;
+        User checkEventParticipantsNRIC;
+        ArrayList<EventParticipants> eventParticipantsArrList = new ArrayList<EventParticipants>();
         if((eventID != 0) && (userNRIC != null) && (!userNRIC.equals(""))){
         	checkEventParticipants = eventParticipantsManager.retrieveEventParticipant(eventID, userNRIC);
             if((eventID == 0) || (userNRIC == null) || ((userNRIC.equals(""))) || (checkEventParticipants == null)){
@@ -86,7 +93,7 @@ public class RetrieveEventParticipantServlet extends HttpServlet {
             }
         }
         else if(eventID != 0){
-        	checkEventParticipantsEvent = eventParticipantsManager.retrieveEventParticipant(eventID);
+        	checkEventParticipantsEvent = eventManager.retrieveEvent(eventID);
             if((eventID == 0) || (checkEventParticipantsEvent == null)){
                 JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", false);
@@ -95,15 +102,21 @@ public class RetrieveEventParticipantServlet extends HttpServlet {
             }
             else {
                 Gson gson = new Gson(); 
-                JsonElement eventParticipantsObj = gson.toJsonTree(checkEventParticipantsEvent);
                 JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", true);
-                myObj.add("eventParticipantsInfo", eventParticipantsObj);
+            	JsonElement eventParticipantsObj;
+            	eventParticipantsArrList = eventParticipantsManager.retrieveEventParticipant(eventID);
+            	JsonArray eventParticipantsArray = new JsonArray();
+                for(int i=0;i<eventParticipantsArrList.size();i++){
+                	eventParticipantsObj = gson.toJsonTree(eventParticipantsArrList.get(i));
+                	eventParticipantsArray.add(eventParticipantsObj);
+                	myObj.add("eventParticipantsInfo", eventParticipantsArray);
+                }
                 out.println(myObj.toString());
             }
         }
         else if((userNRIC != null) && (!userNRIC.equals(""))){
-        	checkEventParticipantsNRIC = eventParticipantsManager.retrieveEventParticipant(userNRIC);
+        	checkEventParticipantsNRIC = userManager.retrieveUser(userNRIC);
             if((userNRIC == null) || ((userNRIC.equals(""))) || (checkEventParticipantsNRIC == null)){
                 JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", false);
@@ -112,10 +125,16 @@ public class RetrieveEventParticipantServlet extends HttpServlet {
             }
             else {
                 Gson gson = new Gson(); 
-                JsonElement eventParticipantsObj = gson.toJsonTree(checkEventParticipantsNRIC);
                 JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", true);
-                myObj.add("eventParticipantsInfo", eventParticipantsObj);
+                JsonElement eventParticipantsObj;
+            	eventParticipantsArrList = eventParticipantsManager.retrieveEventParticipant(userNRIC);
+            	JsonArray eventParticipantsArray = new JsonArray();
+                for(int i=0;i<eventParticipantsArrList.size();i++){
+                	eventParticipantsObj = gson.toJsonTree(eventParticipantsArrList.get(i));
+                	eventParticipantsArray.add(eventParticipantsObj);
+                	myObj.add("eventParticipantsInfo", eventParticipantsArray);
+                }
                 out.println(myObj.toString());
             }
         }
