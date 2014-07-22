@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.EventParticipantsManager;
 import com.example.CommunityOutreach.data.UserManager;
@@ -108,7 +109,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		}
         //Testing Values
         //System.out.println("Event No: " + eventID);
-		String eventAdminNRIC = "S9512233X";
+		String eventAdminNRIC = request.getParameter("eventAdminNRIC");
 		
 		EventManager eventManager = new EventManager();
 		UserManager userManager = new UserManager();

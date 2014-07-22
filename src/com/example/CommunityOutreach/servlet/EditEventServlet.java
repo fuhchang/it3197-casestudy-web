@@ -109,7 +109,7 @@ public class EditEventServlet extends HttpServlet implements Settings{
 		}
         //Testing Values
         //System.out.println("Event No: " + eventID);
-		String eventAdminNRIC = "S9512233X";
+        String eventAdminNRIC = request.getParameter("eventAdminNRIC");
         
         EventManager eventManager = new EventManager();
         Event event = new Event(eventID,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1);
