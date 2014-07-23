@@ -39,6 +39,10 @@ public class User {
 		this.active = active;
 		this.points = points;
 	}
+	public User(String nric) {
+		this.nric = nric;
+	}
+	
 	public String getNric() {
 		return nric;
 	}

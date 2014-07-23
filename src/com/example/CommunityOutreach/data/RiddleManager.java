@@ -144,18 +144,19 @@ public class RiddleManager {
 	}
 
 	public boolean updateRiddle(Riddle riddle){
-		String sql = "UPDATE riddle set userNRIC = ?, riddleTitle = ?, riddleContent = ?, riddleStatus = ?, riddlePoint = ?";
+		String sql = "UPDATE riddle set userNRIC = ?, riddleTitle = ?, riddleContent = ?, riddleStatus = ?, riddlePoint = ? WHERE riddleID = ?";
 		boolean result = false;
 		
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			ps.setString(1, riddle.getUser().getNric());
-			ps.setString(2, riddle.getRiddleTitle());
-			ps.setString(3, riddle.getRiddleContent());
-			ps.setString(4, riddle.getRiddleStatus());
-			ps.setInt(5, riddle.getRiddlePoint());
+			ps.setInt(1, riddle.getRiddleID());
+			ps.setString(2, riddle.getUser().getNric());
+			ps.setString(3, riddle.getRiddleTitle());
+			ps.setString(4, riddle.getRiddleContent());
+			ps.setString(5, riddle.getRiddleStatus());
+			ps.setInt(6, riddle.getRiddlePoint());
 			
 			ps.executeUpdate();
 		} catch (SQLException e) {

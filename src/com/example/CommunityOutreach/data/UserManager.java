@@ -3,6 +3,7 @@ package com.example.CommunityOutreach.data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.example.CommunityOutreach.controller.DBController;
@@ -119,6 +120,44 @@ public class UserManager {
 	}
 
 	/**
+	 * This method is to retrieve a user based on user's nric and password
+	 * @param nric
+	 * @return User
+	 */
+	public User retrieveUser(String nric, String password) {
+		String sql = "SELECT * FROM user WHERE nric = ? AND password = ?";
+		
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, nric);
+			ps.setString(2, password);
+			
+			ResultSet rs = ps.executeQuery();
+			User user = new User();
+			if (rs.next()) {
+				user.setNric(rs.getString("nric"));
+				user.setName(rs.getString("name"));
+				user.setType(rs.getString("type"));
+				user.setPassword(rs.getString("password"));
+				user.setContactNo(rs.getString("contactNo"));
+				user.setAddress(rs.getString("address"));
+				user.setEmail(rs.getString("email"));
+				user.setActive(rs.getInt("active"));
+				user.setPoints(rs.getInt("points"));
+			} else {
+				return null;
+			}
+			conn.close();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
 	 * This method is to retrieve a user based on user's nric
 	 * @param nric
 	 * @return User
@@ -206,5 +245,31 @@ public class UserManager {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public boolean updatePoints(String nric, int points) {
+		String sql = "UPDATE user set points = ? WHERE nric = ?";
+		boolean result = false;
+		
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			ps.setInt(1, points);
+			ps.setString(2, nric);
+			
+			ps.executeUpdate();
+			result = true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

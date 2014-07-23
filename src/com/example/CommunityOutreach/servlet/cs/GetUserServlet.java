@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 @WebServlet("/GetUserServlet")
 public class GetUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       ArrayList<User> userList = new ArrayList<User>();
+       //ArrayList<User> userList = new ArrayList<User>();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -54,7 +54,28 @@ public class GetUserServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
-        UserManager getUser = new UserManager();
+        UserManager userManager = new UserManager();
+        User user = userManager.retrieveUser(request.getParameter("userNRIC"), request.getParameter("password"));
+        
+        if(user.equals("")) {
+        	JsonObject myObj = new JsonObject();
+            myObj.addProperty("success", false);
+            myObj.addProperty("message", "Unable to retrieve User.");
+            out.println(myObj.toString());
+        }else{
+        	Gson gson = new Gson();
+            JsonObject myObj = new JsonObject();
+            myObj.addProperty("success", true);
+        	JsonElement userObj;
+        	JsonArray userArr = new JsonArray();
+        	userObj = gson.toJsonTree(user);
+        	userArr.add(userObj);
+        	myObj.add("user", userArr);
+            out.println(myObj.toString());
+        }
+        out.close();
+        
+        /*UserManager getUser = new UserManager();
         userList = getUser.retrieveAllUsers();
         
         if(userList.size() ==0){
@@ -75,7 +96,7 @@ public class GetUserServlet extends HttpServlet {
             }
             out.println(myObj.toString());
         }
-        out.close();
+        out.close();*/
 	}
 
 }
