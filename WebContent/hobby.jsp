@@ -18,11 +18,11 @@
 		<div class="col-xs-12">
 		<h1 class="col-xs-7">Hobby</h1>
 		<div class="col-xs-1 ">
-		<input type="hidden" name="userName" value="${userName}" /> 
-		<input type="hidden" name="userName" value="${password}" /> 
-		<button type="submit" id="addHobbies" class="btn btn-defaul" data-toggle="modal" data-target="#myModal">
-  			<a href="createHobby.jsp"><span class="glyphicon glyphicon-plus-sign"></span> Create Hobby</a>
+		<a href="createHobby.jsp">
+		<button type="submit" id="addHobbies" class="btn btn-defaul" data-toggle="modal" data-target="#">
+  			<span class="glyphicon glyphicon-plus-sign"></span> Create Hobby
 		</button>
+		</a>
 		</div>
 		</div>
 		<ul class="nav nav-tabs text-center" id="tabs">
@@ -33,19 +33,28 @@
 		<div class="tab-content">
 			<div class="tab-pane" id="joined">
 					<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Description</th>
-				</tr>
-			</thead>
 			<tbody>
-				<tr>
-					<td>a</td>
-					<td>b</td>
-					<td>c</td>
+			<c:forEach items="${joinList}" var="joinItem">
+				<tr class="col-sm-4">
+				
+					<td>
+					<a href="ViewJoinGrpServlet?id=${joinItem.grpID}">
+					<div class="col-sm-4 portfolio-item">
+                    <img class="img-responsive" src="http://placehold.it/250x100" id="img">
+					 <h3 name="gName">${joinItem.grpName}</h3>
+					<textarea name="summernote" id="summernote" cols="27" rows="7"
+											readonly>${joinItem.grpDesc}</textarea>
+	
+            </div>
+            </a>
+            </td>
 				</tr>
+				<tr>
+					<td>
+						<br>
+					</td>
+				</tr>
+				</c:forEach>	
 			</tbody>
 			</table>
 			</div>
@@ -55,9 +64,9 @@
 			<tbody>
 			<c:forEach items="${hobbyList}" var="item">
 				<tr class="col-sm-4">
-				
+					
 					<td>
-					<a href="ViewGroupServlet?id=${item.grpID}">
+					<a href="ViewGroupServlet?id=${item.grpID}&request=0">
 					<div class="col-sm-4 portfolio-item">
                     <img class="img-responsive" src="http://placehold.it/250x100" id="img">
 					 <h3 name="gName">${item.grpName}</h3>
@@ -67,6 +76,11 @@
             </div>
             </a>
             </td>
+				</tr>
+				<tr>
+					<td>
+						<br>
+					</td>
 				</tr>
 				</c:forEach>	
 			</tbody>

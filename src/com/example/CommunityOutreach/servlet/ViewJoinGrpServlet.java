@@ -1,10 +1,7 @@
 package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,20 +14,18 @@ import com.example.CommunityOutreach.data.HobbyManager;
 import com.example.CommunityOutreach.data.PostManager;
 import com.example.CommunityOutreach.model.Hobby;
 import com.example.CommunityOutreach.model.HobbyPost;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
- * Servlet implementation class ViewGroupServlet
+ * Servlet implementation class ViewJoinGrpServlet
  */
-@WebServlet("/ViewGroupServlet")
-public class ViewGroupServlet extends HttpServlet {
+@WebServlet("/ViewJoinGrpServlet")
+public class ViewJoinGrpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewGroupServlet() {
+    public ViewJoinGrpServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,15 +36,6 @@ public class ViewGroupServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int id = Integer.parseInt(request.getParameter("id"));
-		int requestCheck = Integer.parseInt(request.getParameter("request"));
-		System.out.println(requestCheck);
-		if(requestCheck == 1){
-			request.setAttribute("hidden", " none;");
-			System.out.println("hide");
-		}else{
-			request.setAttribute("hidden", "submit");
-			System.out.println("show");
-		}
 		HobbyManager hobbyManager = new HobbyManager();
 		Hobby hobby = hobbyManager.retrieveHobby(id);
 		request.setAttribute("id", id);
@@ -58,10 +44,10 @@ public class ViewGroupServlet extends HttpServlet {
 		request.setAttribute("GrpDesc", hobby.getGrpDesc());
 		PostManager pm = new PostManager();
 		ArrayList<HobbyPost> postList = pm.retrievePost(id);
-		
 		request.setAttribute("postList", postList);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewHobbyGroup.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewJoinHobbyGroup.jsp");
 		requestDispatcher.forward(request, response);
+		
 	}
 
 	/**
@@ -69,19 +55,6 @@ public class ViewGroupServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int id = Integer.parseInt(request.getParameter("id"));
-		HobbyManager hobbyManager = new HobbyManager();
-		Hobby hobby = hobbyManager.retrieveHobby(id);
-		request.setAttribute("id", id);
-		request.setAttribute("GrpName", hobby.getGrpName());
-		request.setAttribute("category", hobby.getCategory());
-		request.setAttribute("GrpDesc", hobby.getGrpDesc());
-		PostManager pm = new PostManager();
-		ArrayList<HobbyPost> postList = pm.retrievePost(id);
-		
-		request.setAttribute("postList", postList);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewHobbyGroup.jsp");
-		requestDispatcher.forward(request, response);
 	}
 
 }

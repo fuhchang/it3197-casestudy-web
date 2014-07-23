@@ -22,17 +22,15 @@
     <h1>${GrpName}</h1>
     <p>${GrpDesc}</p>
   </div>
-  <div class="col-xs-7">
-	</div>
-	<div class="col-xs-5" style="display:${hidden}">
-	<a href="JoinHobbyServlet?id=${id}">
-		<button type="submit" id="addHobbies" class="btn btn-defaul" data-toggle="modal" data-target="#">
-  			<span class="glyphicon glyphicon-plus-sign"></span> Join Hobby
-		</button>
+		<br/>
+		<br/>
+  <div class="input-group">
+ 
+		<span class="input-group-addon">Post: </span>
+		 <a href="createPost.jsp?grpID=${id}">
+		 <input type="text" class="form-control" placeholder="Write you thought" id="posting" readonly>
 		</a>
 		</div>
-		<br/>
-		<br/>
 	<br/>
 	
   <div>

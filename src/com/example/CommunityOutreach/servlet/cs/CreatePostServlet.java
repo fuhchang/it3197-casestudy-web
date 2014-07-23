@@ -9,8 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.CommunityOutreach.data.HobbyManager;
 import com.example.CommunityOutreach.data.PostManager;
+import com.example.CommunityOutreach.model.Hobby;
 import com.example.CommunityOutreach.model.HobbyPost;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -72,13 +77,22 @@ public class CreatePostServlet extends HttpServlet {
 		}
 		PostManager postmanager = new PostManager();
 		result = postmanager.createPost(post);
-
+		
+		
 		if (result) {
+			HobbyManager hm = new HobbyManager();
+			Hobby hobby = hm.retrieveHobby(Integer.parseInt(grpID));
+			Gson gson = new Gson();
 			JsonObject myObj = new JsonObject();
 			myObj.addProperty("success", true);
-			myObj.addProperty("message", "Hobby created successfully.");
+			JsonElement eventObj;
+			JsonArray eventArray = new JsonArray();
+			eventObj = gson.toJsonTree(hobby);
+			eventArray.add(eventObj);
+			myObj.add("hobby", eventArray);
 			out.println(myObj.toString());
 		}
+		out.close();
 	}
 
 }

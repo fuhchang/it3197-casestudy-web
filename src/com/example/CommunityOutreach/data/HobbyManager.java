@@ -107,8 +107,9 @@ public class HobbyManager {
 	}
 	
 	
+	
 	public Hobby retrieveHobby(int id){
-		String sql = "SELECT * FROM hobbies_group WHERE groupID = ?";
+		String sql = "SELECT * FROM hobbies_group WHERE groupID = ? ORDER BY groupID";
 		
 		Hobby hobby = new Hobby();
 		
@@ -125,6 +126,8 @@ public class HobbyManager {
 				hobby.setGrpDesc(rs.getString("description"));
 				hobby.setLat(rs.getDouble("Lat"));
 				hobby.setLng(rs.getDouble("Lng"));
+				hobby.setAdminNric(rs.getString("adminNric"));
+				hobby.setActive(rs.getInt("active"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -188,8 +191,15 @@ public class HobbyManager {
 			while(rs.next()){
 				Hobby hobby = new Hobby();
 				hobby.setGrpID(rs.getInt("groupID"));
+				hobby.setGrpName(rs.getString("groupName"));
+				hobby.setCategory(rs.getString("category"));
+				hobby.setGrpDesc(rs.getString("description"));
+				hobby.setLat(rs.getDouble("Lat"));
+				hobby.setLng(rs.getDouble("Lng"));
+				hobby.setAdminNric(rs.getString("adminNric"));
+				hobby.setActive(rs.getInt("active"));
 				hobbyList.add(hobby);
-				System.out.println(hobbyList.get(0));
+				
 			}
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
@@ -205,6 +215,47 @@ public class HobbyManager {
 			e.printStackTrace();
 		}
 		return hobbyList.get(0).getGrpID();
+		
+	}
+	
+	public ArrayList<Hobby> retrieveAllHobbyByCategory(String category){
+		String sql = "SELECT * FROM hobbies_group WHERE category =  ? ORDER BY groupID DESC";
+		Connection conn;
+		ArrayList<Hobby> hobbyList = new ArrayList<Hobby>();
+		
+		try {
+			conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, category);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				Hobby hobby = new Hobby();
+				hobby.setGrpID(rs.getInt("groupID"));
+				hobby.setGrpName(rs.getString("groupName"));
+				hobby.setCategory(rs.getString("category"));
+				hobby.setGrpDesc(rs.getString("description"));
+				hobby.setLat(rs.getDouble("Lat"));
+				hobby.setLng(rs.getDouble("Lng"));
+				hobby.setAdminNric(rs.getString("adminNric"));
+				hobby.setActive(rs.getInt("active"));
+				hobbyList.add(hobby);
+			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return hobbyList;
 		
 	}
 }

@@ -221,10 +221,9 @@
 				<select class="btn btn-default dropdown-toggle"
 						style="width: 100%; height: 35px;" name="gType">
 								  <option>Select a category</option>
-								  
-								  <option>item1</option>
-        						  <option>item2</option>
-                                  <option>item3</option>
+								  <option>Dance</option>
+        						  <option>Cooking</option>
+                                  <option>Gardening</option>
 							</select>
 				<br />
 				<br />

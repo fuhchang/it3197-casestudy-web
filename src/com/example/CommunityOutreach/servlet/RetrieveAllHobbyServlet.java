@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.HobbyManager;
+import com.example.CommunityOutreach.data.HobbyMembersManager;
 import com.example.CommunityOutreach.model.Hobby;
+import com.example.CommunityOutreach.model.HobbyMembers;
 
 /**
  * Servlet implementation class RetrieveAllHobbyServlet
@@ -50,8 +52,39 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 		HobbyManager hm = new HobbyManager();
 		ArrayList<Hobby> hobbyList = hm.retrieveAllHobby();
 		
-		if(hobbyList.size() > 0){
+		HobbyMembersManager hmManager = new HobbyMembersManager();
+		ArrayList<HobbyMembers> memberList = hmManager.retrieveAllHobbyMember(userName);
+		ArrayList<Hobby> finalList = new ArrayList<Hobby>();
+		if(memberList.size() > 0){
+			int b = 0;
+			for(int i=0; i< memberList.size(); i++){
+				
+				for(int a=0; a< hobbyList.size(); a++){
+					
+					String mID = Integer.toString(memberList.get(i).getGroupID());
+					String hID = Integer.toString(hobbyList.get(a).getGrpID());
+					if (mID.equals(hID)) {
+						finalList.add(hobbyList.get(a));
+					} 
+				}
+			}
+		}
+		
+		for(int i=0; i<finalList.size();i++){
+			for(int a=0; a<hobbyList.size(); a++){
+				String same = Integer.toString(finalList.get(i).getGrpID());
+				String hID = Integer.toString(hobbyList.get(a).getGrpID());
+				if(same.equals(hID)){
+					hobbyList.remove(a);
+					break;
+				}
+			}
+		}
+		if(hobbyList.size() > 0 && finalList.size() >0){
+			request.setAttribute("joinList", finalList);
 			request.setAttribute("hobbyList", hobbyList);		
+			}else if(hobbyList.size() > 0){
+				request.setAttribute("hobbyList", hobbyList);	
 			}
 		
 		
@@ -71,7 +104,6 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 		        for(Cookie cookie : cookies){
 		            if(cookie.getName().equals("userLogin")){
 		                userName = cookie.getValue().toString();
-		               
 		                break;
 		            }
 		        }
@@ -80,6 +112,34 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 		HobbyManager hm = new HobbyManager();
 		ArrayList<Hobby> hobbyList = hm.retrieveAllHobby();
 		
+		HobbyMembersManager hmManager = new HobbyMembersManager();
+		ArrayList<HobbyMembers> memberList = hmManager.retrieveAllHobbyMember(userName);
+		ArrayList<Hobby> finalList = new ArrayList<Hobby>();
+		if(memberList.size() > 0){
+			int b = 0;
+			for(int i=0; i< memberList.size(); i++){
+				
+				for(int a=0; a< hobbyList.size(); a++){
+					
+					String mID = Integer.toString(memberList.get(i).getGroupID());
+					String hID = Integer.toString(hobbyList.get(a).getGrpID());
+					if (mID.equals(hID)) {
+						finalList.add(hobbyList.get(a));
+					} 
+				}
+			}
+		}
+		
+		for(int i=0; i<finalList.size();i++){
+			for(int a=0; a<hobbyList.size(); a++){
+				String same = Integer.toString(finalList.get(i).getGrpID());
+				String hID = Integer.toString(hobbyList.get(a).getGrpID());
+				if(same.equals(hID)){
+					hobbyList.remove(a);
+					break;
+				}
+			}
+		}
 		if(hobbyList.size() > 0){
 			request.setAttribute("hobbyList", hobbyList);		
 			}
