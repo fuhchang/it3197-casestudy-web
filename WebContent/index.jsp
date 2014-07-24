@@ -53,7 +53,7 @@
 				<h4>Hobby</h4>
 			</button>
 			</a>
-			<button class="btn btn-default col-xs-6" onclick="location.href='riddle.jsp'">
+			<button class="btn btn-default col-xs-6" onclick="location.href='RetrieveAllRiddleWebServlet'">
 				<span class="glyphicon glyphicon-book"></span>
 				<h4>Riddle</h4>
 			</button>

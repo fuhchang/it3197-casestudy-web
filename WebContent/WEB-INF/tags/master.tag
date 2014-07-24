@@ -34,8 +34,8 @@
 					<ul class="nav navbar-nav">
 						<li><a href="event.jsp">Events</a></li>
 						<li><a href="article.jsp">Articles</a></li>
-						<li><a href="hobby.jsp">Hobby</a></li>
-						<li><a href="riddle.jsp">Riddle</a></li>
+						<li><a href="RetrieveAllHobbyServlet">Hobby</a></li>
+						<li><a href="RetrieveAllRiddleWebServlet">Riddle</a></li>
 						<li><a href="profile.jsp">Profile</a></li>
 						<li><a href="setting.jsp">Setting</a></li>
 						
