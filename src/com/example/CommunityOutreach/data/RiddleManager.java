@@ -142,6 +142,71 @@ public class RiddleManager {
 		}
 		return riddleAnsList;
 	}
+	
+	public Riddle retrieveRiddle(int riddleID) {
+		Riddle riddle = new Riddle();
+		
+		String sql = "SELECT * FROM riddle WHERE riddleID = ?";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, riddleID);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				riddle.setRiddleID(rs.getInt("riddleID"));
+				riddle.setRiddleTitle(rs.getString("riddleTitle"));
+				riddle.setRiddleContent(rs.getString("riddleContent"));
+				riddle.setRiddleStatus(rs.getString("riddleStatus"));
+				riddle.setRiddlePoint(rs.getInt("riddlePoint"));
+			}
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return riddle;
+	}
+	
+	public ArrayList<RiddleAnswer> retrieveRiddleAnswers(int riddleID) {
+		ArrayList<RiddleAnswer> riddleAnsList = new ArrayList<RiddleAnswer>();
+		
+		String sql = "SELECT * FROM riddle_answer WHERE riddleID = ?";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, riddleID);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				RiddleAnswer riddleAns = new RiddleAnswer();
+				riddleAns.setRiddleAnswerID(rs.getInt("riddleAnswerID"));
+				riddleAns.setRiddle(new Riddle(rs.getInt("riddleID")));
+				riddleAns.setRiddleAnswer(rs.getString("riddleAnswer"));
+				riddleAns.setRiddleAnswerStatus(rs.getString("riddleAnswerStatus"));
+				riddleAnsList.add(riddleAns);
+			}
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return riddleAnsList;
+	}
 
 	public boolean updateRiddle(Riddle riddle){
 		String sql = "UPDATE riddle set userNRIC = ?, riddleTitle = ?, riddleContent = ?, riddleStatus = ?, riddlePoint = ? WHERE riddleID = ?";
@@ -151,12 +216,12 @@ public class RiddleManager {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			ps.setInt(1, riddle.getRiddleID());
-			ps.setString(2, riddle.getUser().getNric());
-			ps.setString(3, riddle.getRiddleTitle());
-			ps.setString(4, riddle.getRiddleContent());
-			ps.setString(5, riddle.getRiddleStatus());
-			ps.setInt(6, riddle.getRiddlePoint());
+			ps.setString(1, riddle.getUser().getNric());
+			ps.setString(2, riddle.getRiddleTitle());
+			ps.setString(3, riddle.getRiddleContent());
+			ps.setString(4, riddle.getRiddleStatus());
+			ps.setInt(5, riddle.getRiddlePoint());
+			ps.setInt(6, riddle.getRiddleID());
 			
 			ps.executeUpdate();
 		} catch (SQLException e) {

@@ -14,18 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.CommunityOutreach.data.RiddleManager;
 import com.example.CommunityOutreach.model.Riddle;
 import com.example.CommunityOutreach.model.RiddleAnswer;
+import com.example.CommunityOutreach.model.User;
 
 /**
- * Servlet implementation class RetrieveAllRiddleWebServlet
+ * Servlet implementation class UpdateRiddleWebServlet
  */
-@WebServlet("/RetrieveAllRiddleWebServlet")
-public class RetrieveAllRiddleWebServlet extends HttpServlet {
+@WebServlet("/UpdateRiddleWebServlet")
+public class UpdateRiddleWebServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveAllRiddleWebServlet() {
+    public UpdateRiddleWebServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,26 +37,14 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		response.setContentType("text/html");
-		String nric = null;
-		Cookie[] cookies = request.getCookies();
-		 if(cookies != null){
-	        for(Cookie cookie : cookies){
-	            if(cookie.getName().equals("userLogin")){
-	                nric = cookie.getValue().toString();
-	                break;
-	            }
-	        }
-		 }
-		 request.setAttribute("userNRIC", nric);
 		
-		ArrayList<Riddle> riddleList = new RiddleManager().retrieveAllRiddle();
-		request.setAttribute("riddleList", riddleList);
+		Riddle riddle = new RiddleManager().retrieveRiddle(Integer.parseInt(request.getParameter("riddleID")));
+		request.setAttribute("riddle", riddle);
 		
-		ArrayList<RiddleAnswer> riddleAnsList = new RiddleManager().retrieveAllRiddleAnswers();
+		ArrayList<RiddleAnswer> riddleAnsList = new RiddleManager().retrieveRiddleAnswers(Integer.parseInt(request.getParameter("riddleID")));
 		request.setAttribute("riddleAnsList", riddleAnsList);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/UpdateRiddle.jsp");
 		requestDispatcher.forward(request, response);
 	}
 
@@ -76,16 +65,33 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	            }
 	        }
 		 }
-		 request.setAttribute("userNRIC", nric);
-		
-		ArrayList<Riddle> riddleList = new RiddleManager().retrieveAllRiddle();
-		request.setAttribute("riddleList", riddleList);
-		
-		ArrayList<RiddleAnswer> riddleAnsList = new RiddleManager().retrieveAllRiddleAnswers();
-		request.setAttribute("riddleAnsList", riddleAnsList);
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
-		requestDispatcher.forward(request, response);
+		 
+		 Riddle riddle = new Riddle();
+		 riddle.setRiddleID(Integer.parseInt(request.getParameter("riddleID")));
+		 riddle.setUser(new User(nric));
+		 riddle.setRiddleTitle(request.getParameter("title"));
+		 riddle.setRiddleContent(request.getParameter("content"));
+		 riddle.setRiddleStatus("UPDATED");
+		 riddle.setRiddlePoint(10);
+		 
+		 RiddleManager riddleManager = new RiddleManager();
+		 riddleManager.updateRiddle(riddle);
+		 
+		 for (int i = 0; i < 4; i++) {
+			 RiddleAnswer riddleAns = new RiddleAnswer();
+			 riddleAns.setRiddleAnswerID(Integer.parseInt(request.getParameter("riddleAnsID"+i)));
+			 riddleAns.setRiddleAnswer(request.getParameter("choice"+(i+1)));
+			 
+			 if(Integer.parseInt(request.getParameter("choices")) == i)
+				 riddleAns.setRiddleAnswerStatus("CORRECT");
+			 else
+				 riddleAns.setRiddleAnswerStatus("WRONG");
+			 
+			 riddleManager.updateRiddleAns(riddle, riddleAns);
+		 }
+		 
+		 RequestDispatcher requestDispatcher = request.getRequestDispatcher("RetrieveAllRiddleWebServlet");
+		 requestDispatcher.forward(request, response);
 	}
 
 }
