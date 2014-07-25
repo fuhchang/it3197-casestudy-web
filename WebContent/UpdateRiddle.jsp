@@ -23,16 +23,20 @@
 				<label for="choices">Choices: </label>
 				
 				<c:forEach items="${riddleAnsList}" var="riddleAns" varStatus="theCount">
-					<div class="radio">
-						<c:choose>
-							<c:when test="${riddleAns.riddleAnswerStatus == 'CORRECT'}">
-								<input type="radio" name="choices" value="${theCount.index}" checked>
-							</c:when>
-							<c:otherwise>
-																<!-- theCount.index is 0, 1, 2, 3 -->
-								<input type="radio" name="choices" value="${theCount.index}">
-							</c:otherwise>
-						</c:choose>
+					<br/>
+					<div class="input-group">
+						<span class="input-group-addon">
+							<c:choose>
+								<c:when test="${riddleAns.riddleAnswerStatus == 'CORRECT'}">
+																	<!-- theCount.index is 0, 1, 2, 3 -->
+									<input type="radio" name="choices" value="${theCount.index}" checked>
+								</c:when>
+								<c:otherwise>
+																	<!-- theCount.index is 0, 1, 2, 3 -->
+									<input type="radio" name="choices" value="${theCount.index}">
+								</c:otherwise>
+							</c:choose>
+						</span>
 													<!-- theCount.count is 1, 2, 3, 4 -->
 						<input class="form-control" name="choice${theCount.count}" type="text" value="${riddleAns.riddleAnswer}">
 					</div>

@@ -1,7 +1,6 @@
 package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,21 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.RiddleManager;
+import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Riddle;
 import com.example.CommunityOutreach.model.RiddleAnswer;
-import com.example.CommunityOutreach.model.RiddleUserAnswered;
+import com.example.CommunityOutreach.model.User;
 
 /**
- * Servlet implementation class RetrieveAllRiddleWebServlet
+ * Servlet implementation class InsertChoiceWebServlet
  */
-@WebServlet("/RetrieveAllRiddleWebServlet")
-public class RetrieveAllRiddleWebServlet extends HttpServlet {
+@WebServlet("/InsertChoiceWebServlet")
+public class InsertChoiceWebServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveAllRiddleWebServlet() {
+    public InsertChoiceWebServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,30 +36,6 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		response.setContentType("text/html");
-		String nric = null;
-		Cookie[] cookies = request.getCookies();
-		if(cookies != null){
-			for(Cookie cookie : cookies){
-				if(cookie.getName().equals("userLogin")){
-					nric = cookie.getValue().toString();
-					break;
-	            }
-	        }
-		}
-		request.setAttribute("userNRIC", nric);
-		
-		RiddleManager riddleManager = new RiddleManager();
-		
-		ArrayList<Riddle> riddleList = riddleManager.retrieveAllRiddle();
-		request.setAttribute("riddleList", riddleList);
-		
-		ArrayList<RiddleAnswer> riddleAnsList = riddleManager.retrieveAllRiddleAnswers();
-		request.setAttribute("riddleAnsList", riddleAnsList);
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
-		requestDispatcher.forward(request, response);
 	}
 
 	/**
@@ -78,17 +54,28 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	                break;
 	            }
 	        }
-		}
-		request.setAttribute("userNRIC", nric);
-		
-		ArrayList<Riddle> riddleList = new RiddleManager().retrieveAllRiddle();
-		request.setAttribute("riddleList", riddleList);
-		
-		ArrayList<RiddleAnswer> riddleAnsList = new RiddleManager().retrieveAllRiddleAnswers();
-		request.setAttribute("riddleAnsList", riddleAnsList);
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
-		requestDispatcher.forward(request, response);
+		 }
+		 
+		 UserManager userManager = new UserManager();
+		 User user = userManager.retrieveUser(nric);
+		 
+		 int riddleID = Integer.parseInt(request.getParameter("riddleID"));
+		 int riddleAnswerID = Integer.parseInt(request.getParameter("riddleAnswerID"));
+		 
+		 RiddleManager riddleManager = new RiddleManager();
+		 Riddle riddle = riddleManager.retrieveRiddle(riddleID);
+		 
+		 boolean result = riddleManager.insertChoice(riddleID, riddleAnswerID, nric);
+		 
+		 if(result) {
+			 RiddleAnswer riddleAns = riddleManager.retrieveRiddleAnswer(riddleAnswerID);
+			 
+			 if(riddleAns.getRiddleAnswerStatus().equals("CORRECT"))
+				 userManager.updatePoints(nric, user.getPoints()+riddle.getRiddlePoint());
+		 }
+			
+		//RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewRiddleWebServlet");
+		//requestDispatcher.forward(request, response);
 	}
 
 }

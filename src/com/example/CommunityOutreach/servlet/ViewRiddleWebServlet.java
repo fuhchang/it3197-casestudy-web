@@ -17,16 +17,16 @@ import com.example.CommunityOutreach.model.RiddleAnswer;
 import com.example.CommunityOutreach.model.RiddleUserAnswered;
 
 /**
- * Servlet implementation class RetrieveAllRiddleWebServlet
+ * Servlet implementation class ViewRiddleWebServlet
  */
-@WebServlet("/RetrieveAllRiddleWebServlet")
-public class RetrieveAllRiddleWebServlet extends HttpServlet {
+@WebServlet("/ViewRiddleWebServlet")
+public class ViewRiddleWebServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveAllRiddleWebServlet() {
+    public ViewRiddleWebServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,17 +48,20 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	            }
 	        }
 		}
-		request.setAttribute("userNRIC", nric);
-		
+
+		int riddleID = Integer.parseInt(request.getParameter("riddleID"));
 		RiddleManager riddleManager = new RiddleManager();
 		
-		ArrayList<Riddle> riddleList = riddleManager.retrieveAllRiddle();
-		request.setAttribute("riddleList", riddleList);
+		Riddle riddle = riddleManager.retrieveRiddle(riddleID);
+		request.setAttribute("riddle", riddle);
 		
-		ArrayList<RiddleAnswer> riddleAnsList = riddleManager.retrieveAllRiddleAnswers();
+		ArrayList<RiddleAnswer> riddleAnsList = riddleManager.retrieveRiddleAnswers(riddleID);		
 		request.setAttribute("riddleAnsList", riddleAnsList);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
+		ArrayList<RiddleUserAnswered> userAnsweredList = riddleManager.retrieveAllUserAnswered(nric);
+		request.setAttribute("userAnsweredList", userAnsweredList);
+		
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewRiddle.jsp");
 		requestDispatcher.forward(request, response);
 	}
 
@@ -67,28 +70,6 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		response.setContentType("text/html");
-		String nric = null;
-		Cookie[] cookies = request.getCookies();
-		 if(cookies != null){
-	        for(Cookie cookie : cookies){
-	            if(cookie.getName().equals("userLogin")){
-	                nric = cookie.getValue().toString();
-	                break;
-	            }
-	        }
-		}
-		request.setAttribute("userNRIC", nric);
-		
-		ArrayList<Riddle> riddleList = new RiddleManager().retrieveAllRiddle();
-		request.setAttribute("riddleList", riddleList);
-		
-		ArrayList<RiddleAnswer> riddleAnsList = new RiddleManager().retrieveAllRiddleAnswers();
-		request.setAttribute("riddleAnsList", riddleAnsList);
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
-		requestDispatcher.forward(request, response);
 	}
 
 }

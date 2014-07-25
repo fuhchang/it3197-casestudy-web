@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.RiddleManager;
+import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Riddle;
 import com.example.CommunityOutreach.model.RiddleAnswer;
 import com.example.CommunityOutreach.model.User;
@@ -59,7 +60,7 @@ public class CreateRiddleWebServlet extends HttpServlet {
 		 riddle.setUser(new User(nric));
 		 riddle.setRiddleTitle(request.getParameter("title"));
 		 riddle.setRiddleContent(request.getParameter("content"));
-		 riddle.setRiddleStatus("ACTIVE");
+		 riddle.setRiddleStatus("NORMAL");
 		 riddle.setRiddlePoint(10);
 		 
 		 RiddleManager riddleManager = new RiddleManager();
@@ -76,6 +77,10 @@ public class CreateRiddleWebServlet extends HttpServlet {
 			 
 			 riddleManager.createRiddleAns(riddleAns);
 		 }
+		 
+		 UserManager userManager = new UserManager();
+		 User user = userManager.retrieveUser(nric);
+		 userManager.updatePoints(nric, user.getPoints()-50);
 		 
 		 RequestDispatcher requestDispatcher = request.getRequestDispatcher("RetrieveAllRiddleWebServlet");
 		 requestDispatcher.forward(request, response);

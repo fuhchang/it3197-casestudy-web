@@ -21,23 +21,31 @@
 			<div class="form-group">
 				<label for="choices">Choices: </label>
 				
-				<div class="radio">
-				    <input type="radio" name="choices" value="0" checked>
+				<div class="input-group">
+					<span class="input-group-addon">
+				    	<input type="radio" name="choices" value="0" checked>
+			    	</span>
 				    <input class="form-control" name="choice1" type="text" id="choice1" placeholder="Enter choice">
 				</div>
-				
-				<div class="radio">
-				    <input type="radio" name="choices" value="1">
+				<br/>
+				<div class="input-group">
+					<span class="input-group-addon">
+				    	<input type="radio" name="choices" value="1">
+			    	</span>
 				    <input class="form-control" name="choice2" type="text" id="choice2" placeholder="Enter choice">
 				</div>
-				
-				<div class="radio">
-				    <input type="radio" name="choices" value="2">
+				<br/>
+				<div class="input-group">
+					<span class="input-group-addon">
+				    	<input type="radio" name="choices" value="2">
+			    	</span>
 				    <input class="form-control" name="choice3" type="text" id="choice3" placeholder="Enter choice">
 				</div>
-				
-				<div class="radio">
-				    <input type="radio" name="choices" value="3">
+				<br/>
+				<div class="input-group">
+					<span class="input-group-addon">
+				    	<input type="radio" name="choices" value="3">
+				    </span>
 				    <input class="form-control" name="choice4" type="text" id="choice4" placeholder="Enter choice">
 				</div>
 			</div>

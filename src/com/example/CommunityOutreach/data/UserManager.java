@@ -179,6 +179,7 @@ public class UserManager {
 				user.setAddress(rs.getString("address"));
 				user.setEmail(rs.getString("email"));
 				user.setActive(rs.getInt("active"));
+				user.setPoints(rs.getInt("points"));
 			} else {
 				return null;
 			}

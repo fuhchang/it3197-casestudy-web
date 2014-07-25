@@ -71,8 +71,6 @@ public class UpdateRiddleWebServlet extends HttpServlet {
 		 riddle.setUser(new User(nric));
 		 riddle.setRiddleTitle(request.getParameter("title"));
 		 riddle.setRiddleContent(request.getParameter("content"));
-		 riddle.setRiddleStatus("UPDATED");
-		 riddle.setRiddlePoint(10);
 		 
 		 RiddleManager riddleManager = new RiddleManager();
 		 riddleManager.updateRiddle(riddle);

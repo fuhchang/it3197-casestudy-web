@@ -7,13 +7,22 @@
 	<jsp:attribute name="cssImports"></jsp:attribute>
 	<jsp:attribute name="jsImports">
 		<script>
-			$('.panel-collapse').collapse("hide");
+			var toggle;
+			var notToggled = $('.panel-content').collapse("hide");
+			$(document).ready(function(){
+				toggle = $('.panel-heading').click(function() {
+					toggle.not($(this).removeClass('active'));
+					$(this).toggleClass('active');
+					notToggled.not($(this).next()).slideUp();
+					$(this).next().slideToggle("fast");
+				});
+			});
 			
 			function deleteRiddle(riddleID) {
 				if(confirm("Are you sure you want to delete?")) {
 					window.location.href="DeleteRiddleWebServlet?riddleID="+riddleID;
 				}
-			}
+			};
 		</script>
 	</jsp:attribute>
 	
@@ -22,20 +31,29 @@
 		
 		<button type="submit" class="col-xs-offset-7 col-xs-5 btn btn-default" onClick="location.href='CreateRiddle.jsp'"><span class="glyphicon glyphicon-plus-sign"></span> Create Riddle</button>
 		
-		<div class="panel-group" id="accordion">
+		<div class="panel-group">
 			<!-- For each riddle, a panel to display -->
 			<c:forEach items="${riddleList}" var="riddle">
 				<div class="panel panel-default">
-					<a data-toggle="collapse" data-parent="#accordion" href="#riddle${riddle.riddleID}" style="color:white;text-decoration:none;">
-						<div class="panel-heading" style="background-color:grey;">
-							<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="glyphicon glyphicon-chevron-right pull-right"></span></h3>
-						</div>
-					</a>			
-					<div id="riddle${riddle.riddleID}" class="panel-collapse collapse in" data-toggle="modal" data-target=".modal${riddle.riddleID}">
-						<div class="panel-body">${riddle.riddleContent}</div>
-					</div>
+					<c:choose>
+						<c:when test="${riddle.user.nric == userNRIC}">
+							<div class="panel-heading" style="color:white;background-color:gray;">
+								<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+							</div>
+							<div id="riddle${riddle.riddleID}" class="panel-content" data-toggle="modal" data-target=".modal${riddle.riddleID}">
+								<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-up"></span></div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="panel-heading" style="color:white;background-color:black;">
+								<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+							</div>
+							<div id="riddle${riddle.riddleID}" class="panel-content" onClick="location.href='ViewRiddleWebServlet?riddleID=${riddle.riddleID}'">
+								<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-left"></span></div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 					
-					<!-- For each riddle, a modal to display answers -->
 					<div class="modal fade modal${riddle.riddleID}">
 						<div class="modal-dialog modal-lg">
 							<div class="modal-content">
@@ -44,31 +62,24 @@
 									<h4 class="modal-title"><strong>${riddle.riddleTitle}</strong></h4>
 								</div>
 								<div class="modal-body">
-									<p>${riddle.riddleContent}</p>
-									<!-- For each riddle get the four choices -->
+									<p style="text-align:justify">${riddle.riddleContent}</p>
 									<c:forEach items="${riddleAnsList}" var="riddleAns">
-										<!--  Only display the choices for the selected riddle -->
 										<c:if test="${riddleAns.riddle.riddleID == riddle.riddleID}">
 											<c:choose>
-												<c:when test="${riddle.user.nric == userNRIC && riddleAns.riddleAnswerStatus == 'WRONG'}">
-													<button class="btn btn-danger form-control" style="margin-top:5%;" disabled>${riddleAns.riddleAnswer}</button>
-												</c:when>
-												<c:when test="${riddle.user.nric == userNRIC && riddleAns.riddleAnswerStatus == 'CORRECT'}">
+												<c:when test="${riddleAns.riddleAnswerStatus == 'CORRECT'}">
 													<button class="btn btn-success form-control" style="margin-top:5%;" disabled>${riddleAns.riddleAnswer}</button>
 												</c:when>
 												<c:otherwise>
-													<button class="btn btn-default form-control" style="margin-top:5%;">${riddleAns.riddleAnswer}</button>
+													<button class="btn btn-danger form-control" style="margin-top:5%;" disabled>${riddleAns.riddleAnswer}</button>
 												</c:otherwise>
 											</c:choose>
 										</c:if>
 									</c:forEach>
 								</div>
-								<c:if test="${riddle.user.nric == userNRIC}">
-									<div class="modal-footer">
-										<button class="btn btn-default glyphicon glyphicon-pencil" onClick="location.href='UpdateRiddleWebServlet?riddleID=${riddle.riddleID}'"> Edit</button>
-										<button class="btn btn-default glyphicon glyphicon-trash" onClick="deleteRiddle(${riddle.riddleID})"> Delete</button>
-									</div>
-								</c:if>
+								<div class="modal-footer">
+									<button class="btn btn-default glyphicon glyphicon-pencil" onClick="location.href='UpdateRiddleWebServlet?riddleID=${riddle.riddleID}'"> Edit</button>
+									<button class="btn btn-default glyphicon glyphicon-trash" onClick="deleteRiddle(${riddle.riddleID})"> Delete</button>
+								</div>
 							</div>
 						</div>
 					</div>

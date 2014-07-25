@@ -15,6 +15,10 @@ public class RiddleAnswer {
 		this.riddleAnswerStatus = riddleAnswerStatus;
 	}
 	
+	public RiddleAnswer(int riddleAnswerID) {
+		this.riddleAnswerID = riddleAnswerID;
+	}
+
 	public int getRiddleAnswerID() {
 		return riddleAnswerID;
 	}
