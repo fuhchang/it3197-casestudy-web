@@ -63,7 +63,7 @@
 			}
 	 
 		function initialize(position) {
-		  //geocoder = new google.maps.Geocoder();			
+		  geocoder = new google.maps.Geocoder();			
 		  var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);		 
 		 /* map = new google.maps.Map(document.getElementById('mapCanvas'), {		 
 		    zoom: 18,		 
@@ -81,7 +81,7 @@
 	 
 		  // Update current position info.		 
 		  updateMarkerPosition(latLng);		 
-		 
+		  geocodePosition(latLng);
 		 		 
 		}
 		
@@ -95,6 +95,26 @@
 			
 			//document.getElementById('test').value = [latLng.lat(),latLng.lng()].join(', ');		 
 			}
+		
+		
+		function geocodePosition(pos) {		 
+			geocoder.geocode({
+				latLng: pos
+			}, 	 
+			function(responses) {		 
+			    if (responses && responses.length > 0) {			 
+			      updateMarkerAddress(responses[0].formatted_address);			 
+			    } else {	 
+			      updateMarkerAddress('Cannot determine address at this location.');			 
+			    }			 
+			  });			 
+			}
+		
+		
+		function updateMarkerAddress(str) {			 
+			// document.getElementById('address').innerHTML = str;
+			  document.getElementById('loc').value = str;
+			}	
 		</script>
 	
 	
@@ -119,6 +139,7 @@
 	 
 	 <div class="panel panel-info" Style="width:100%;margin:0px auto;">
 		<div class="panel-heading">
+			<a type="submit" href="PendingArticlesServlet" id="" name="article-content-id">.</a>
 			<h2>Latest News</h2>
 			
 		</div>
@@ -161,12 +182,15 @@
    						 </div>
   				</div>
   				
+		  					
+		 					<input type = "text" class="form-control" id="loc" style="width:100%;margin-top:10px;" name="loc" readonly/>
+				
   				
-  				<div class="input-group" style="margin-top:10px;">
+  				<div class="input-group" style="margin-top:10px;display:none;">
 		  					<span class="input-group-addon">Latitude: </span>
 		 					<input type = "text" class="form-control" id="currentLat" style="width:100%;" name="currentLat" readonly/>
 				</div>
-				<div class="input-group" style="margin-top:10px;">
+				<div class="input-group" style="margin-top:10px; display:none;">
 		  					<span class="input-group-addon">Longitude: </span>
 		 					<input type = "text" class="form-control" id="currentLon" style="width:100%;" name="currentLon" readonly/>
 				</div>
@@ -241,7 +265,6 @@
 		var selectedDistance = document.getElementById("distSelected").value;
 		//alert(hi);
 		if(selectedDistance==0){
-			//document.getElementById("test").value="Shit";
 			document.getElementById("showArtLoc").style.display="none";
 			document.getElementById("brrr").style.display="none";
 		}

@@ -120,7 +120,6 @@
 	<div class="panel panel-info" Style="width:850px;margin:0px auto;">
 		<div class="panel-heading">
 			<!--  <h1 class="panel-title">Latest News From Around The Neighbourhood</h1>-->
-			<a type="submit" href="PendingArticlesServlet" id="" name="article-content-id">.</a>
 			<h1>Pending Latest News Submissions</h1>
 				
 		</div>
