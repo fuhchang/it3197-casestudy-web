@@ -30,8 +30,7 @@
 						<div class="panel-heading" style="background-color:grey;">
 							<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="glyphicon glyphicon-chevron-right pull-right"></span></h3>
 						</div>
-					</a>					
-					<div style="height:1px;background-color:grey"></div>					
+					</a>			
 					<div id="riddle${riddle.riddleID}" class="panel-collapse collapse in" data-toggle="modal" data-target=".modal${riddle.riddleID}">
 						<div class="panel-body">${riddle.riddleContent}</div>
 					</div>
@@ -51,11 +50,12 @@
 										<!--  Only display the choices for the selected riddle -->
 										<c:if test="${riddleAns.riddle.riddleID == riddle.riddleID}">
 											<c:choose>
-												<!-- If riddle belongs to logged in user, he cannot answer -->
-												<c:when test="${riddle.user.nric == userNRIC}">
-													<button class="btn btn-default form-control" style="margin-top:5%;" disabled>${riddleAns.riddleAnswer}</button>
+												<c:when test="${riddle.user.nric == userNRIC && riddleAns.riddleAnswerStatus == 'WRONG'}">
+													<button class="btn btn-danger form-control" style="margin-top:5%;" disabled>${riddleAns.riddleAnswer}</button>
 												</c:when>
-												<!-- If riddle does not belongs to logged in user, he can answer -->
+												<c:when test="${riddle.user.nric == userNRIC && riddleAns.riddleAnswerStatus == 'CORRECT'}">
+													<button class="btn btn-success form-control" style="margin-top:5%;" disabled>${riddleAns.riddleAnswer}</button>
+												</c:when>
 												<c:otherwise>
 													<button class="btn btn-default form-control" style="margin-top:5%;">${riddleAns.riddleAnswer}</button>
 												</c:otherwise>
