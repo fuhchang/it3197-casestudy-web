@@ -12,9 +12,11 @@ import java.util.Enumeration;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 
 import com.example.CommunityOutreach.data.EventManager;
@@ -68,7 +70,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         String eventName = request.getParameter("eventName");
         String eventCategory = request.getParameter("eventCategory");
         String eventDescription = request.getParameter("eventDescription");
-        String eventType = request.getParameter("eventType");
+        String eventType = "Small Event";
         String occurence = request.getParameter("occurence");
         String eventDateTimeFrom = request.getParameter("eventDateTimeFrom");
         String eventDateTimeTo = request.getParameter("eventDateTimeTo");
@@ -84,6 +86,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         }
         Date dateTimeFrom = null;
         Date dateTimeTo = null;
+        String eventAdminNRIC = "";
         try {
         	System.out.println(request.getParameter("web"));
         	if(request.getParameter("web").equals("true")){
@@ -98,10 +101,13 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		cTo.set(Calendar.SECOND, 0);
         		cTo.setTime(dateTimeTo);
         		dateTimeTo = cTo.getTime();
+        		
+        		eventAdminNRIC = this.getCookieValue(request);
         	}
         	else{
         		dateTimeFrom = sqlDateTimeFormatter.parse(eventDateTimeFrom);
         		dateTimeTo = sqlDateTimeFormatter.parse(eventDateTimeTo);
+        		eventAdminNRIC = request.getParameter("eventAdminNRIC");
         	}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -109,7 +115,6 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		}
         //Testing Values
         //System.out.println("Event No: " + eventID);
-		String eventAdminNRIC = request.getParameter("eventAdminNRIC");
 		
 		EventManager eventManager = new EventManager();
 		UserManager userManager = new UserManager();
@@ -156,7 +161,6 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         			myObj.addProperty("success", true);
         			myObj.addProperty("message","Event created successfully.");
         			out.println(myObj.toString());
-        			return;
         		}
         		else{
         			JsonObject myObj = new JsonObject();
@@ -173,12 +177,25 @@ public class CreateEventServlet extends HttpServlet implements Settings{
             myObj.addProperty("success", false);
             myObj.addProperty("message","Unable to create event successfully.");
             out.println(myObj.toString());
+            return;
         }
         
         if(request.getParameter("web").equals("true")){
-        	RequestDispatcher rd = request.getRequestDispatcher("event.jsp");
-        	rd.forward(request, response);
+    		response.sendRedirect("viewAllEvents.jsp");
 		}
 	}
 
+    public String getCookieValue(HttpServletRequest req){
+    	String cName = "userLogin",dValue = "";
+    	Cookie[] c1= req.getCookies();
+    	if (c1 != null) {
+    		for(int i=0; i<c1.length; i++) {
+    			Cookie c = c1[i];
+    			if (cName.equals(c.getName())) {
+    				return(c.getValue());
+    			}
+    		}
+    	}
+    	return(dValue);
+   }
 }

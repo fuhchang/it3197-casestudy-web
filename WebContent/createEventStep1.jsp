@@ -12,10 +12,13 @@
 				float:left;
 			}
 			#currentForm{
-				margin-top:25px;
+				margin-top:3%;
 			}
 			#location{
 				display:inline;
+			}
+			#container{
+				margin-bottom:5%:
 			}
 		</style>
 	</jsp:attribute>
@@ -99,7 +102,11 @@
 							<table id="uploadPosterButtons">
 								<tr>
 									<td><div id="container"></div></td>
-									<td style="padding-left:25px;"></td>
+								</tr>
+								<!--<tr>
+									<td style='height:50px;padding-left:20%;'>- Or -</td>
+								</tr> -->
+								<tr>
 									<td><input type="file" name="excelPathName" id="uploadBtnExcel" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/></td>
 								</tr>
 							</table>

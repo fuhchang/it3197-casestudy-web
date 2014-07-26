@@ -39,10 +39,13 @@
 	 	<h1>Community Outreach</h1>
 
 		<div class="row marketing">
-			<button class="btn btn-default col-xs-6" onclick="location.href='event.jsp'">
-				<span class="glyphicon glyphicon-calendar"></span>
-				<h4>Events</h4>
-			</button>
+			<form action="retrieveAllEvents" method="POST">
+				<button class="btn btn-default col-xs-6" onclick="location.href='event.jsp'">
+					<span class="glyphicon glyphicon-calendar"></span>
+					<h4>Events</h4>
+				</button>
+				<input type="hidden" name="web" value="true" />
+			</form>
 			<button class="btn btn-default col-xs-6" onclick="location.href='article.jsp'">
 				<span class="glyphicon glyphicon-list-alt"></span>
 				<h4>Articles</h4>

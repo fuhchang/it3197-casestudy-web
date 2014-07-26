@@ -8,13 +8,14 @@ import java.util.ArrayList;
 
 import com.example.CommunityOutreach.controller.DBController;
 import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.util.Settings;
 
 /**
  * This is the data access manager for Event
  * @author Lee Zhuo Xun
  *
  */
-public class EventManager {
+public class EventManager{
 	private DBController dbController = new DBController();
 	
 	/**
@@ -60,6 +61,43 @@ public class EventManager {
 	}
 	
 	/**
+	 * This method is to retrieve all active events from the database.
+	 * 
+	 * @return ArrayList<Event>
+	 */
+	public ArrayList<Event> retrieveAllActiveEvents() {
+		String sql = "SELECT * FROM event WHERE active = 1";
+		ArrayList<Event> eventArrList = new ArrayList<Event>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Event event = new Event();
+				event.setEventID(rs.getInt("eventID"));
+				event.setEventAdminNRIC(rs.getString("eventAdminNRIC"));
+				event.setEventName(rs.getString("eventName"));
+				event.setEventCategory(rs.getString("eventCategory"));
+				event.setEventDescription(rs.getString("eventDescription"));
+				event.setEventType(rs.getString("eventType"));
+				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
+				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeFrom"));
+				event.setOccurence(rs.getString("occurence"));
+				event.setEventLocation(rs.getString("eventLocation"));
+				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
+				event.setActive(rs.getInt("active"));
+				eventArrList.add(event);
+			}
+			conn.close();
+			return eventArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
 	 * This method is to retrieve all events from the database.
 	 * 
 	 * @return ArrayList<Event>
@@ -95,6 +133,7 @@ public class EventManager {
 			return null;
 		}
 	}
+	
 	
 	/**
 	 * This method is to retrieve a event based on eventID
@@ -147,7 +186,7 @@ public class EventManager {
 			conn.setAutoCommit(false);
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			
+			System.out.println("New Event Admin NRIC: " + event.getEventAdminNRIC());
 			ps.setString(1, event.getEventAdminNRIC());
 			ps.setString(2, event.getEventName());
 			ps.setString(3, event.getEventCategory());
