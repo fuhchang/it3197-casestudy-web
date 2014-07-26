@@ -23,7 +23,6 @@
 			 	display:block;
 			}
 			a{
-				width:65%;
 				text-align:center;
 			}
 		</style>
@@ -31,7 +30,7 @@
 		<script src="plugins/jquery-2.x.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/master.js"></script>
-		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false&libraries=geometry"></script>
 		<script src="js/oneMap.js"></script>
    		<script type="text/javascript" src="js/suggestLocation.js"></script>
    		<script type="text/javascript" src="js/spin.js"></script>
@@ -42,7 +41,6 @@
 		<div id="googleMap" style="width:98%;height:380px;"></div>
 		<div id="legend">
 		  Legend:
-		  <div id="forLegend" class='suggestLocation' style="margin-bottom:5px;margin-top:5px;"><img src='images/suggest.gif' class="suggestLocation" /><span class="suggestLocation" style="font-size:14px;margin-left:5px;">Recommended Location</span></div>
 		  <div id="forLegend" class='Eldercare' style="margin-bottom:5px;margin-top:5px;"><img class="Eldercare"/><span class="Eldercare" style="font-size:14px;margin-left:5px;">Elder Care Services</span></div>
 		  <div id="forLegend" class='Family' style="margin-bottom:5px;margin-top:5px;"><img class="Family"/><span class="Family" style="font-size:14px;margin-left:5px;">Family Services</span></div>
 		  <div id="forLegend" class='VoluntaryWelfareOrgs' style="margin-bottom:5px;margin-top:5px;"><img class="VoluntaryWelfareOrgs"/><span class="VoluntaryWelfareOrgs" style="font-size:14px;margin-left:5px;">Voluntary Welfare Organizations</span></div>
@@ -54,7 +52,7 @@
 				<span id='up' class="glyphicon glyphicon-chevron-up" style='float:right;'></span>
 			</div>
 			<div class="panel-body">
-			  	<div class="col-xs-6">
+			  	<div class="col-xs-6 col-md-8">
 					<p>Theme(s): </p>
 					<div id="themeAvailable" class="list-group">
 						<div id="education">
@@ -69,7 +67,7 @@
 						</div>
 					</div>
 				</div>
-			  	<div class="col-xs-6">
+			  	<div class="col-xs-6 col-md-4">
 					<p> Options: </p>
 					<div>
 						<a class='list-group-item suggestLocation'> Suggest Location </a>
@@ -79,12 +77,10 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="row" style="margin-left:1%;">
-		  	<div class="col-xs-4" style='padding-left:0;'>
-		  		<br/>
-		  		<br/>
-		  		<table>
-		  			<tr><td class='selectedName'></td></tr>
+		<div class="row" style="margin-left:1%;margin-right:0%;margin-bottom:1%;">
+		  	<div class="col-xs-12" style='padding-left:0;padding-right:1%;'>
+		  		<table class="table table-bordered selectLocationTable">
+		  			<tr><td colspan="2" class='selectedName'></td></tr>
 		  			<tr><td class='selectedlocation'></td></tr>
 		  			<tr><td class='selectedHyperlink'></td></tr>
 		  		</table>
@@ -93,4 +89,4 @@
 			<br/>
 		</div>
 	</body>
-</html>
+</html>		
