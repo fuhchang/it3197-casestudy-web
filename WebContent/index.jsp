@@ -39,8 +39,8 @@
 	 	<h1>Community Outreach</h1>
 
 		<div class="row marketing">
-			<form action="retrieveAllEvents" method="POST">
-				<button class="btn btn-default col-xs-6" onclick="location.href='event.jsp'">
+			<form action="retrieveAllEvents" method="GET">
+				<button class="btn btn-default col-xs-6">
 					<span class="glyphicon glyphicon-calendar"></span>
 					<h4>Events</h4>
 				</button>

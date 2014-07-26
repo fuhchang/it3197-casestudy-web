@@ -44,7 +44,7 @@
 			<tbody>
 				<c:forEach items="${eventArrList}" var="item">
 					<tr>
-						<td>${item.eventID}</td>
+						<td><a href="retrieveEvent?id=${item.eventID}">${item.eventID}</a></td>
 						<td>${item.eventName}</td>
 						<td>${item.eventCategory}</td>
 						<td>${item.eventDateTimeFrom}</td>

@@ -42,6 +42,36 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+        response.setContentType("text/html");
+        response.setHeader("Cache-control", "no-cache, no-store");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "-1");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Max-Age", "86400");
+
+        if(request.getParameter("web").equals("true")){
+	        EventManager eventManager = new EventManager();
+	        ArrayList<Event> eventArrList = eventManager.retrieveAllActiveEvents();
+	        
+	        for(int i=0;i<eventArrList.size();i++){
+	        	String eventDateTimeFrom = displayFormatter.format(eventArrList.get(i).getEventDateTimeFrom());
+	        	String eventDateTimeTo = displayFormatter.format(eventArrList.get(i).getEventDateTimeTo());
+	        	try {
+					eventArrList.get(i).setEventDateTimeFrom(displayFormatter.parse(eventDateTimeFrom));
+	            	eventArrList.get(i).setEventDateTimeTo(displayFormatter.parse(eventDateTimeTo));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	        
+			request.setAttribute("eventArrList", eventArrList);
+	    	RequestDispatcher rd = request.getRequestDispatcher("viewAllEvents.jsp");
+	    	rd.forward(request,response);
+        }
 	}
 
 	/**
@@ -86,26 +116,5 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
 	        }
 
 		}
-        else{
-
-            EventManager eventManager = new EventManager();
-            ArrayList<Event> eventArrList = eventManager.retrieveAllActiveEvents();
-            
-            for(int i=0;i<eventArrList.size();i++){
-            	String eventDateTimeFrom = displayFormatter.format(eventArrList.get(i).getEventDateTimeFrom());
-            	String eventDateTimeTo = displayFormatter.format(eventArrList.get(i).getEventDateTimeTo());
-            	try {
-					eventArrList.get(i).setEventDateTimeFrom(displayFormatter.parse(eventDateTimeFrom));
-	            	eventArrList.get(i).setEventDateTimeTo(displayFormatter.parse(eventDateTimeTo));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-            
-    		request.setAttribute("eventArrList", eventArrList);
-        	RequestDispatcher rd = request.getRequestDispatcher("viewAllEvents.jsp");
-        	rd.forward(request,response);
-        }
 	}
 }
