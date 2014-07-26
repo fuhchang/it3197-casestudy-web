@@ -149,7 +149,9 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		Calendar todayDate = Calendar.getInstance();
         		EventParticipants eventParticipants = new EventParticipants(eventID,eventAdminNRIC,todayDate.getTime(),0);
         		boolean isEventParticipantsCreated = eventParticipantsManager.createEventParticipant(eventParticipants);
-        		if(isEventParticipantsCreated){
+        		boolean addedPoints = userManager.updatePoints(eventAdminNRIC, (user.getPoints() + pointsForCreatingEvent));
+        		System.out.println(user.getPoints() + pointsForCreatingEvent);
+        		if((isEventParticipantsCreated) && (addedPoints)){
         			JsonObject myObj = new JsonObject();
         			myObj.addProperty("success", true);
         			myObj.addProperty("message","Event created successfully.");

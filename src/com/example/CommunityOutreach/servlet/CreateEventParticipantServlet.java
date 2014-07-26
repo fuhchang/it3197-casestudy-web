@@ -125,7 +125,7 @@ public class CreateEventParticipantServlet extends HttpServlet implements Settin
         boolean isEventParticipantCreated = false;
         try{
         	isEventParticipantCreated = eventParticipantsManager.createEventParticipant(eventParticipant);
-        	if(!isEventParticipantCreated){
+        	if((!isEventParticipantCreated)){
         		JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", false);
                 myObj.addProperty("message","Unable to create event participant successfully.");

@@ -25,7 +25,7 @@ public class UserManager {
 	 */
 	public boolean createUser(User user) {
 		String sql = "INSERT INTO user ";
-		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ?)";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ?, ?)";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -40,7 +40,7 @@ public class UserManager {
 			ps.setString(6, user.getAddress());
 			ps.setString(7, user.getEmail());
 			ps.setInt(8, user.getActive());
-
+			ps.setInt(9, user.getPoints());
 			System.out.println(ps);
 			ps.executeUpdate();
 
@@ -76,6 +76,7 @@ public class UserManager {
 				user.setAddress(rs.getString("address"));
 				user.setEmail(rs.getString("email"));
 				user.setActive(rs.getInt("active"));
+				user.setPoints(rs.getInt("points"));
 				userArrList.add(user);
 			}
 			conn.close();
@@ -109,6 +110,7 @@ public class UserManager {
 				user.setAddress(rs.getString("address"));
 				user.setEmail(rs.getString("email"));
 				user.setActive(rs.getInt("active"));
+				user.setPoints(rs.getInt("points"));
 				userArrList.add(user);
 			}
 			conn.close();
@@ -259,7 +261,11 @@ public class UserManager {
 			ps.setInt(1, points);
 			ps.setString(2, nric);
 			
+			System.out.println(ps);
 			ps.executeUpdate();
+			
+			conn.setAutoCommit(true);
+			conn.close();
 			result = true;
 			
 		} catch (SQLException e) {
