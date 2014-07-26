@@ -43,7 +43,6 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 		        for(Cookie cookie : cookies){
 		            if(cookie.getName().equals("userLogin")){
 		                userName = cookie.getValue().toString();
-		               
 		                break;
 		            }
 		        }
@@ -53,7 +52,9 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 		ArrayList<Hobby> hobbyList = hm.retrieveAllHobby();
 		
 		HobbyMembersManager hmManager = new HobbyMembersManager();
+		
 		ArrayList<HobbyMembers> memberList = hmManager.retrieveAllHobbyMember(userName);
+		
 		ArrayList<Hobby> finalList = new ArrayList<Hobby>();
 		if(memberList.size() > 0){
 			int b = 0;
@@ -63,11 +64,14 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 					
 					String mID = Integer.toString(memberList.get(i).getGroupID());
 					String hID = Integer.toString(hobbyList.get(a).getGrpID());
+					System.out.println(mID + " " + hID);
 					if (mID.equals(hID)) {
 						finalList.add(hobbyList.get(a));
 					} 
 				}
 			}
+			
+			request.setAttribute("joinList", finalList);
 		}
 		
 		for(int i=0; i<finalList.size();i++){
@@ -80,11 +84,9 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 				}
 			}
 		}
-		if(hobbyList.size() > 0 && finalList.size() >0){
-			request.setAttribute("joinList", finalList);
+		
+		if(hobbyList.size() > 0){
 			request.setAttribute("hobbyList", hobbyList);		
-			}else if(hobbyList.size() > 0){
-				request.setAttribute("hobbyList", hobbyList);	
 			}
 		
 		
@@ -113,7 +115,9 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 		ArrayList<Hobby> hobbyList = hm.retrieveAllHobby();
 		
 		HobbyMembersManager hmManager = new HobbyMembersManager();
+		
 		ArrayList<HobbyMembers> memberList = hmManager.retrieveAllHobbyMember(userName);
+		
 		ArrayList<Hobby> finalList = new ArrayList<Hobby>();
 		if(memberList.size() > 0){
 			int b = 0;
@@ -123,11 +127,14 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 					
 					String mID = Integer.toString(memberList.get(i).getGroupID());
 					String hID = Integer.toString(hobbyList.get(a).getGrpID());
+					System.out.println(mID + " " + hID);
 					if (mID.equals(hID)) {
 						finalList.add(hobbyList.get(a));
 					} 
 				}
 			}
+			
+			request.setAttribute("joinList", finalList);
 		}
 		
 		for(int i=0; i<finalList.size();i++){
@@ -140,6 +147,7 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 				}
 			}
 		}
+		
 		if(hobbyList.size() > 0){
 			request.setAttribute("hobbyList", hobbyList);		
 			}

@@ -113,4 +113,38 @@ public class PostManager {
 		return result;
 	
 	}
+	
+	public boolean updatePost(HobbyPost post){
+		boolean result = false;
+		String sql = "UPDATE post set dateTime= ?, postTitle = ?, content =? ,Lat =?, Lng =? WHERE postID=?";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			ps.setString(1,	dateFormat.format(date));
+			ps.setString(2, post.getPostTitle());
+			ps.setString(3, post.getContent());
+			ps.setDouble(4, post.getLat());
+			ps.setDouble(5, post.getLng());
+			ps.setInt(6, post.getPostID());
+			ps.executeUpdate();
+			result=true;
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 }

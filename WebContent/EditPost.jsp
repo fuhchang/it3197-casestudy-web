@@ -181,13 +181,12 @@
 
 				if (input.files && input.files[0]) {
 					var reader = new FileReader();
-						
+
 					reader.onload = function(e) {
 						$('#blah').attr('src', e.target.result);
 					}
 
 					reader.readAsDataURL(input.files[0]);
-					
 				}
 			}
 
@@ -206,39 +205,23 @@
 
 	<jsp:attribute name="content">
 	<br>	
-			<form action="CreateHobbyWebServlet" method="post">
+			<form action="UpdatePostServlet" method="post">
 			<div class="panel panel-info">
 			<div class="panel-heading">
-				<h2>Create Group Form</h2>
+				<h2>Update Post Form</h2>
 			</div>
 				<div class="panel-body">
 				<div class="input-group">
 		  					<span class="input-group-addon">Title: </span>
 		 					<input type="text" class="form-control" placeholder=""
-							name="gtitle">
+							name="gtitle" value="${param['grpPost']}">
+							<input type="hidden" name="postID" value=${param['id']} >
+							<input type="hidden" name="groupID" value="${param['grpid']}" /> 
 						</div>
 				<br />
-				
-				<select class="btn btn-default dropdown-toggle"
-						style="width: 100%; height: 35px;" name="gType">
-								  <option>Select a category</option>
-								  <option>Dance</option>
-        						  <option>Cooking</option>
-                                  <option>Gardening</option>
-							</select>
+				<textarea cols="50" style="width: 100%; height: 350px;" name="gDesc">${param['postContent']}</textarea>
 				<br />
 				<br />
-				<textarea cols="50" placeholder="Enter your Description here"
-						style="width: 100%; height: 350px;" name="gDesc"></textarea>
-				<br />
-				<br />
-				
-				<div class="input-group">
-				<form action="upload-script-url" method="post" enctype="multipart/form-data">
-					<input type='file' id="imgInp" name="imgFile"/>
-   					 <img id="blah" src="#" alt="your image" height="100" width="100"/>
-   					 </form>
-				</div>
 				<div>
     				<div class="input-group">
       					<!--  <input type="text" class="form-control">-->
@@ -271,7 +254,6 @@
 			</div>
 		</div>
 		</form>
-		
-		
+	
 	</jsp:attribute>
 </t:master>

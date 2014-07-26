@@ -76,6 +76,8 @@ public class CreateHobbyWebServlet extends HttpServlet {
 		            }
 		        }
 		 }
+		//String imgString = request.getParameter("imgFile");
+		//System.out.println(imgString);
 		String title = request.getParameter("gtitle");
 		String category = request.getParameter("gType");
 		String grpDesc = request.getParameter("gDesc");
@@ -93,8 +95,13 @@ public class CreateHobbyWebServlet extends HttpServlet {
 
 		Lat = Double.parseDouble(temp[0]);
 		Lng = Double.parseDouble(temp[1]);
-
-		
+		/*
+		File file = new File("/storage/emulated/0/DCIM/Camera/20140717_111856.jpg");
+		int len = (int) file.length();
+		byte[] buf = new byte[len];
+		FileInputStream fis = new FileInputStream(file);
+		fis.read(buf);
+		*/
 		Hobby hobby = new Hobby();
 		User user = new User();
 		user.setNric(userName);
@@ -102,7 +109,11 @@ public class CreateHobbyWebServlet extends HttpServlet {
 		hobby.setCategory(category);
 		hobby.setLat(Lat);
 		hobby.setLng(Lng);
-		hobby.setGrpDesc(grpDesc);
+		/*
+		String relativeWebPath ="C:/Users/fuhchang/Desktop/uploadFile";
+		String absoluteFilePath = getServletContext().getRealPath(relativeWebPath);
+		*/
+		hobby.setGrpDesc(grpDesc); 
 		HobbyManager hobbyManager = new HobbyManager();
 		boolean result = hobbyManager.createHobby(hobby, user);
 		if(result){

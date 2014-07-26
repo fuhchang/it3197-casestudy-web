@@ -70,6 +70,15 @@ public class ViewGroupServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int id = Integer.parseInt(request.getParameter("id"));
+		int requestCheck = Integer.parseInt(request.getParameter("request"));
+		System.out.println(requestCheck);
+		if(requestCheck == 1){
+			request.setAttribute("hidden", " none;");
+			System.out.println("hide");
+		}else{
+			request.setAttribute("hidden", "submit");
+			System.out.println("show");
+		}
 		HobbyManager hobbyManager = new HobbyManager();
 		Hobby hobby = hobbyManager.retrieveHobby(id);
 		request.setAttribute("id", id);

@@ -216,6 +216,7 @@
 		 					<input type="text" class="form-control" placeholder=""
 							name="gtitle" >
 							<input type="hidden" name="id" value="${param['grpID']}" /> 
+							
 						</div>
 				<br />
 				

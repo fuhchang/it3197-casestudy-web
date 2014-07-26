@@ -15,35 +15,31 @@ import com.example.CommunityOutreach.data.PostManager;
 import com.example.CommunityOutreach.model.HobbyPost;
 
 /**
- * Servlet implementation class CreatePostWebServlet
+ * Servlet implementation class UpdatePostServlet
  */
-@WebServlet("/CreatePostWebServlet")
-public class CreatePostWebServlet extends HttpServlet {
+@WebServlet("/UpdatePostServlet")
+public class UpdatePostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UpdatePostServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public CreatePostWebServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		String userName = null;
@@ -57,13 +53,13 @@ public class CreatePostWebServlet extends HttpServlet {
 		            }
 		        }
 		 }
-			String id = request.getParameter("id");
+		 
+		 	String id = request.getParameter("postID");
 			String title = request.getParameter("gtitle");
 			String grpDesc = request.getParameter("gDesc");
 			String coordinates = request.getParameter("coordinates");
-			System.out.println(grpDesc);
 			HobbyPost post = new HobbyPost();
-			post.setGrpID(Integer.parseInt(id));
+			post.setPostID(Integer.parseInt(id));
 			post.setContent(grpDesc);
 			post.setPostTitle(title);
 			post.setNric(userName);
@@ -84,13 +80,15 @@ public class CreatePostWebServlet extends HttpServlet {
 			post.setLng(Lng);
 			
 			PostManager pm = new PostManager();
-			boolean result = pm.createPost(post);
-			System.out.println(result);
-			request.setAttribute("id", id);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewJoinGrpServlet");
-			requestDispatcher.forward(request, response);
-		}
-
+		 pm.updatePost(post);
+		 int grpid = Integer.parseInt(request.getParameter("groupID"));
+		 System.out.println(grpid);
+		 request.setAttribute("id", grpid);
+		 response.sendRedirect("ViewJoinGrpServlet?id=" + grpid);
+		 /*
+		 RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewJoinGrpServlet");
+		 requestDispatcher.forward(request, response);
+		*/
 	}
 
-
+}

@@ -45,7 +45,7 @@ public class HobbyManager {
 			ps.setString(3, hobby.getCategory());
 			ps.setDouble(4, hobby.getLat());
 			ps.setDouble(5, hobby.getLng());
-			ps.setString(6, "");
+			ps.setBytes(6, null);
 			ps.setString(7, hobby.getGrpDesc());
 			ps.setString(8, user.getNric());
 			ps.setInt(9, 1);

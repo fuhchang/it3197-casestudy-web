@@ -47,12 +47,10 @@
 				<span class="glyphicon glyphicon-list-alt"></span>
 				<h4>Articles</h4>
 			</button>
-			<a href="RetrieveAllHobbyServlet">
-			<button class="btn btn-default col-xs-6">
+			<button class="btn btn-default col-xs-6" onclick="location.href='RetrieveAllHobbyServlet'">
 				<span class="glyphicon glyphicon-heart"></span>
 				<h4>Hobby</h4>
 			</button>
-			</a>
 			<button class="btn btn-default col-xs-6" onclick="location.href='RetrieveAllRiddleWebServlet'">
 				<span class="glyphicon glyphicon-book"></span>
 				<h4>Riddle</h4>
