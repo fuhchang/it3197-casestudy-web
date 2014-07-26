@@ -26,7 +26,7 @@ public class EventManager{
 	 */
 	public boolean createEvent(Event event) {
 		String sql = "INSERT INTO event ";
-		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -47,7 +47,9 @@ public class EventManager{
 			ps.setString(10, event.getEventLocation());
 			ps.setInt(11, event.getNoOfParticipantsAllowed());
 			ps.setInt(12, event.getActive());
-
+			ps.setDouble(13, event.getLat());
+			ps.setDouble(14, event.getLng());
+			
 			System.out.println(ps);
 			ps.executeUpdate();
 
@@ -161,6 +163,8 @@ public class EventManager{
 				event.setEventLocation(rs.getString("eventLocation"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setLat(rs.getDouble("lat"));
+				event.setLng(rs.getDouble("lng"));
 			} else {
 				return null;
 			}

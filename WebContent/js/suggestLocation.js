@@ -157,6 +157,8 @@ $(document).ready(function() {
 								$(".selectedlocation").html(address);
 								$(".selectedName").html(name);
 								$(".selectedHyperlink").html("<a href='"+result[closest][3]+"'>"+result[closest][3]+"</a>");
+								$(".selectedLatitude").html(y);
+								$(".selectedLongtitude").html(x);
 								$(".btn").attr("disabled",false);
 								$(".selectLocationTable").show();
 								map.setZoom(15);
@@ -193,7 +195,11 @@ $(document).ready(function() {
 					
 					$(".selectLocation").click(function() {
 						var location = $(".selectedlocation").html();
+						var lat = $(".selectedLatitude").html();
+						var lng = $(".selectedLongtitude").html(); 
 						$(window.opener.document).find("#location").html("");
+						$(window.opener.document).find("#lat").attr("value",lat);
+						$(window.opener.document).find("#lng").attr("value",lng);
 						$(window.opener.document).find("#location").html("<textarea class='form-control floatLeftText' name='eventLocation' rows='3' placeholder='Enter event location'>"+location+"</textarea>");
 						window.close();
 					});
@@ -348,6 +354,8 @@ $(document).ready(function() {
 							$(".selectedlocation").html(address);
 							$(".selectedName").html(name);
 							$(".selectedHyperlink").html("<a href='"+hyperLink+"'>"+hyperLink+"</a>");
+							$(".selectedLatitude").html(lat);
+							$(".selectedLongtitude").html(lon);
 							$(".btn").attr("disabled",false);
 							$(".selectLocationTable").show();
 						});

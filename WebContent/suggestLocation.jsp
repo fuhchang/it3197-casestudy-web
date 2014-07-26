@@ -80,9 +80,10 @@
 		<div class="row" style="margin-left:1%;margin-right:0%;margin-bottom:1%;">
 		  	<div class="col-xs-12" style='padding-left:0;padding-right:1%;'>
 		  		<table class="table table-bordered selectLocationTable">
-		  			<tr><td colspan="2" class='selectedName'></td></tr>
-		  			<tr><td class='selectedlocation'></td></tr>
-		  			<tr><td class='selectedHyperlink'></td></tr>
+		  			<tr><td colspan="4" class='selectedName'></td></tr>
+		  			<tr><td class='selectedlocation' colspan='4'></td></tr>
+		  			<tr><td class='selectedHyperlink' colspan='4'></td></tr>
+		  			<tr><td>Latitude: </td><td class='selectedLatitude'></td><td>Longtitude: </td><td class='selectedLongtitude'></td></tr>
 		  		</table>
 				<button class="btn btn-default selectLocation"> Select Location</button>
 			</div>

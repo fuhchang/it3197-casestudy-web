@@ -185,6 +185,8 @@
 					<input type="hidden" id="noOfParticipants" id="noOfParticipants"
 							name="noOfParticipants"
 							value="<c:out value="${param.noOfParticipants}" />" />
+					<input type="hidden" name="lat" value="${param.lat}" />
+					<input type="hidden" name="lng" value="${param.lng}" />
 					Create Event
 					<br />
 					Step 2: Please fill in the event schedule

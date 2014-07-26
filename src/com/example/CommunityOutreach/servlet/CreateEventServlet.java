@@ -115,10 +115,12 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		}
         //Testing Values
         //System.out.println("Event No: " + eventID);
-		
+		double lat = Double.parseDouble(request.getParameter("lat"));
+		double lng = Double.parseDouble(request.getParameter("lng"));
+        
 		EventManager eventManager = new EventManager();
 		UserManager userManager = new UserManager();
-        Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1);
+        Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1,lat,lng);
         User user = userManager.retrieveUser(eventAdminNRIC);
         EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
         
@@ -181,7 +183,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         }
         
         if(request.getParameter("web").equals("true")){
-    		response.sendRedirect("viewAllEvents.jsp");
+    		response.sendRedirect("retrieveAllEvents?web=true");
 		}
 	}
 

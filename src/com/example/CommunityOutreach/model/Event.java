@@ -15,6 +15,8 @@ public class Event{
 	private String eventLocation;
 	private int noOfParticipantsAllowed;
 	private int active;
+	private double lat;
+	private double lng;
 	
 	/**
 	 * Event's default constructor
@@ -22,7 +24,7 @@ public class Event{
 	public Event(){}
 
 	/**
-	 * This constructor is to retrieve events
+	 * This constructor is to retrieve events in mobile
 	 * @param eventID
 	 * @param eventAdminNRIC
 	 * @param eventName
@@ -37,6 +39,39 @@ public class Event{
 	 * @param active
 	 */
 	public Event(int eventID, String eventAdminNRIC, String eventName,String eventCategory, String eventDescription, String eventType,Date eventDateTimeFrom, Date eventDateTimeTo, String occurence,String eventLocation, int noOfParticipantsAllowed, int active) {
+		// TODO Auto-generated constructor stub
+		this.eventID = eventID;
+		this.eventAdminNRIC = eventAdminNRIC;
+		this.eventName = eventName;
+		this.eventCategory = eventCategory;
+		this.eventDescription = eventDescription;
+		this.eventType = eventType;
+		this.eventDateTimeFrom = eventDateTimeFrom;
+		this.eventDateTimeTo = eventDateTimeTo;
+		this.occurence = occurence;
+		this.eventLocation = eventLocation;
+		this.noOfParticipantsAllowed = noOfParticipantsAllowed;
+		this.active = active;
+	}
+	
+	/**
+	 * This constructor is to retrieve events in web
+	 * @param eventID
+	 * @param eventAdminNRIC
+	 * @param eventName
+	 * @param eventCategory
+	 * @param eventDescription
+	 * @param eventType
+	 * @param eventDateTimeFrom
+	 * @param eventDateTimeTo
+	 * @param occurence
+	 * @param eventLocation
+	 * @param noOfParticipantsAllowed
+	 * @param active
+	 * @param lat
+	 * @param lng
+	 */
+	public Event(int eventID, String eventAdminNRIC, String eventName,String eventCategory, String eventDescription, String eventType,Date eventDateTimeFrom, Date eventDateTimeTo, String occurence,String eventLocation, int noOfParticipantsAllowed, int active, double lat, double lng) {
 		super();
 		this.eventID = eventID;
 		this.eventAdminNRIC = eventAdminNRIC;
@@ -50,6 +85,8 @@ public class Event{
 		this.eventLocation = eventLocation;
 		this.noOfParticipantsAllowed = noOfParticipantsAllowed;
 		this.active = active;
+		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public int getEventID() {
@@ -146,5 +183,21 @@ public class Event{
 
 	public void setActive(int active) {
 		this.active = active;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
 	}
 }
