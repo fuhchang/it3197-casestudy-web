@@ -19,10 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.EventParticipantsManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.model.EventLocationDetail;
 import com.example.CommunityOutreach.model.EventParticipants;
 import com.example.CommunityOutreach.model.User;
 import com.example.CommunityOutreach.util.Settings;
@@ -70,11 +74,9 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         String eventName = request.getParameter("eventName");
         String eventCategory = request.getParameter("eventCategory");
         String eventDescription = request.getParameter("eventDescription");
-        String eventType = "Small Event";
         String occurence = request.getParameter("occurence");
         String eventDateTimeFrom = request.getParameter("eventDateTimeFrom");
         String eventDateTimeTo = request.getParameter("eventDateTimeTo");
-        String eventLocation = request.getParameter("eventLocation");
         int noOfParticipantsAllowed = 0;
         if(request.getParameter("noOfParticipants") != null){
         	try{
@@ -115,12 +117,18 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		}
         //Testing Values
         //System.out.println("Event No: " + eventID);
-		double lat = Double.parseDouble(request.getParameter("lat"));
+		//Event Location
+
+        String eventLocationName = request.getParameter("locationName");
+        String eventLocationAddress = request.getParameter("locationAddress");
+        String eventLocationHyperLink = request.getParameter("locationHyperLink");
+        double lat = Double.parseDouble(request.getParameter("lat"));
 		double lng = Double.parseDouble(request.getParameter("lng"));
         
 		EventManager eventManager = new EventManager();
 		UserManager userManager = new UserManager();
-        Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1,lat,lng);
+		EventLocationDetailManager eventLocationDetailManager = new EventLocationDetailManager();
+        Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,dateTimeFrom,dateTimeTo,occurence,noOfParticipantsAllowed,1);
         User user = userManager.retrieveUser(eventAdminNRIC);
         EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
         
@@ -157,8 +165,9 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		EventParticipants eventParticipants = new EventParticipants(eventID,eventAdminNRIC,todayDate.getTime(),0);
         		boolean isEventParticipantsCreated = eventParticipantsManager.createEventParticipant(eventParticipants);
         		boolean addedPoints = userManager.updatePoints(eventAdminNRIC, (user.getPoints() + pointsForCreatingEvent));
-        		System.out.println(user.getPoints() + pointsForCreatingEvent);
-        		if((isEventParticipantsCreated) && (addedPoints)){
+        		EventLocationDetail eventLocationDetails = new EventLocationDetail(0,eventID,eventLocationName,eventLocationAddress,eventLocationHyperLink,lat,lng);
+        		boolean addedLocation = eventLocationDetailManager.createEventLocationDetails(eventLocationDetails);
+        		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation)){
         			JsonObject myObj = new JsonObject();
         			myObj.addProperty("success", true);
         			myObj.addProperty("message","Event created successfully.");

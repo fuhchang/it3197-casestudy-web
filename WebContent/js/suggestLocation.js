@@ -156,7 +156,7 @@ $(document).ready(function() {
 								prev_window = this['infowindow'];
 								$(".selectedlocation").html(address);
 								$(".selectedName").html(name);
-								$(".selectedHyperlink").html("<a href='"+result[closest][3]+"'>"+result[closest][3]+"</a>");
+								$(".selectedHyperlink").html(result[closest][3]);
 								$(".selectedLatitude").html(suggestedY);
 								$(".selectedLongtitude").html(suggestedX);
 								$(".btn").attr("disabled",false);
@@ -194,12 +194,16 @@ $(document).ready(function() {
 					});
 					
 					$(".selectLocation").click(function() {
+						var name = $(".selectedName").html();
+						var hyperlink = $(".selectedHyperlink").html();
 						var location = $(".selectedlocation").html();
 						var lat = $(".selectedLatitude").html();
 						var lng = $(".selectedLongtitude").html(); 
 						$(window.opener.document).find("#location").html("");
 						$(window.opener.document).find("#lat").attr("value",lat);
 						$(window.opener.document).find("#lng").attr("value",lng);
+						$(window.opener.document).find("#locationName").attr("value",name);
+						$(window.opener.document).find("#locationHyperLink").attr("value",hyperlink);
 						$(window.opener.document).find("#location").html("<textarea class='form-control floatLeftText' name='eventLocation' rows='3' placeholder='Enter event location'>"+location+"</textarea>");
 						window.close();
 					});
@@ -353,7 +357,7 @@ $(document).ready(function() {
 							prev_window = this['infowindow'];
 							$(".selectedlocation").html(address);
 							$(".selectedName").html(name);
-							$(".selectedHyperlink").html("<a href='"+hyperLink+"'>"+hyperLink+"</a>");
+							$(".selectedHyperlink").html(hyperLink);
 							$(".selectedLatitude").html(lat);
 							$(".selectedLongtitude").html(lon);
 							$(".btn").attr("disabled",false);

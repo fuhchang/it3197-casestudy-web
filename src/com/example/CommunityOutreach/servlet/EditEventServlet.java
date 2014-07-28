@@ -68,11 +68,9 @@ public class EditEventServlet extends HttpServlet implements Settings{
         String eventName = request.getParameter("eventName");
         String eventCategory = request.getParameter("eventCategory");
         String eventDescription = request.getParameter("eventDescription");
-        String eventType = request.getParameter("eventType");
         String occurence = request.getParameter("occurence");
         String eventDateTimeFrom = request.getParameter("eventDateTimeFrom");
         String eventDateTimeTo = request.getParameter("eventDateTimeTo");
-        String eventLocation = request.getParameter("eventLocation");
         int noOfParticipantsAllowed = 0;
         if(request.getParameter("noOfParticipants") != null){
         	try{
@@ -111,8 +109,11 @@ public class EditEventServlet extends HttpServlet implements Settings{
         //System.out.println("Event No: " + eventID);
         String eventAdminNRIC = request.getParameter("eventAdminNRIC");
         
+		//Event Location
+        String eventLocationAddress = request.getParameter("eventLocationAddress");
+        
         EventManager eventManager = new EventManager();
-        Event event = new Event(eventID,eventAdminNRIC,eventName,eventCategory,eventDescription,eventType,dateTimeFrom,dateTimeTo,occurence,eventLocation,noOfParticipantsAllowed,1);
+        Event event = new Event(eventID,eventAdminNRIC,eventName,eventCategory,eventDescription,dateTimeFrom,dateTimeTo,occurence,noOfParticipantsAllowed,1);
         Event checkEvent = eventManager.retrieveEvent(eventID);
         if((checkEvent == null) || (eventID == 0)){
             JsonObject myObj = new JsonObject();

@@ -172,19 +172,18 @@
 				<div class="panel panel-primary">
 				<div class="panel-heading">
 					<input type="hidden" name="web" value="true" />
-					<input type="hidden" name="eventType" id="eventType"
-							value="<c:out value="${param.eventType}" />" />
 					<input type="hidden" name="eventName" id="eventName"
 							value="<c:out value="${param.eventName}" />" />
 					<input type="hidden" name="eventCategory" id="eventCategory"
 							value="<c:out value="${param.eventCategory}" />" />
 					<input type="hidden" name="eventDescription" id="eventDescription"
 							value="<c:out value="${param.eventDescription}" />" />
-					<input type="hidden" name="eventLocation" id="eventLocation"
-							value="<c:out value="${param.eventLocation}" />" />
 					<input type="hidden" id="noOfParticipants" id="noOfParticipants"
 							name="noOfParticipants"
 							value="<c:out value="${param.noOfParticipants}" />" />
+					<input type="hidden" name="locationName" id="locationName" value="<c:out value="${param.locationName}" />"/>
+					<input type="hidden" name="locationAddress" id="locationAddress" value="<c:out value="${param.eventLocation}" />"/>
+					<input type="hidden" name="locationHyperLink" id="locationHyperLink" value="<c:out value="${param.locationHyperLink}" />"/>
 					<input type="hidden" name="lat" value="${param.lat}" />
 					<input type="hidden" name="lng" value="${param.lng}" />
 					Create Event

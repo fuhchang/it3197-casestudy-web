@@ -26,7 +26,7 @@ public class EventManager{
 	 */
 	public boolean createEvent(Event event) {
 		String sql = "INSERT INTO event ";
-		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -38,17 +38,13 @@ public class EventManager{
 			ps.setString(3, event.getEventName());
 			ps.setString(4, event.getEventCategory());
 			ps.setString(5, event.getEventDescription());
-			ps.setString(6, event.getEventType());
 			Timestamp timestampFrom = new Timestamp(event.getEventDateTimeFrom().getTime());
 			Timestamp timestampTo = new Timestamp(event.getEventDateTimeTo().getTime());
-			ps.setTimestamp(7, timestampFrom);
-			ps.setTimestamp(8, timestampTo);
-			ps.setString(9, event.getOccurence());
-			ps.setString(10, event.getEventLocation());
-			ps.setInt(11, event.getNoOfParticipantsAllowed());
-			ps.setInt(12, event.getActive());
-			ps.setDouble(13, event.getLat());
-			ps.setDouble(14, event.getLng());
+			ps.setTimestamp(6, timestampFrom);
+			ps.setTimestamp(7, timestampTo);
+			ps.setString(8, event.getOccurence());
+			ps.setInt(9, event.getNoOfParticipantsAllowed());
+			ps.setInt(10, event.getActive());
 			
 			System.out.println(ps);
 			ps.executeUpdate();
@@ -82,11 +78,9 @@ public class EventManager{
 				event.setEventName(rs.getString("eventName"));
 				event.setEventCategory(rs.getString("eventCategory"));
 				event.setEventDescription(rs.getString("eventDescription"));
-				event.setEventType(rs.getString("eventType"));
 				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
 				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeFrom"));
 				event.setOccurence(rs.getString("occurence"));
-				event.setEventLocation(rs.getString("eventLocation"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
 				eventArrList.add(event);
@@ -119,11 +113,9 @@ public class EventManager{
 				event.setEventName(rs.getString("eventName"));
 				event.setEventCategory(rs.getString("eventCategory"));
 				event.setEventDescription(rs.getString("eventDescription"));
-				event.setEventType(rs.getString("eventType"));
 				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
 				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeTo"));
 				event.setOccurence(rs.getString("occurence"));
-				event.setEventLocation(rs.getString("eventLocation"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
 				eventArrList.add(event);
@@ -156,15 +148,11 @@ public class EventManager{
 				event.setEventName(rs.getString("eventName"));
 				event.setEventCategory(rs.getString("eventCategory"));
 				event.setEventDescription(rs.getString("eventDescription"));
-				event.setEventType(rs.getString("eventType"));
 				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
 				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeTo"));
 				event.setOccurence(rs.getString("occurence"));
-				event.setEventLocation(rs.getString("eventLocation"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
-				event.setLat(rs.getDouble("lat"));
-				event.setLng(rs.getDouble("lng"));
 			} else {
 				return null;
 			}
@@ -183,8 +171,8 @@ public class EventManager{
 	 */
 	public boolean editEvent(Event event) {
 		String sql = "UPDATE event ";
-		sql += "SET eventAdminNRIC = ? , eventName = ? , eventCategory = ? , eventDescription = ? , eventType = ? ," +
-				" eventDateTimeFrom = ? , eventDateTimeTo = ? , occurence = ? , eventLocation = ? , noOfParticipantsAllowed = ? WHERE eventID = ? ";
+		sql += "SET eventAdminNRIC = ? , eventName = ? , eventCategory = ? , eventDescription = ? ," +
+				" eventDateTimeFrom = ? , eventDateTimeTo = ? , occurence = ? , noOfParticipantsAllowed = ? WHERE eventID = ? ";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -195,13 +183,11 @@ public class EventManager{
 			ps.setString(2, event.getEventName());
 			ps.setString(3, event.getEventCategory());
 			ps.setString(4, event.getEventDescription());
-			ps.setString(5, event.getEventType());
 			Timestamp timestampFrom = new Timestamp(event.getEventDateTimeFrom().getTime());
 			Timestamp timestampTo = new Timestamp(event.getEventDateTimeTo().getTime());
 			ps.setTimestamp(6, timestampFrom);
 			ps.setTimestamp(7, timestampTo);
 			ps.setString(8, event.getOccurence());
-			ps.setString(9, event.getEventLocation());
 			ps.setInt(10, event.getNoOfParticipantsAllowed());
 			ps.setInt(11, event.getEventID());
 			

@@ -88,7 +88,6 @@
 			<div id="currentForm" class="form-horizontal" role="form">
 				<div class="panel panel-primary">
 				<div class="panel-heading">
-					<input id='eventType' type="hidden" name="eventType" value="<c:out value="${param.typeOfEvent}" />" />
 					Create Event
 					<br/>
 					Step 1: Please fill in the event details
@@ -149,6 +148,8 @@
 							</select>
 						</div>
 						<div class="form-group">
+							<input type="hidden" name="locationName" id="locationName" />
+							<input type="hidden" name="locationHyperLink" id="locationHyperLink" />
 							<input type="hidden" name="lat" id="lat" />
 							<input type="hidden" name="lng" id="lng" />
 							<a href="event.jsp"><button type="button" id="cancelBtn" class="btn btn-default"> Cancel </button></a>
