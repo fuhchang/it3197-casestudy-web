@@ -48,7 +48,7 @@ public class EventLocationDetailManager {
 	}
 	
 	/**
-	 * This method is to retrieve a event based on eventID
+	 * This method is to retrieve a event location details based on eventID
 	 * @param eventID
 	 * @return EventLocationDetail
 	 */
@@ -67,7 +67,7 @@ public class EventLocationDetailManager {
 				eventLocationDetails.setEventLocationAddress(rs.getString("eventLocationAddress"));
 				eventLocationDetails.setEventLocationHyperLink(rs.getString("eventLocationHyperLink"));
 				eventLocationDetails.setEventLocationLat(rs.getDouble("eventLocationLat"));
-				eventLocationDetails.setEventLocationLat(rs.getDouble("eventLocationLng"));
+				eventLocationDetails.setEventLocationLng(rs.getDouble("eventLocationLng"));
 			} else {
 				return null;
 			}
@@ -76,6 +76,38 @@ public class EventLocationDetailManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	/**
+	 * This method is to edit event location details into the database
+	 * @param event
+	 * @return boolean
+	 */
+	public boolean editEventLocationDetails(EventLocationDetail eventLocationDetails) {
+		String sql = "UPDATE event_location_details ";
+		sql += "SET eventLocationName = ? , eventLocationAddress = ? , eventLocationHyperLink = ? " +
+				" eventLocationLat = ? , eventLocationLng = ? WHERE eventID = ? ";
+		try {
+			Connection conn = dbController.getConnection();
+			conn.setAutoCommit(false);
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, eventLocationDetails.getEventLocationName());
+			ps.setString(2, eventLocationDetails.getEventLocationAddress());
+			ps.setString(3, eventLocationDetails.getEventLocationHyperLink());
+			ps.setDouble(4, eventLocationDetails.getEventLocationLat());
+			ps.setDouble(6, eventLocationDetails.getEventLocationLng());
+			ps.setInt(7, eventLocationDetails.getEventID());
+			
+			System.out.println(ps);
+			ps.executeUpdate();
+			conn.setAutoCommit(true);
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

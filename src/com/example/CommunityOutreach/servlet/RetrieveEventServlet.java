@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.model.EventLocationDetail;
 import com.example.CommunityOutreach.model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -57,8 +59,11 @@ public class RetrieveEventServlet extends HttpServlet {
         }
 
         EventManager eventManager = new EventManager();
+        EventLocationDetailManager eventLocationDetailManager = new EventLocationDetailManager();
         Event event = eventManager.retrieveEvent(eventID);
+        EventLocationDetail eventLocationDetails = eventLocationDetailManager.retrieveEventLocationDetails(eventID);
         request.setAttribute("event", event);
+        request.setAttribute("eventLocationDetails", eventLocationDetails);
         RequestDispatcher rd = request.getRequestDispatcher("viewEvent.jsp");
         rd.forward(request, response);
 	}

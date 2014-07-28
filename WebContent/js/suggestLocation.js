@@ -139,7 +139,6 @@ $(document).ready(function() {
 						      '</div>'+
 						      '<h4 id="firstHeading" class="firstHeading">'+name+'</h1>'+
 						      '<div id="bodyContent">'+
-						      '<p>'+address+'</p>'+
 						      hyperL +
 						      '</div>'+
 						      '</div>';
@@ -162,6 +161,7 @@ $(document).ready(function() {
 								$(".btn").attr("disabled",false);
 								$(".selectLocationTable").show();
 								map.setZoom(15);
+								map.panTo(new google.maps.LatLng(suggestedY, suggestedX));
 							});
 							refreshMap();
 							new google.maps.event.trigger( suggestMarker, 'click' );
@@ -339,7 +339,6 @@ $(document).ready(function() {
 					      '</div>'+
 					      '<h4 id="firstHeading" class="firstHeading">'+name+'</h1>'+
 					      '<div id="bodyContent">'+
-					      '<p>'+address+'</p>'+
 					      hyperL +
 					      '</div>'+
 					      '</div>';

@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.model.EventLocationDetail;
 import com.example.CommunityOutreach.model.User;
 import com.example.CommunityOutreach.util.Settings;
 import com.google.gson.JsonObject;
@@ -110,9 +112,14 @@ public class EditEventServlet extends HttpServlet implements Settings{
         String eventAdminNRIC = request.getParameter("eventAdminNRIC");
         
 		//Event Location
-        String eventLocationAddress = request.getParameter("eventLocationAddress");
+        String eventLocationName = request.getParameter("locationName");
+        String eventLocationAddress = request.getParameter("locationAddress");
+        String eventLocationHyperLink = request.getParameter("locationHyperLink");
+        double lat = Double.parseDouble(request.getParameter("lat"));
+		double lng = Double.parseDouble(request.getParameter("lng"));
         
         EventManager eventManager = new EventManager();
+        EventLocationDetailManager eventLocationDetailManager = new EventLocationDetailManager();
         Event event = new Event(eventID,eventAdminNRIC,eventName,eventCategory,eventDescription,dateTimeFrom,dateTimeTo,occurence,noOfParticipantsAllowed,1);
         Event checkEvent = eventManager.retrieveEvent(eventID);
         if((checkEvent == null) || (eventID == 0)){
@@ -133,7 +140,10 @@ public class EditEventServlet extends HttpServlet implements Settings{
         boolean isEventEdited = false;
         try{
         	isEventEdited = eventManager.editEvent(event);
-        	if(!isEventEdited){
+        	int locationID = eventLocationDetailManager.retrieveEventLocationDetails(eventID).getEventLocationID();
+        	EventLocationDetail eventLocationDetails = new EventLocationDetail(locationID,eventID,eventLocationName,eventLocationAddress,eventLocationHyperLink,lat,lng);
+    		boolean addedLocation = eventLocationDetailManager.createEventLocationDetails(eventLocationDetails);
+        	if((!isEventEdited) || (addedLocation)){
         		JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", false);
                 myObj.addProperty("message","Unable to edit event successfully.");

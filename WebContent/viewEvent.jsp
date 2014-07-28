@@ -29,9 +29,9 @@
 			var transitLayer = new google.maps.TransitLayer();
 			var x;
 			var y;	
-			
+			var prev_window = false;
 			var mapProp = {
-				center : new google.maps.LatLng(<c:out value="${event.lat}" />, <c:out value="${event.lng}" />),
+				center : new google.maps.LatLng(<c:out value="${eventLocationDetails.eventLocationLat}" />, <c:out value="${eventLocationDetails.eventLocationLng}" />),
 				
 				zoom : 15,
 				minZoom : 11,
@@ -56,18 +56,34 @@
 				x = position.coords.longitude;
 			}
 			
-			var locationPosition = new google.maps.LatLng(parseFloat(<c:out value="${event.lat}" />), parseFloat(<c:out value="${event.lng}" />))
+			var locationPosition = new google.maps.LatLng(parseFloat(<c:out value="${eventLocationDetails.eventLocationLat}" />), parseFloat(<c:out value="${eventLocationDetails.eventLocationLng}" />))
 			var locationMarker = new google.maps.Marker({
 				position : locationPosition,
 				map : map
 			});
+
+			var hyperL = 'For more information: <a href="<c:out value="${eventLocationDetails.eventLocationHyperLink}" />"><c:out value="${eventLocationDetails.eventLocationHyperLink}" /></a>';
+
+		    var html = '<div id="content"><div id="siteNotice"></div><h4 id="firstHeading" class="firstHeading"><c:out value="${eventLocationDetails.eventLocationName}" /></h1><div id="bodyContent">'+hyperL+'</div></div>';
+
+		    locationMarker['infowindow'] = new google.maps.InfoWindow({
+				content : html
+			});
 			
 			google.maps.event.addListener(locationMarker, 'click',function() {
+				if (!prev_window) {
+				} else {
+					prev_window.close();
+				}
+				this['infowindow'].open(map, this);
+				prev_window = this['infowindow'];
 				map.setZoom(15);
+				map.panTo(locationPosition);
 			});
-			new google.maps.event.trigger(locationMarker, 'click' );
 
-			var end = parseFloat(<c:out value="${event.lat}" />) + ", " + parseFloat(<c:out value="${event.lng}" />);
+			new google.maps.event.trigger(locationMarker, 'click' );
+			
+			var end = parseFloat(<c:out value="${eventLocationDetails.eventLocationLat}" />) + ", " + parseFloat(<c:out value="${eventLocationDetails.eventLocationLng}" />);
 
 			$("#information").click(function(){
 				transitLayer.setMap(null);
@@ -77,21 +93,30 @@
 					position : locationPosition,
 					map : map
 				});
+
+			    locationMarker['infowindow'] = new google.maps.InfoWindow({
+					content : html
+				});
 				
 				google.maps.event.addListener(locationMarker, 'click',function() {
+					if (!prev_window) {
+					} else {
+						prev_window.close();
+					}
+					this['infowindow'].open(map, this);
+					prev_window = this['infowindow'];
 					map.setZoom(15);
+					map.panTo(locationPosition);
 				});
 
 				new google.maps.event.trigger(locationMarker, 'click' );
 			});
 			
 			$("#DRIVING").click(function(){
-				directionsDisplay.setMap(map);
 				getDirections("DRIVING");
 				transitLayer.setMap(null);
 			});
 			$("#TRANSIT").click(function(){
-				directionsDisplay.setMap(map);
 				getDirections("TRANSIT");
 				transitLayer.setMap(map);
 			});
@@ -110,6 +135,8 @@
 
 
 			function getDirections(by){
+				prev_window.close();
+				directionsDisplay.setMap(map);
 				locationMarker.setVisible(false);
 				map.setZoom(11);
 				directionsDisplay.setPanel(document.getElementById('directions-panel'));
@@ -193,7 +220,13 @@
 			<br/>
 			<div class="tab-content">
 				<div class="tab-pane active" id="informations">
-					<p><c:out value="${event.eventLocation}" /></p>
+					<table class="table table-bordered selectLocationTable">
+			  			<tr><td colspan="4" style="background-color:#428bca;color:#fff;"><h4> Information </h4></td></tr>
+			  			<tr><td colspan="4" class='selectedName'><c:out value="${eventLocationDetails.eventLocationName}" /></td></tr>
+			  			<tr><td class='selectedlocation' colspan='4'><c:out value="${eventLocationDetails.eventLocationAddress}" /></td></tr>
+			  			<tr><td class='selectedHyperlink' colspan='4'><a href="<c:out value="${eventLocationDetails.eventLocationHyperLink}" />"><c:out value="${eventLocationDetails.eventLocationHyperLink}" /></a></td></tr>
+			  			<tr><td>Latitude: </td><td class='selectedLatitude'><c:out value="${eventLocationDetails.eventLocationLat}" /></td><td>Longtitude: </td><td class='selectedLongtitude'><c:out value="${eventLocationDetails.eventLocationLng}" /></td></tr>
+			  		</table>
 				</div>
   				<div class="tab-pane" id="navigate">
     				<div id="directions-panel"></div>
