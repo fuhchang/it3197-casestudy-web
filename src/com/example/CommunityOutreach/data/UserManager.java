@@ -250,6 +250,25 @@ public class UserManager {
 		}
 	}
 	
+	public boolean deleteUser(String nric) {
+		String sql = "DELETE FROM user WHERE nric = '" + nric + "'";
+		try {
+			Connection conn = dbController.getConnection();
+			conn.setAutoCommit(false);
+			
+			PreparedStatement ps1 = conn.prepareStatement(sql);
+			
+			ps1.executeUpdate();
+			
+			conn.setAutoCommit(true);
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public boolean updatePoints(String nric, int points) {
 		String sql = "UPDATE user set points = ? WHERE nric = ?";
 		boolean result = false;

@@ -67,7 +67,9 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
 					e.printStackTrace();
 				}
 	        }
-	        
+	        UserManager um = new UserManager();
+	        boolean userDeleted = um.deleteUser("S9523803C");
+	        System.out.println(userDeleted);
 			request.setAttribute("eventArrList", eventArrList);
 	    	RequestDispatcher rd = request.getRequestDispatcher("viewAllEvents.jsp");
 	    	rd.forward(request,response);

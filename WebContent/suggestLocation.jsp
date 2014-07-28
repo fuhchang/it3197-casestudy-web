@@ -80,6 +80,7 @@
 		<div class="row" style="margin-left:1%;margin-right:0%;margin-bottom:1%;">
 		  	<div class="col-xs-12" style='padding-left:0;padding-right:1%;'>
 		  		<table class="table table-bordered selectLocationTable">
+		  			<tr><td colspan="4" style="background-color:#428bca;color:#fff;"><h4> Information </h4></td></tr>
 		  			<tr><td colspan="4" class='selectedName'></td></tr>
 		  			<tr><td class='selectedlocation' colspan='4'></td></tr>
 		  			<tr><td class='selectedHyperlink' colspan='4'></td></tr>

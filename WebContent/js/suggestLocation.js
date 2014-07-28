@@ -157,8 +157,8 @@ $(document).ready(function() {
 								$(".selectedlocation").html(address);
 								$(".selectedName").html(name);
 								$(".selectedHyperlink").html("<a href='"+result[closest][3]+"'>"+result[closest][3]+"</a>");
-								$(".selectedLatitude").html(y);
-								$(".selectedLongtitude").html(x);
+								$(".selectedLatitude").html(suggestedY);
+								$(".selectedLongtitude").html(suggestedX);
 								$(".btn").attr("disabled",false);
 								$(".selectLocationTable").show();
 								map.setZoom(15);
@@ -207,8 +207,8 @@ $(document).ready(function() {
 					//Self-declared functions
 					//show position based on the current location
 					function showPosition(position) {
-						y = position.coords.latitude.toFixed(4);
-						x = position.coords.longitude.toFixed(4);
+						y = position.coords.latitude;
+						x = position.coords.longitude;
 					}
 					
 					//Detect whether the devices is a desktop web or mobile web
