@@ -86,7 +86,7 @@ public class EventLocationDetailManager {
 	 */
 	public boolean editEventLocationDetails(EventLocationDetail eventLocationDetails) {
 		String sql = "UPDATE event_location_details ";
-		sql += "SET eventLocationName = ? , eventLocationAddress = ? , eventLocationHyperLink = ? " +
+		sql += "SET eventLocationName = ? , eventLocationAddress = ? , eventLocationHyperLink = ?, " +
 				" eventLocationLat = ? , eventLocationLng = ? WHERE eventID = ? ";
 		try {
 			Connection conn = dbController.getConnection();
@@ -97,8 +97,8 @@ public class EventLocationDetailManager {
 			ps.setString(2, eventLocationDetails.getEventLocationAddress());
 			ps.setString(3, eventLocationDetails.getEventLocationHyperLink());
 			ps.setDouble(4, eventLocationDetails.getEventLocationLat());
-			ps.setDouble(6, eventLocationDetails.getEventLocationLng());
-			ps.setInt(7, eventLocationDetails.getEventID());
+			ps.setDouble(5, eventLocationDetails.getEventLocationLng());
+			ps.setInt(6, eventLocationDetails.getEventID());
 			
 			System.out.println(ps);
 			ps.executeUpdate();

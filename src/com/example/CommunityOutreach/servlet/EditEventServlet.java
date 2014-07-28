@@ -142,8 +142,8 @@ public class EditEventServlet extends HttpServlet implements Settings{
         	isEventEdited = eventManager.editEvent(event);
         	int locationID = eventLocationDetailManager.retrieveEventLocationDetails(eventID).getEventLocationID();
         	EventLocationDetail eventLocationDetails = new EventLocationDetail(locationID,eventID,eventLocationName,eventLocationAddress,eventLocationHyperLink,lat,lng);
-    		boolean addedLocation = eventLocationDetailManager.createEventLocationDetails(eventLocationDetails);
-        	if((!isEventEdited) || (addedLocation)){
+    		boolean addedLocation = eventLocationDetailManager.editEventLocationDetails(eventLocationDetails);
+        	if((!isEventEdited) || (!addedLocation)){
         		JsonObject myObj = new JsonObject();
                 myObj.addProperty("success", false);
                 myObj.addProperty("message","Unable to edit event successfully.");

@@ -185,11 +185,11 @@ public class EventManager{
 			ps.setString(4, event.getEventDescription());
 			Timestamp timestampFrom = new Timestamp(event.getEventDateTimeFrom().getTime());
 			Timestamp timestampTo = new Timestamp(event.getEventDateTimeTo().getTime());
-			ps.setTimestamp(6, timestampFrom);
-			ps.setTimestamp(7, timestampTo);
-			ps.setString(8, event.getOccurence());
-			ps.setInt(10, event.getNoOfParticipantsAllowed());
-			ps.setInt(11, event.getEventID());
+			ps.setTimestamp(5, timestampFrom);
+			ps.setTimestamp(6, timestampTo);
+			ps.setString(7, event.getOccurence());
+			ps.setInt(8, event.getNoOfParticipantsAllowed());
+			ps.setInt(9, event.getEventID());
 			
 			System.out.println(ps);
 			ps.executeUpdate();
