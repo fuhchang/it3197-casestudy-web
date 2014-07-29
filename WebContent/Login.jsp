@@ -40,7 +40,7 @@
 		<form action="LoginServlet" method="post">
 			<div class="panel panel-info">
 			<div class="panel-heading" align="middle">
-			<img id="icon" src="resources/community.png" height="100" width="100" >
+			<img id="icon" src="resources/logo.png" height="100" width="100" >
 				<h2>Welcome to Community OutReach</h2>
 			</div>
 				<div class="panel-body">
