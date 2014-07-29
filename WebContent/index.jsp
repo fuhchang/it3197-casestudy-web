@@ -35,7 +35,7 @@
 	</head>
 	
 	<body class="container">
-		<img id="icon" src="resources/logo.png" width="50%">
+		<img id="icon" src="resources/logo.png">
 	 	<h1>Community Outreach</h1>
 
 		<div class="row marketing">
