@@ -73,26 +73,13 @@ public class SearchHobbyForRequest extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		int id = Integer.parseInt(request.getParameter("cateID"));
-		System.out.println(id);
 		double lat = Double.parseDouble(request.getParameter("lat"));
-		double lng = Double.parseDouble(request.getParameter("lng"));	
-		
-		System.out.println(id +" " +lat+ " "+ lng );
-		/*
-		int id = 0;
-		int km = 1000;
-		double lat, lng;
-		String message = request.getParameter("message");
-		StringTokenizer st2 = new StringTokenizer(message, ",");
-		ArrayList<String> reqList = new ArrayList<String>();
-		while (st2.hasMoreElements()) {
-			reqList.add((String) st2.nextElement());
-		}
-		
-		id = Integer.parseInt(reqList.get(0));
-		lng = Double.parseDouble(reqList.get(1));
-		lat = Double.parseDouble(reqList.get(2));
+		double lng = Double.parseDouble(request.getParameter("lng"));
+		System.out.println(id);
+		System.out.println(lat);
+		System.out.println(lng);
 		HobbyManager hm = new HobbyManager();
 		ArrayList<Hobby> hobbyList;
 		
@@ -101,7 +88,6 @@ public class SearchHobbyForRequest extends HttpServlet {
 			hobbyList = hm.retrieveAllHobbyByCategory("Dance");
 			ArrayList<Hobby> danceList = new ArrayList<Hobby>();
 			for (int i = 0; i < hobbyList.size(); i++) {
-				System.out.println(hobbyList.get(i).getGrpName());
 				double result = getDistanceFromLatLongInKm(lat, lng, hobbyList.get(i).getLat(), hobbyList.get(i).getLat());
 				if (result < 2000) {
 					 danceList.add(hobbyList.get(i));
@@ -115,24 +101,24 @@ public class SearchHobbyForRequest extends HttpServlet {
 			 
 		} else if (id == 2) {
 
-			//hobbyList = hm.retrieveAllHobbyByCategory("Cooking");
-			/*
-			 * request.setAttribute("hobbyList", hobbyList); RequestDispatcher
-			 * requestDispatcher =
-			 * request.getRequestDispatcher("/ViewAvaliableHobbyHelp.jsp");
-			 * requestDispatcher.forward(request, response);
+			hobbyList = hm.retrieveAllHobbyByCategory("Cooking");
+			
+			 request.setAttribute("hobbyList", hobbyList); RequestDispatcher
+			 requestDispatcher =
+			 request.getRequestDispatcher("/ViewAvaliableHobbyHelp.jsp");
+			 requestDispatcher.forward(request, response);
 			 
 		} else if (id == 3) {
 
-			//hobbyList = hm.retrieveAllHobbyByCategory("Gardening");
-			/*
-			 * request.setAttribute("hobbyList", hobbyList); RequestDispatcher
-			 * requestDispatcher =
-			 * request.getRequestDispatcher("/ViewAvaliableHobbyHelp.jsp");
-			 * requestDispatcher.forward(request, response);
+			hobbyList = hm.retrieveAllHobbyByCategory("Gardening");
+			
+			 request.setAttribute("hobbyList", hobbyList); RequestDispatcher
+			 requestDispatcher =
+			 request.getRequestDispatcher("/ViewAvaliableHobbyHelp.jsp");
+			 requestDispatcher.forward(request, response);
 			 
 		}
-		*/
+		
 
 	}
 

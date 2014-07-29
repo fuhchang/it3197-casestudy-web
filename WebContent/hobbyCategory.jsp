@@ -51,6 +51,14 @@
 						position.coords.longitude);
 				$("#lat").val(position.coords.latitude);
 				$("#lng").val(position.coords.longitude);
+				$("#lat1").val(position.coords.latitude);
+				$("#lng1").val(position.coords.longitude);
+				$("#lat2").val(position.coords.latitude);
+				$("#lng2").val(position.coords.longitude);
+				longitude = position.coords.longitude;
+				latitude = position.coords.latitude;
+				alert(latitude);
+				alert(longitude);
 				geocodePosition(latLng);
 				
 			
@@ -70,9 +78,9 @@
 									}
 								});
 			}
-			/*
 			
-				$('.btnDance').click(function(){
+			
+				$('#btnDance').click(function(){
 					var mge = "1";
 					mge += ",";
 					mge += longitude;
@@ -86,13 +94,10 @@
 				 $.ajax({
 			          type: "POST",
 			          url: "SearchHobbyForRequest",
-			          data: { message : mge},
-			          success : function(data){
-			              alert(data);
-			          }
+			          data: { message : mge}
 			        });
 			}
-			*/
+			
 		</Script>
 	</jsp:attribute>
 
@@ -105,24 +110,33 @@
 			
 				<tr>
 					<td>
-					
-					<button type ="submit" class="btn btn-default btn-block" data-dismiss="modal" aria-hidden="true" id="btnDance" onclick="location.href='SearchHobbyForRequest?id=1'">Dance<i class="glyphicon glyphicon-play pull-right"></i></button>
-					
+					<form action="SearchHobbyForRequest" method="post">
+					<input type="hidden" name="cateID" value="1"/>
+					<input type="hidden" name="lat" id="lat" />
+					<input type="hidden" name="lng" id="lng"/>
+					<button type ="submit" class="btn btn-default btn-block" data-dismiss="modal" aria-hidden="true" id="btnD" >Dance<i class="glyphicon glyphicon-play pull-right"></i></button>
+					</form>
            			 </td>
 				</tr>
 				<tr>
 					<td>
-					
+						<form action="SearchHobbyForRequest" method="post">
+					<input type="hidden" name="cateID" value="2"/>
+					<input type="hidden" name="lat" id="lat1" />
+					<input type="hidden" name="lng" id="lng1"/>
 						<button class="btn btn-default btn-block" data-dismiss="modal" aria-hidden="true" id="btnCooking" onclick="location.href='SearchHobbyForRequest?id=2'">Cooking<i class="glyphicon glyphicon-play pull-right"></i></button>
-						
+						</form>
 						
 					</td>
 				</tr>
 				<tr>
 					<td>
-					
+					<form action="SearchHobbyForRequest" method="post">
+					<input type="hidden" name="cateID" value="3"/>
+					<input type="hidden" name="lat" id="lat2" />
+					<input type="hidden" name="lng" id="lng2"/>
 						<button class="btn btn-default btn-block" data-dismiss="modal" aria-hidden="true" id="btnGarden" onclick="location.href='SearchHobbyForRequest?id=3'">Gardeing<i class="glyphicon glyphicon-play pull-right"></i></button>
-						
+						</form>
 						
 					</td>
 				</tr>
