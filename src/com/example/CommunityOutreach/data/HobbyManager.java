@@ -27,19 +27,6 @@ public class HobbyManager {
 			hobby.setGrpID(0);
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			/*
-			try {
-				File file = new File("/storage/emulated/0/WhatsApp/Media/WhatsApp/Images/IMG-20140704-WA0001.jpg");
-				FileInputStream fs = new FileInputStream(file);
-				ps.setBinaryStream(2,fs,fs.available());
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
 			ps.setInt(1, hobby.getGrpID());
 			ps.setString(2, hobby.getGrpName());
 			ps.setString(3, hobby.getCategory());

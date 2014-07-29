@@ -52,6 +52,7 @@
 							<a href="EditPost.jsp?id=${item.postID}&grpPost=${item.postTitle}&postContent=${item.content}&grpid=${item.grpID}">
 									<button class="btn glyphicon glyphicon-pencil" style="float: right"'>Edit</button>
 									</a>
+									 <img class="img-responsive" src="${item.image}" id="img">
 								 <h2 name="gName" class="panel-heading text-left">${item.postTitle}</h2>
 								<textarea name="summernote" rows="5" cols="30" readonly>${item.content}</textarea>
 					 		</div>

@@ -61,7 +61,7 @@ public class CreatePostWebServlet extends HttpServlet {
 			String title = request.getParameter("gtitle");
 			String grpDesc = request.getParameter("gDesc");
 			String coordinates = request.getParameter("coordinates");
-			System.out.println(grpDesc);
+	
 			HobbyPost post = new HobbyPost();
 			post.setGrpID(Integer.parseInt(id));
 			post.setContent(grpDesc);
@@ -85,10 +85,11 @@ public class CreatePostWebServlet extends HttpServlet {
 			
 			PostManager pm = new PostManager();
 			boolean result = pm.createPost(post);
-			System.out.println(result);
+			if(result){
 			request.setAttribute("id", id);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewJoinGrpServlet");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewJoinGrpServlet");
 			requestDispatcher.forward(request, response);
+			}
 		}
 
 	}
