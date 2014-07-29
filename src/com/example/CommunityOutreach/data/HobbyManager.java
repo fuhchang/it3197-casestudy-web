@@ -86,6 +86,7 @@ public class HobbyManager {
 				hobby.setGrpDesc(rs.getString("description"));
 				hobby.setLat(rs.getDouble("Lat"));
 				hobby.setLng(rs.getDouble("Lng"));
+				hobby.setPhoto(rs.getString("groupimage"));
 				hobby.setAdminNric(rs.getString("adminNric"));
 				hobby.setActive(rs.getInt("active"));
 				hobbyList.add(hobby);
@@ -257,5 +258,26 @@ public class HobbyManager {
 		}
 		return hobbyList;
 		
+	}
+	
+	public boolean uploadImage(String path , int id){
+		String sql = "UPDATE hobbies_group set groupimage =? where groupID = ?";
+		boolean result = false;
+		Connection conn;
+		try {
+			conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, path);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+			result=true;
+		} catch (IllegalAccessException | InstantiationException
+				| ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
 	}
 }

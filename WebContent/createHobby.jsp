@@ -232,13 +232,6 @@
 						style="width: 100%; height: 350px;" name="gDesc"></textarea>
 				<br />
 				<br />
-				
-				<div class="input-group">
-				<form action="upload-script-url" method="post" enctype="multipart/form-data">
-					<input type='file' id="imgInp" name="imgFile"/>
-   					 <img id="blah" src="#" alt="your image" height="100" width="100"/>
-   					 </form>
-				</div>
 				<div>
     				<div class="input-group">
       					<!--  <input type="text" class="form-control">-->

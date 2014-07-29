@@ -40,7 +40,7 @@
 					<td>
 					<a href="ViewJoinGrpServlet?id=${joinItem.grpID}">
 					<div class="col-sm-4 portfolio-item">
-                    <img class="img-responsive" src="http://placehold.it/250x100" id="img">
+                    <img class="img-responsive" src="${joinItem.photo}" id="img">
 					 <h3 name="gName">${joinItem.grpName}</h3>
 					<textarea name="summernote" id="summernote" cols="27" rows="7"
 											readonly>${joinItem.grpDesc}</textarea>

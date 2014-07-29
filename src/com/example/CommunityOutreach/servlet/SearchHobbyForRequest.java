@@ -87,14 +87,18 @@ public class SearchHobbyForRequest extends HttpServlet {
 			
 			hobbyList = hm.retrieveAllHobbyByCategory("Dance");
 			ArrayList<Hobby> danceList = new ArrayList<Hobby>();
+			ArrayList<RequestHobby> reqList = new ArrayList<RequestHobby>();
+			requestHobbyManager rhm = new requestHobbyManager();
+			
 			for (int i = 0; i < hobbyList.size(); i++) {
 				double result = getDistanceFromLatLongInKm(lat, lng, hobbyList.get(i).getLat(), hobbyList.get(i).getLat());
 				if (result < 2000) {
 					 danceList.add(hobbyList.get(i));
+					 reqList.addAll(rhm.retrieveAllRequest(hobbyList.get(i).getGrpID()));
 				}
 				
 			}
-			
+			 request.setAttribute("status", reqList);
 			 request.setAttribute("hobbyList", danceList); 
 			 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewAvaliableHobbyHelp.jsp");
 			 requestDispatcher.forward(request, response);
@@ -102,8 +106,15 @@ public class SearchHobbyForRequest extends HttpServlet {
 		} else if (id == 2) {
 
 			hobbyList = hm.retrieveAllHobbyByCategory("Cooking");
-			
-			 request.setAttribute("hobbyList", hobbyList); RequestDispatcher
+			ArrayList<Hobby> CookList = new ArrayList<Hobby>();
+			for (int i = 0; i < hobbyList.size(); i++) {
+				double result = getDistanceFromLatLongInKm(lat, lng, hobbyList.get(i).getLat(), hobbyList.get(i).getLat());
+				if (result < 2000) {
+					CookList.add(hobbyList.get(i));
+				}
+				
+			}
+			 request.setAttribute("hobbyList", CookList); RequestDispatcher
 			 requestDispatcher =
 			 request.getRequestDispatcher("/ViewAvaliableHobbyHelp.jsp");
 			 requestDispatcher.forward(request, response);
@@ -111,8 +122,15 @@ public class SearchHobbyForRequest extends HttpServlet {
 		} else if (id == 3) {
 
 			hobbyList = hm.retrieveAllHobbyByCategory("Gardening");
-			
-			 request.setAttribute("hobbyList", hobbyList); RequestDispatcher
+			ArrayList<Hobby> GardenList = new ArrayList<Hobby>();
+			for (int i = 0; i < hobbyList.size(); i++) {
+				double result = getDistanceFromLatLongInKm(lat, lng, hobbyList.get(i).getLat(), hobbyList.get(i).getLat());
+				if (result < 2000) {
+					 GardenList.add(hobbyList.get(i));
+				}
+				
+			}
+			 request.setAttribute("hobbyList",  GardenList); RequestDispatcher
 			 requestDispatcher =
 			 request.getRequestDispatcher("/ViewAvaliableHobbyHelp.jsp");
 			 requestDispatcher.forward(request, response);

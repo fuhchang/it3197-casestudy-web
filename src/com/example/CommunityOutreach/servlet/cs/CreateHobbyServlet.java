@@ -88,7 +88,7 @@ public class CreateHobbyServlet extends HttpServlet {
 			hobby.setLng(Double.parseDouble(Lng));
 		}
 		hobby.setGrpDesc(grpDesc);
-		hobby.setPhoto(byteImg);
+		
 		HobbyManager hobbyManager = new HobbyManager();
 		boolean result = hobbyManager.createHobby(hobby, user);
 		if (result) {

@@ -126,11 +126,13 @@ public class CreateHobbyWebServlet extends HttpServlet {
 		HobbyMembersManager MemberManager = new HobbyMembersManager();
 		boolean resultM = MemberManager.createHobbyMember(hm);
 		System.out.println(resultM);
+		System.out.println(result);
+		request.setAttribute("grpID", id);
+		RequestDispatcher rd = request.getRequestDispatcher("upload.jsp");
+    	rd.forward(request, response);
 		}
 		
-		System.out.println(result);
-		RequestDispatcher rd = request.getRequestDispatcher("RetrieveAllHobbyServlet");
-    	rd.forward(request, response);
+		
 	}
 
 }

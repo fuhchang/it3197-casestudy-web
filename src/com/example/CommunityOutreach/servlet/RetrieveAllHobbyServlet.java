@@ -67,6 +67,7 @@ public class RetrieveAllHobbyServlet extends HttpServlet {
 					System.out.println(mID + " " + hID);
 					if (mID.equals(hID)) {
 						finalList.add(hobbyList.get(a));
+						System.out.println(hobbyList.get(a).getPhoto());
 					} 
 				}
 			}

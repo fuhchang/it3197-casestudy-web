@@ -14,7 +14,7 @@
 		<!-- Include jQuery -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<Script type="text/javascript">
-		$(document).ready(function(){
+		
 		 var longitude;
 		 var latitude;
 		 
@@ -57,8 +57,8 @@
 				$("#lng2").val(position.coords.longitude);
 				longitude = position.coords.longitude;
 				latitude = position.coords.latitude;
-				alert(latitude);
-				alert(longitude);
+				//alert(latitude);
+				//alert(longitude);
 				geocodePosition(latLng);
 				
 			
@@ -72,7 +72,8 @@
 								},
 								function(responses) {
 									if (responses && responses.length > 0) {
-										alert(responses[0].formatted_address);
+										var loc =  document.getElementById("myLoc");
+										loc.value = "All hobby group is within 1km radius of " + responses[0].formatted_address;
 									} else {
 										alert('Cannot determine address at this location.');
 									}
@@ -80,23 +81,7 @@
 			}
 			
 			
-				$('#btnDance').click(function(){
-					var mge = "1";
-					mge += ",";
-					mge += longitude;
-					mge += ",";
-					mge += latitude;
-					sendData(mge);
-				});
-			});
-			function sendData(mge){
-				
-				 $.ajax({
-			          type: "POST",
-			          url: "SearchHobbyForRequest",
-			          data: { message : mge}
-			        });
-			}
+			
 			
 		</Script>
 	</jsp:attribute>
@@ -105,8 +90,16 @@
 		<div class="col-xs-12">
 		<h2>Select Category </h2>
 		</div>
+		<div class="panel panel-info">
+			
+		</div>
 					<table class="table">
 			<tbody>
+			<tr>
+				<td>
+				<textarea cols="50" style="width: 100%; height: 80px;" name="myLoc" id="myLoc" readonly></textarea>
+				</td>
+			</tr>
 			
 				<tr>
 					<td>
@@ -135,7 +128,7 @@
 					<input type="hidden" name="cateID" value="3"/>
 					<input type="hidden" name="lat" id="lat2" />
 					<input type="hidden" name="lng" id="lng2"/>
-						<button class="btn btn-default btn-block" data-dismiss="modal" aria-hidden="true" id="btnGarden" onclick="location.href='SearchHobbyForRequest?id=3'">Gardeing<i class="glyphicon glyphicon-play pull-right"></i></button>
+						<button class="btn btn-default btn-block" data-dismiss="modal" aria-hidden="true" id="btnGarden" onclick="location.href='SearchHobbyForRequest?id=3'">Gardening<i class="glyphicon glyphicon-play pull-right"></i></button>
 						</form>
 						
 					</td>

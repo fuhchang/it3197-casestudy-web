@@ -13,7 +13,7 @@ public class Hobby {
 	private double Lng;
 	private String grpDesc;
 	private int active;
-	private byte[] photo;
+	private String photo;
 	private String adminNric;
 	public int getGrpID() {
 		return grpID;
@@ -58,18 +58,7 @@ public class Hobby {
 	public void setGrpDesc(String grpDesc) {
 		this.grpDesc = grpDesc;
 	}
-	/**
-	 * @return the photo
-	 */
-	public byte[] getPhoto() {
-		return photo;
-	}
-	/**
-	 * @param photo the photo to set
-	 */
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
-	}
+	
 	/**
 	 * @return the lng
 	 */
@@ -105,6 +94,18 @@ public class Hobby {
 	 */
 	public void setAdminNric(String adminNric) {
 		this.adminNric = adminNric;
+	}
+	/**
+	 * @return the photo
+	 */
+	public String getPhoto() {
+		return photo;
+	}
+	/**
+	 * @param photo the photo to set
+	 */
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	
 	
