@@ -27,7 +27,7 @@
 				        <span class="icon-bar"></span>
 				        <span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="index.jsp"><img src="resources/community.png" height="25px" width="25px"> Community Outreach</a>
+					<a class="navbar-brand" href="index.jsp"><img src="resources/logo.png" height="25px" width="25px"> Community Outreach</a>
 				</div>
 				
 				<div class="collapse navbar-collapse" id="nav-content">
