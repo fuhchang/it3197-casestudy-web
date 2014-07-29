@@ -9,12 +9,22 @@
 		<script>
 			var toggle;
 			var notToggled = $('.panel-content').collapse("hide");
+			
 			$(document).ready(function(){
 				toggle = $('.panel-heading').click(function() {
 					toggle.not($(this).removeClass('active'));
 					$(this).toggleClass('active');
 					notToggled.not($(this).next()).slideUp();
 					$(this).next().slideToggle("fast");
+					
+					if($('.panel-title', this).find('span').hasClass('glyphicon-chevron-right')) {
+						$('.panel-title', this).find('span').removeClass('glyphicon-chevron-right');
+						$('.panel-title', this).find('span').addClass('glyphicon-chevron-down');
+					}
+					else {
+						$('.panel-title', this).find('span').removeClass('glyphicon-chevron-down');
+						$('.panel-title', this).find('span').addClass('glyphicon-chevron-right');
+					}
 				});
 			});
 			
@@ -27,21 +37,22 @@
 	</jsp:attribute>
 	
 	<jsp:attribute name="content">
-		<h1>Riddle</h1>
-		
-		<button type="submit" class="col-xs-offset-7 col-xs-5 btn btn-default" onClick="location.href='CreateRiddle.jsp'"><span class="glyphicon glyphicon-plus-sign"></span> Create Riddle</button>
+		<div class="row">
+			<h1 class="col-xs-3">Riddle</h1>
+			<button type="submit" class="col-xs-offset-2 col-xs-6 btn btn-default" onClick="location.href='CreateRiddle.jsp'" style="margin-top:6%;margin-bottom:5%;"><span class="glyphicon glyphicon-plus-sign"></span> Submit your riddle</button>
+		</div>
 		
 		<div class="panel-group">
 			<!-- For each riddle, a panel to display -->
 			<c:forEach items="${riddleList}" var="riddle">
 				<div class="panel panel-default">
 					<c:choose>
-						<c:when test="${riddle.user.nric == userNRIC}">
+						<c:when test="${riddle.user.nric == user.nric}">
 							<div class="panel-heading" style="color:white;background-color:gray;">
 								<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
 							</div>
 							<div id="riddle${riddle.riddleID}" class="panel-content" data-toggle="modal" data-target=".modal${riddle.riddleID}">
-								<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-up"></span></div>
+								<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-left"></span></div>
 							</div>
 						</c:when>
 						<c:otherwise>

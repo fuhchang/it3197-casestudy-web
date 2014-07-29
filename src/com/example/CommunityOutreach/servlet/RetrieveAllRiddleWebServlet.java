@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.RiddleManager;
+import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Riddle;
 import com.example.CommunityOutreach.model.RiddleAnswer;
-import com.example.CommunityOutreach.model.RiddleUserAnswered;
+import com.example.CommunityOutreach.model.User;
 
 /**
  * Servlet implementation class RetrieveAllRiddleWebServlet
@@ -48,7 +49,10 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	            }
 	        }
 		}
-		request.setAttribute("userNRIC", nric);
+		 
+		UserManager userManager = new UserManager();
+		User user = userManager.retrieveUser(nric);
+		request.setAttribute("user", user);
 		
 		RiddleManager riddleManager = new RiddleManager();
 		
@@ -79,7 +83,10 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	            }
 	        }
 		}
-		request.setAttribute("userNRIC", nric);
+		 
+		UserManager userManager = new UserManager();
+		User user = userManager.retrieveUser(nric);
+		request.setAttribute("user", user);
 		
 		ArrayList<Riddle> riddleList = new RiddleManager().retrieveAllRiddle();
 		request.setAttribute("riddleList", riddleList);

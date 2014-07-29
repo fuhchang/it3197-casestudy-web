@@ -7,7 +7,7 @@
 	<jsp:attribute name="jsImports"></jsp:attribute>
 	
 	<jsp:attribute name="content">
-		<h1>Create Riddle</h1>
+		<h1>Submit Riddle</h1>
 		
 		<form action="CreateRiddleWebServlet" method="post">
 			<div class="form-group">
@@ -49,7 +49,7 @@
 				    <input class="form-control" name="choice4" type="text" id="choice4" placeholder="Enter choice">
 				</div>
 			</div>
-			<button type="submit" class="btn btn-default col-xs-offset-9 col-xs-3">Create</button>
+			<button type="submit" class="btn btn-default col-xs-offset-9 col-xs-3">Submit</button>
 		</form>
 	</jsp:attribute>
 </t:master>

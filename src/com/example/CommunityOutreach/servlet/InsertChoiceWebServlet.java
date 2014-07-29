@@ -55,27 +55,37 @@ public class InsertChoiceWebServlet extends HttpServlet {
 	            }
 	        }
 		 }
-		 
+
 		 UserManager userManager = new UserManager();
 		 User user = userManager.retrieveUser(nric);
 		 
-		 int riddleID = Integer.parseInt(request.getParameter("riddleID"));
-		 int riddleAnswerID = Integer.parseInt(request.getParameter("riddleAnswerID"));
-		 
 		 RiddleManager riddleManager = new RiddleManager();
-		 Riddle riddle = riddleManager.retrieveRiddle(riddleID);
 		 
-		 boolean result = riddleManager.insertChoice(riddleID, riddleAnswerID, nric);
-		 
-		 if(result) {
-			 RiddleAnswer riddleAns = riddleManager.retrieveRiddleAnswer(riddleAnswerID);
+		 if(request.getParameter("riddleAnswerID") != null) {
+			 int riddleID = Integer.parseInt(request.getParameter("riddleID"));
+			 int riddleAnswerID = Integer.parseInt(request.getParameter("riddleAnswerID"));
 			 
-			 if(riddleAns.getRiddleAnswerStatus().equals("CORRECT"))
-				 userManager.updatePoints(nric, user.getPoints()+riddle.getRiddlePoint());
+			 Riddle riddle = riddleManager.retrieveRiddle(riddleID);
+			 
+			 boolean result = riddleManager.insertChoice(riddleID, riddleAnswerID, nric);
+			 
+			 if(result) {
+				 RiddleAnswer riddleAns = riddleManager.retrieveRiddleAnswer(riddleAnswerID);
+				 
+				 if(riddleAns.getRiddleAnswerStatus().equals("CORRECT"))
+					 userManager.updatePoints(nric, user.getPoints()+riddle.getRiddlePoint());
+			 }
+		 }
+		 else if(request.getParameter("rating") != null) {
+			 boolean result = riddleManager.insertRate(nric, request.getParameter("rating").toUpperCase());
+			 
+			 if(result) {
+				 userManager.updatePoints(nric, user.getPoints()+1);
+			 }
 		 }
 			
-		//RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewRiddleWebServlet");
-		//requestDispatcher.forward(request, response);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewRiddleWebServlet");
+		requestDispatcher.forward(request, response);
 	}
 
 }

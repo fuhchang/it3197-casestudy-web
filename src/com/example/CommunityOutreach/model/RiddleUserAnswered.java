@@ -5,14 +5,16 @@ public class RiddleUserAnswered {
 	private Riddle riddle;
 	private RiddleAnswer riddleAnswer;
 	private User user;
+	private String answeredRate;
 	
 	public RiddleUserAnswered(){}
 	
-	public RiddleUserAnswered(int riddleUserAnsweredID, Riddle riddle, RiddleAnswer riddleAnswer, User user){
+	public RiddleUserAnswered(int riddleUserAnsweredID, Riddle riddle, RiddleAnswer riddleAnswer, User user, String answeredRate){
 		this.riddleUserAnsweredID = riddleUserAnsweredID;
 		this.riddle = riddle;
 		this.riddleAnswer = riddleAnswer;
 		this.user = user;
+		this.answeredRate = answeredRate;
 	}
 
 	public int getRiddleUserAnsweredID() {
@@ -38,5 +40,11 @@ public class RiddleUserAnswered {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public String getAnsweredRate() {
+		return answeredRate;
+	}
+	public void setAnsweredRate(String answeredRate) {
+		this.answeredRate = answeredRate;
 	}
 }

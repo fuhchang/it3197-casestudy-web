@@ -88,7 +88,7 @@ public class RiddleManager {
 		boolean result = false;
 		
 		String sql = "INSERT INTO riddle_user_answered ";
-		sql += "VALUES(?, ?, ?, ?)";
+		sql += "VALUES(?, ?, ?, ?, ?)";
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -97,6 +97,7 @@ public class RiddleManager {
 			ps.setInt(2, riddleID);
 			ps.setInt(3, riddleAnswerID);
 			ps.setString(4, userNRIC);
+			ps.setString(5, "NULL");
 			
 			ps.executeUpdate();
 			result = true;
@@ -108,6 +109,33 @@ public class RiddleManager {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public boolean insertRate(String userNRIC, String rate) {
+		boolean result = false;
+
+		String sql = "UPDATE riddle_user_answered set answeredRate = ? WHERE userNRIC = ?";
+		
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, rate);
+			ps.setString(2, userNRIC);
+			
+			ps.executeUpdate();
+			result = true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -190,6 +218,38 @@ public class RiddleManager {
 				userAnswer.setRiddle(new Riddle(rs.getInt("riddleID")));
 				userAnswer.setRiddleAnswer(new RiddleAnswer(rs.getInt("riddleAnswerID")));
 				userAnswer.setUser(new User(userNRIC));
+				userAnswer.setAnsweredRate(rs.getString("answeredRate"));
+				userAnswerList.add(userAnswer);
+			}
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userAnswerList;
+	}
+	
+	public ArrayList<RiddleUserAnswered> retrieveAllAnswered(int riddleID) {
+		ArrayList<RiddleUserAnswered> userAnswerList = new ArrayList<RiddleUserAnswered>();
+		
+		String sql = "SELECT * FROM riddle_user_answered WHERE riddleID = ?";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, riddleID);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				RiddleUserAnswered userAnswer = new RiddleUserAnswered();
+				userAnswer.setRiddleUserAnsweredID(rs.getInt("answeredID"));
+				userAnswer.setRiddle(new Riddle(riddleID));
+				userAnswer.setRiddleAnswer(new RiddleAnswer(rs.getInt("riddleAnswerID")));
+				userAnswer.setUser(new User(rs.getString("userNRIC")));
+				userAnswer.setAnsweredRate(rs.getString("answeredRate"));
 				userAnswerList.add(userAnswer);
 			}
 		} catch (IllegalAccessException e) {
