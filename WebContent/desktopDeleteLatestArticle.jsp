@@ -14,7 +14,7 @@
 	  	<script src="js/displayArticle.js"></script>
 	  	<script type="text/javascript" language="javascript" src="js/dataTable/dataTables.js"></script>
    		<script type="text/javascript" language="javascript" src="js/dataTable/numberSort.js"></script>
-   		<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.12/src/markerclusterer_packed.js" />
+   		<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.12/src/markerclusterer_packed.js"></script>
 	</jsp:attribute>
 	<jsp:attribute name="content">
 	
@@ -72,7 +72,10 @@
 			  	var markers = [];
 				  <c:forEach items="${artList}" var="item">
 				  	  var latLng = new google.maps.LatLng(${item.dbLat},${item.dbLon});
-				  	  var marker = new google.maps.Marker({'position': latLng});
+				  	  var marker = new google.maps.Marker({'position': latLng,
+					      title: '${item.title}',
+					      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+					      map: map});
 				  	  markers.push(marker);
 				  	</c:forEach>
 				  	var markerCluster = new MarkerClusterer(map, markers);
