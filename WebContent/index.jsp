@@ -58,7 +58,7 @@
 				<span class="glyphicon glyphicon-book"></span>
 				<h4>Riddle</h4>
 			</button>
-			<button class="btn btn-default col-xs-6" onclick="location.href='profile.jsp'">
+			<button class="btn btn-default col-xs-6" onclick="location.href='ProfileWebServlet'">
 				<span class="glyphicon glyphicon-user"></span>
 				<h4>Profile</h4>
 			</button>

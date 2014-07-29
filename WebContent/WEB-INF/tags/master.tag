@@ -36,7 +36,7 @@
 						<li><a href="article.jsp">Articles</a></li>
 						<li><a href="RetrieveAllHobbyServlet">Hobby</a></li>
 						<li><a href="RetrieveAllRiddleWebServlet">Riddle</a></li>
-						<li><a href="profile.jsp">Profile</a></li>
+						<li><a href="ProfileWebServlet">Profile</a></li>
 						<li><a href="setting.jsp">Setting</a></li>
 					</ul>
 					
