@@ -25,6 +25,10 @@
 			a{
 				text-align:center;
 			}
+			#selectLocation{
+				margin-top:-0.2%;
+				margin-left:80%;
+			}
 		</style>
 		<!-- Import JS here -->
 		<script src="plugins/jquery-2.x.js"></script>
@@ -38,12 +42,10 @@
    		<script type="text/javascript" src="js/markerCluster.js"></script>
 	</head>
 	<body>
-		<div id="googleMap" style="width:98%;height:380px;"></div>
-		<div id="legend">
-		  Legend:
-		  <div id="forLegend" class='Eldercare' style="margin-bottom:5px;margin-top:5px;"><img class="Eldercare"/><span class="Eldercare" style="font-size:14px;margin-left:5px;">Elder Care Services</span></div>
-		  <div id="forLegend" class='Family' style="margin-bottom:5px;margin-top:5px;"><img class="Family"/><span class="Family" style="font-size:14px;margin-left:5px;">Family Services</span></div>
-		  <div id="forLegend" class='VoluntaryWelfareOrgs' style="margin-bottom:5px;margin-top:5px;"><img class="VoluntaryWelfareOrgs"/><span class="VoluntaryWelfareOrgs" style="font-size:14px;margin-left:5px;">Voluntary Welfare Organizations</span></div>
+		<div id="selectLocation">
+			<button class="btn btn-primary selectLocation"> 
+			 	<span class="glyphicon glyphicon-plus-sign"></span> Select Location
+			</button>
 		</div>
 		<div class="row panel panel-primary" style="margin-left:1%;margin-right:1%;margin-top:1%;">
 			<div class="panel-heading">
@@ -77,16 +79,23 @@
 			  	</div>
 			</div>
 		</div>
+		<div id="googleMap" style="width:98%;height:380px;"></div>
+		<div id="legend">
+		  Legend:
+		  <div id="forLegend" class='Eldercare' style="margin-bottom:5px;margin-top:5px;"><img class="Eldercare"/><span class="Eldercare" style="font-size:14px;margin-left:5px;">Elder Care Services</span></div>
+		  <div id="forLegend" class='Family' style="margin-bottom:5px;margin-top:5px;"><img class="Family"/><span class="Family" style="font-size:14px;margin-left:5px;">Family Services</span></div>
+		  <div id="forLegend" class='VoluntaryWelfareOrgs' style="margin-bottom:5px;margin-top:5px;"><img class="VoluntaryWelfareOrgs"/><span class="VoluntaryWelfareOrgs" style="font-size:14px;margin-left:5px;">Voluntary Welfare Organizations</span></div>
+		</div>
+		<br/>
 		<div class="row" style="margin-left:1%;margin-right:0%;margin-bottom:1%;">
 		  	<div class="col-xs-12" style='padding-left:0;padding-right:1%;'>
 		  		<table class="table table-bordered selectLocationTable">
 		  			<tr><td colspan="4" style="background-color:#428bca;color:#fff;"><h4> Information </h4></td></tr>
 		  			<tr><td colspan="4" class='selectedName'></td></tr>
 		  			<tr><td class='selectedlocation' colspan='4'></td></tr>
-		  			<tr><td class='selectedHyperlink' colspan='4'></td></tr>
+		  			<tr><td colspan='4'><a class="hyperL"><span class='selectedHyperlink'></span></a></td></tr>
 		  			<tr><td>Latitude: </td><td class='selectedLatitude'></td><td>Longtitude: </td><td class='selectedLongtitude'></td></tr>
 		  		</table>
-				<button class="btn btn-default selectLocation"> Select Location</button>
 			</div>
 			<br/>
 		</div>

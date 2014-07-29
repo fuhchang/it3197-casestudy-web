@@ -148,11 +148,20 @@
 							</select>
 						</div>
 						<div class="form-group">
+							<div class="checkbox">
+							  <label>
+							    <input type="checkbox" name="help" />
+								Need help from hobby groups for the event?
+							  </label>
+							</div>
+							<br/>
+						</div>
+						<div class="form-group">
 							<input type="hidden" name="locationName" id="locationName" />
 							<input type="hidden" name="locationHyperLink" id="locationHyperLink" />
 							<input type="hidden" name="lat" id="lat" />
 							<input type="hidden" name="lng" id="lng" />
-							<a href="event.jsp"><button type="button" id="cancelBtn" class="btn btn-default"> Cancel </button></a>
+							<a href="retrieveAllEvents?web=true"><button type="button" id="cancelBtn" class="btn btn-default"> Cancel </button></a>
 							<input type="submit" name="submit" id="submitBtn" value="Next" class="btn btn-default"/>
 						</div>
 					</div>
