@@ -11,6 +11,7 @@ public class HobbyPost {
 	private int grpID;
 	private String nric;
 	private String postTitle;
+	private String image;
 	public int getPostID() {
 		return postID;
 	}
@@ -76,6 +77,18 @@ public class HobbyPost {
 	 */
 	public void setPostTitle(String postTitle) {
 		this.postTitle = postTitle;
+	}
+	/**
+	 * @return the image
+	 */
+	public String getImage() {
+		return image;
+	}
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

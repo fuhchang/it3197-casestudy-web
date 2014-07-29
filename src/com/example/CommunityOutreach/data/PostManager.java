@@ -20,7 +20,7 @@ public class PostManager {
 		int active = 1;
 		boolean result = false;
 		String sql = "INSERT INTO post ";
-		sql += "VALUES(?,?,?,?,?,?,?,?)";
+		sql += "VALUES(?,?,?,?,?,?,?,?,?)";
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -34,6 +34,7 @@ public class PostManager {
 			ps.setInt(6, post.getGrpID());
 			ps.setString(7, post.getNric());
 			ps.setString(8, post.getPostTitle());
+			ps.setString(9, "");
 			ps.executeUpdate();
 			result=true;
 		} catch (IllegalAccessException e) {
@@ -73,6 +74,7 @@ public class PostManager {
 				post.setDatetime(rs.getDate("dateTime"));
 				post.setNric(rs.getString("userNRIC"));
 				post.setPostTitle(rs.getString("postTitle"));
+				post.setImage(rs.getString("postImage"));
 				postList.add(post);
 			}
 		} catch (IllegalAccessException | InstantiationException
@@ -147,4 +149,52 @@ public class PostManager {
 		return result;
 	}
 	
+	public int getLastPostID(String nric){
+		String sql = "SELECT * FROM post WHERE userNRIC=? ORDER by postID DESC";
+		Connection conn;
+		ArrayList<HobbyPost> hobbyList = new ArrayList<HobbyPost>();
+		
+		try {
+			conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, nric);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				HobbyPost hp = new HobbyPost();
+				hp.setPostID(rs.getInt("postID"));
+				hobbyList.add(hp);
+				
+			}
+			
+		} catch (IllegalAccessException | InstantiationException
+				| ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return hobbyList.get(0).getPostID();
+	}
+	
+	public boolean uploadImage(String path , int id){
+		String sql = "UPDATE post set postImage =? where postID = ?";
+		boolean result = false;
+		Connection conn;
+		try {
+			conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, path);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+			result=true;
+		} catch (IllegalAccessException | InstantiationException
+				| ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
 }
