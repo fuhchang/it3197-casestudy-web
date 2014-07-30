@@ -2,7 +2,6 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -82,8 +81,7 @@ public class CreateRiddleWebServlet extends HttpServlet {
 		 User user = userManager.retrieveUser(nric);
 		 userManager.updatePoints(nric, user.getPoints()-50);
 		 
-		 RequestDispatcher requestDispatcher = request.getRequestDispatcher("RetrieveAllRiddleWebServlet");
-		 requestDispatcher.forward(request, response);
+		 response.sendRedirect("RetrieveAllRiddleWebServlet");
 	}
 
 }

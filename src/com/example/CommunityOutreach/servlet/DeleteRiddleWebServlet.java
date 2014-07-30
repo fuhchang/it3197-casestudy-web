@@ -2,7 +2,6 @@ package com.example.CommunityOutreach.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,8 +35,7 @@ public class DeleteRiddleWebServlet extends HttpServlet {
 		riddleManager.deleteRiddle(Integer.parseInt(request.getParameter("riddleID")));
 		riddleManager.deleteRiddleAns(Integer.parseInt(request.getParameter("riddleID")));
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("RetrieveAllRiddleWebServlet");
-		requestDispatcher.forward(request, response);
+		response.sendRedirect("RetrieveAllRiddleWebServlet");
 	}
 
 	/**

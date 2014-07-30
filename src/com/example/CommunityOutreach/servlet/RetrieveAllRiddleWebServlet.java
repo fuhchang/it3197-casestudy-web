@@ -15,6 +15,7 @@ import com.example.CommunityOutreach.data.RiddleManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Riddle;
 import com.example.CommunityOutreach.model.RiddleAnswer;
+import com.example.CommunityOutreach.model.RiddleUserAnswered;
 import com.example.CommunityOutreach.model.User;
 
 /**
@@ -62,6 +63,9 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 		ArrayList<RiddleAnswer> riddleAnsList = riddleManager.retrieveAllRiddleAnswers();
 		request.setAttribute("riddleAnsList", riddleAnsList);
 		
+		ArrayList<RiddleUserAnswered> userAnsweredList = riddleManager.retrieveAllUserAnswered(nric);
+		request.setAttribute("userAnsweredList", userAnsweredList);
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -71,31 +75,6 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		response.setContentType("text/html");
-		String nric = null;
-		Cookie[] cookies = request.getCookies();
-		 if(cookies != null){
-	        for(Cookie cookie : cookies){
-	            if(cookie.getName().equals("userLogin")){
-	                nric = cookie.getValue().toString();
-	                break;
-	            }
-	        }
-		}
-		 
-		UserManager userManager = new UserManager();
-		User user = userManager.retrieveUser(nric);
-		request.setAttribute("user", user);
-		
-		ArrayList<Riddle> riddleList = new RiddleManager().retrieveAllRiddle();
-		request.setAttribute("riddleList", riddleList);
-		
-		ArrayList<RiddleAnswer> riddleAnsList = new RiddleManager().retrieveAllRiddleAnswers();
-		request.setAttribute("riddleAnsList", riddleAnsList);
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
-		requestDispatcher.forward(request, response);
 	}
 
 }
