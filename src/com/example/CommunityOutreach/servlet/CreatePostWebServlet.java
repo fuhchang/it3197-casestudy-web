@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.PostManager;
+import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.HobbyPost;
+import com.example.CommunityOutreach.model.User;
 
 /**
  * Servlet implementation class CreatePostWebServlet
@@ -86,8 +88,11 @@ public class CreatePostWebServlet extends HttpServlet {
 			PostManager pm = new PostManager();
 			boolean result = pm.createPost(post);
 			if(result){
+			UserManager um = new UserManager();
+			User user = um.retrieveUser(userName);
+			um.updatePoints(user.getNric(), user.getPoints() + 50);
 			request.setAttribute("id", id);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/ViewJoinGrpServlet");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewJoinGrpServlet");
 			requestDispatcher.forward(request, response);
 			}
 		}

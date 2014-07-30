@@ -44,6 +44,7 @@
 					},
 					success : function(data) {
 						alert('success' + data);
+						window.location.href="retrieveAllEvents?web=true";
 					}
 				});
 

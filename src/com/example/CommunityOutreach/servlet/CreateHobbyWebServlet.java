@@ -28,6 +28,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.example.CommunityOutreach.data.HobbyManager;
 import com.example.CommunityOutreach.data.HobbyMembersManager;
+import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Hobby;
 import com.example.CommunityOutreach.model.HobbyMembers;
 import com.example.CommunityOutreach.model.User;
@@ -117,6 +118,9 @@ public class CreateHobbyWebServlet extends HttpServlet {
 		HobbyManager hobbyManager = new HobbyManager();
 		boolean result = hobbyManager.createHobby(hobby, user);
 		if(result){
+		UserManager um = new UserManager();
+		user = um.retrieveUser(userName);
+		um.updatePoints(user.getNric(), user.getPoints() + 50);
 		int id = hobbyManager.getLastHobbyID(user.getNric());
 		HobbyMembers hm = new HobbyMembers();
 		hm.setGroupID(id);
