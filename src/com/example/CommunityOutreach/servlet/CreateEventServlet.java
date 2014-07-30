@@ -168,10 +168,20 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		EventLocationDetail eventLocationDetails = new EventLocationDetail(0,eventID,eventLocationName,eventLocationAddress,eventLocationHyperLink,lat,lng);
         		boolean addedLocation = eventLocationDetailManager.createEventLocationDetails(eventLocationDetails);
         		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation)){
-        			JsonObject myObj = new JsonObject();
-        			myObj.addProperty("success", true);
-        			myObj.addProperty("message","Event created successfully.");
-        			out.println(myObj.toString());
+        	        if(request.getParameter("web").equals("true")){
+        	        	if(request.getParameter("requestHelp").equals("on")){
+            	        	response.sendRedirect("hobbyCategory.jsp");
+        	        	}
+        	        	else{
+            	    		response.sendRedirect("retrieveAllEvents?web=true");
+        	        	}
+        			}
+        	        else{
+        	        	JsonObject myObj = new JsonObject();
+        				myObj.addProperty("success", true);
+        				myObj.addProperty("message","Event created successfully.");
+        				out.println(myObj.toString());
+        	        }
         		}
         		else{
         			JsonObject myObj = new JsonObject();
@@ -190,10 +200,6 @@ public class CreateEventServlet extends HttpServlet implements Settings{
             out.println(myObj.toString());
             return;
         }
-        
-        if(request.getParameter("web").equals("true")){
-    		response.sendRedirect("retrieveAllEvents?web=true");
-		}
 	}
 
     public String getCookieValue(HttpServletRequest req){

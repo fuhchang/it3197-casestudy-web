@@ -158,6 +158,7 @@ $(document).ready(function() {
 								$(".selectedHyperlink").html(result[closest][3]);
 								$(".selectedLatitude").html(suggestedY);
 								$(".selectedLongtitude").html(suggestedX);
+								$(".hyperL").attr("href",result[closest][3]);
 								$(".btn").attr("disabled",false);
 								$(".selectLocationTable").show();
 								map.setZoom(15);
@@ -330,7 +331,7 @@ $(document).ready(function() {
 						
 						var hyperL = "";
 						
-						if((hyperLink != null) || (hyperlink == "")){
+						if((hyperLink != null) || (hyperLink == "")){
 							hyperL =  'For more information: <a href='+hyperLink+'>'+hyperLink+'</a>'
 					    };
 						
@@ -359,6 +360,7 @@ $(document).ready(function() {
 							$(".selectedHyperlink").html(hyperLink);
 							$(".selectedLatitude").html(lat);
 							$(".selectedLongtitude").html(lon);
+							$(".hyperL").attr("href",hyperLink);
 							$(".btn").attr("disabled",false);
 							$(".selectLocationTable").show();
 						});

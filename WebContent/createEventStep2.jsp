@@ -69,7 +69,7 @@
 					var dateToString = $("#eventDateTimeTo").val().substr(0,11);
 					var dateFrom = new Date(dateFromString);
 					var dateTo = new Date(dateToString);
-					if(dateFrom - dateTo < 0){
+					if(dateFrom - dateTo <= 0){
 						return true;
 					}
 					else{
@@ -125,10 +125,14 @@
 		           	pick12HourFormat: true,
 		        });
 		        $("#eventDateTimeFrom").on("dp.change",function (e) {
-		    	    $('#eventDateTimeTo').data("DateTimePicker").setMinDate(e.date);
+		        	var day = new Date(e.date);
+			        var d = moment(day).subtract('days', 1);
+		    	    $('#eventDateTimeTo').data("DateTimePicker").setMinDate(d);
 		        });
 		        $("#eventDateTimeTo").on("dp.change",function (e) {
-		        	$('#eventDateTimeFrom').data("DateTimePicker").setMaxDate(e.date);
+		        	var day = new Date(e.date);
+			        var d = moment(day).subtract('days', 1);
+		        	$('#eventDateTimeFrom').data("DateTimePicker").setMaxDate(d);
 		       	});
 		     	$("#submitBtn").click(function(e){
 		          	$('#createEventStep2Form').validate();
@@ -184,8 +188,9 @@
 					<input type="hidden" name="locationName" id="locationName" value="<c:out value="${param.locationName}" />"/>
 					<input type="hidden" name="locationAddress" id="locationAddress" value="<c:out value="${param.eventLocation}" />"/>
 					<input type="hidden" name="locationHyperLink" id="locationHyperLink" value="<c:out value="${param.locationHyperLink}" />"/>
-					<input type="hidden" name="lat" value="${param.lat}" />
-					<input type="hidden" name="lng" value="${param.lng}" />
+					<input type="hidden" name="lat" value="<c:out value="${param.lat}" />" />
+					<input type="hidden" name="lng" value="<c:out value="${param.lng}" />" />
+					<input type="hidden" id="help" name="requestHelp" value="<c:out value="${param.help}" />" />
 					Create Event
 					<br />
 					Step 2: Please fill in the event schedule
@@ -228,5 +233,25 @@
 				</div>
 			</div>
 		</form>
+		
+			
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Request from Hobby Groups</h4>
+			      </div>
+			      <div class="modal-body">
+			        Do you want to request help from hooby groups?
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" id="no" onclick="notRequestingHelp()">No</button>
+			        <button type="button" class="btn btn-primary" id="yes" onclick="requestingHelp()">Yes</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 	</jsp:attribute>
 </t:master>

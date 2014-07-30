@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <t:master>
 	<jsp:attribute name="cssImports">
 		<!-- Import CSS here -->
@@ -14,7 +16,16 @@
    		<script type="text/javascript" src="js/dataTable/numberSort.js"></script>
    		<script>
 		$(document).ready(function() {
-			$('#eventTable').dataTable();
+			$('#eventTable').dataTable({
+				
+			     "aoColumns": [
+			                   { "sType": "natural" },
+			                   null,
+			                   null,
+			                   null,
+			                   null,
+			               ]
+			});
 		});
 		</script>
 	</jsp:attribute>
@@ -35,24 +46,27 @@
 				<tr>
 					<td> Event No </td>
 					<td> Name </td>
-					<td> Category </td>
+					<td> Description </td>
 					<td> From </td>
 					<td> To </td>
-					<td> No of participants allowed </td>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${eventArrList}" var="item">
 					<tr>
-						<td><a href="retrieveEvent?id=${item.eventID}">${item.eventID}</a></td>
-						<td>${item.eventName}</td>
-						<td>${item.eventCategory}</td>
-						<td>${item.eventDateTimeFrom}</td>
-						<td>${item.eventDateTimeTo}</td>
-						<td>${item.noOfParticipantsAllowed}</td>
+						<td style="width:8%;"><a href="retrieveEvent?id=${item.eventID}">${item.eventID}</a></td>
+						<td style="width:10%;">${item.eventName}</td>
+						<td style="width:50%;">${item.eventDescription}</td>
+						<td style="width:15%;">
+						<fmt:formatDate pattern="dd/MM/yyyy hh:mm aa" 
+            			value="${item.eventDateTimeFrom}" /></td>
+						<td style="width:15%;"><fmt:formatDate pattern="dd/MM/yyyy hh:mm aa" 
+            			value="${item.eventDateTimeTo}" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<br/>
+		<br/>
 	</jsp:attribute>
 </t:master>
