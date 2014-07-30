@@ -13,11 +13,11 @@
 		<form action="UpdateRiddleWebServlet" method="post">
 			<div class="form-group">
 				<label for="title">Title: </label>
-				<input type="text" class="form-control" name="title" value="${riddle.riddleTitle}" placeholder="Enter title">
+				<input type="text" class="form-control" name="title" value="${riddle.riddleTitle}" placeholder="Enter title" required>
 			</div>
 			<div class="form-group">
 			  <label for="content">Content: </label>
-			  <textarea rows="2" class="form-control" name="content" placeholder="Enter content">${riddle.riddleContent}</textarea>
+			  <textarea rows="2" class="form-control" name="content" placeholder="Enter content" required>${riddle.riddleContent}</textarea>
 			</div>
 			<div class="form-group">
 				<label for="choices">Choices: </label>
@@ -40,10 +40,10 @@
 													<!-- theCount.count is 1, 2, 3, 4 -->
 						<input class="form-control" name="choice${theCount.count}" type="text" value="${riddleAns.riddleAnswer}">
 					</div>
-				<input type="hidden" name="riddleAnsID${theCount.index}" value="${riddleAns.riddleAnswerID}" />
+				<input type="hidden" name="riddleAnsID${theCount.index}" value="${riddleAns.riddleAnswerID}" required/>
 				</c:forEach>
 			</div>
-			<input type="hidden" name="riddleID" value="${riddle.riddleID}" />
+			<input type="hidden" name="riddleID" value="${riddle.riddleID}"/>
 			<button type="submit" class="btn btn-default col-xs-offset-9 col-xs-3">Update</button>
 		</form>
 	</jsp:attribute>

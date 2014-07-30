@@ -22,7 +22,7 @@
 					html: true,
 					content: '<table class="table">'+
 								'<tr><th class="text-center">Points given: ${riddle.riddlePoint}</th></tr>'+
-								'<tr style="padding-bottom:0%;"><td>Correctly Answered: ${correctlyAnswered} / ${answeredList.size()}</td></tr></table>'
+								'<tr style="padding-bottom:0%;"><td>Correctly Answered: ${correctlyAnswered} out of ${answeredList.size()} people</td></tr></table>'
 				});
 			    setTimeout(function() {
 			        $('#rating').modal('show');

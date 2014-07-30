@@ -28,6 +28,16 @@
 				});
 			});
 			
+			function createRiddle() {
+				if(confirm("50 points will be used to submit a riddle. Are you sure?")) {
+					window.location.href="CreateRiddle.jsp";
+				}
+			}
+			
+			function cannotCreateRiddle() {
+				alert("You do not have sufficient points. 50 points is required to submit a riddle.\nJoin events, participate in hobbies activites, post some articles or just travel with our web to earn some points.");
+			}
+			
 			function deleteRiddle(riddleID) {
 				if(confirm("Are you sure you want to delete?")) {
 					window.location.href="DeleteRiddleWebServlet?riddleID="+riddleID;
@@ -39,7 +49,14 @@
 	<jsp:attribute name="content">
 		<div class="row">
 			<h1 class="col-xs-3">Riddle</h1>
-			<button type="submit" class="col-xs-offset-2 col-xs-6 btn btn-default" onClick="location.href='CreateRiddle.jsp'" style="margin-top:6%;margin-bottom:5%;"><span class="glyphicon glyphicon-plus-sign"></span> Submit your riddle</button>
+				<c:choose>
+					<c:when test="${user.points >= 50}">
+						<button class="col-xs-offset-2 col-xs-6 btn btn-default" onClick="createRiddle()" style="margin-top:6%;margin-bottom:5%;"><span class="glyphicon glyphicon-plus-sign"></span> Submit your riddle</button>
+					</c:when>
+					<c:otherwise>
+						<button class="col-xs-offset-2 col-xs-6 btn btn-default" onClick="cannotCreateRiddle()" style="margin-top:6%;margin-bottom:5%;"><span class="glyphicon glyphicon-plus-sign"></span> Submit your riddle</button>
+					</c:otherwise>
+				</c:choose>
 		</div>
 		
 		<div class="panel-group">
@@ -48,7 +65,7 @@
 				<div class="panel panel-default">
 					<c:choose>
 						<c:when test="${riddle.user.nric == user.nric}">
-							<div class="panel-heading" style="color:white;background-color:gray;">
+							<div class="panel-heading" style="color:white;background-color:black;">
 								<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
 							</div>
 							<div id="riddle${riddle.riddleID}" class="panel-content" data-toggle="modal" data-target=".modal${riddle.riddleID}">
@@ -56,9 +73,23 @@
 							</div>
 						</c:when>
 						<c:otherwise>
-							<div class="panel-heading" style="color:white;background-color:black;">
-								<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
-							</div>
+							<c:choose>
+								<c:when test="${riddle.riddlePoint == 5}">
+									<div class="panel-heading" style="color:white;background-color:green;">
+										<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+									</div>
+								</c:when>
+								<c:when test="${riddle.riddlePoint == 10}">
+									<div class="panel-heading" style="color:white;background-color:orange;">
+										<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="panel-heading" style="color:white;background-color:red;">
+										<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+									</div>
+								</c:otherwise>
+							</c:choose>
 							<div id="riddle${riddle.riddleID}" class="panel-content" onClick="location.href='ViewRiddleWebServlet?riddleID=${riddle.riddleID}'">
 								<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-left"></span></div>
 							</div>
