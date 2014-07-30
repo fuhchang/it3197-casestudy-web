@@ -79,7 +79,7 @@ public class EventManager{
 				event.setEventCategory(rs.getString("eventCategory"));
 				event.setEventDescription(rs.getString("eventDescription"));
 				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
-				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeFrom"));
+				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeTo"));
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));

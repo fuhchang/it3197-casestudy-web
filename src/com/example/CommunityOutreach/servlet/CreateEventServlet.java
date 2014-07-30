@@ -129,8 +129,19 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         String eventLocationName = request.getParameter("locationName");
         String eventLocationAddress = request.getParameter("locationAddress");
         String eventLocationHyperLink = request.getParameter("locationHyperLink");
-        double lat = Double.parseDouble(request.getParameter("lat"));
-		double lng = Double.parseDouble(request.getParameter("lng"));
+
+        double lat = 0.00;
+		double lng = 0.00;
+        if((request.getParameter("lat") != null) && (request.getParameter("lng") != null)){
+        	try{
+        		lat = Double.parseDouble(request.getParameter("lat"));
+        		lng = Double.parseDouble(request.getParameter("lng"));
+        	}
+        	catch(Exception e){
+        		lat = 0.00;
+        		lng = 0.00;
+        	}
+        }
         
 		EventManager eventManager = new EventManager();
 		UserManager userManager = new UserManager();
