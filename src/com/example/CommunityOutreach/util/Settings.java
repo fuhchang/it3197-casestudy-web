@@ -28,7 +28,7 @@ public interface Settings {
 	SimpleDateFormat webSqlDateTimeFormatter = new SimpleDateFormat("MM/dd/yyyy h:mm aa");
 	SimpleDateFormat displayFormatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
 
-	int pointsForCreatingEvent = 10;
-	int pointsForJoiningEvent = 5;
+	int pointsForCreatingEvent = 600;
+	int pointsForJoiningEvent = 300;
 }
 
