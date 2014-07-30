@@ -3,7 +3,9 @@ package com.example.CommunityOutreach.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,10 +23,15 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+import com.example.CommunityOutreach.data.ArticleManager;
 import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.EventParticipantsManager;
 import com.example.CommunityOutreach.data.UserManager;
+import com.example.CommunityOutreach.model.Article;
 import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.EventLocationDetail;
 import com.example.CommunityOutreach.model.EventParticipants;
@@ -167,7 +174,27 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		boolean addedPoints = userManager.updatePoints(eventAdminNRIC, (user.getPoints() + pointsForCreatingEvent));
         		EventLocationDetail eventLocationDetails = new EventLocationDetail(0,eventID,eventLocationName,eventLocationAddress,eventLocationHyperLink,lat,lng);
         		boolean addedLocation = eventLocationDetailManager.createEventLocationDetails(eventLocationDetails);
-        		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation)){
+        		ArticleManager articleManager = new ArticleManager();
+        		
+        		DateFormat dateFormat = new SimpleDateFormat("dd/MMMM/yyyy HH:mm a");
+        		Calendar cal = Calendar.getInstance();
+        		String now = dateFormat.format(cal.getTime());
+        		
+        		
+        		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MMMM/yyyy HH:mm a");
+
+                Date currentTime = null;
+        		try {
+        			currentTime = simpleDateFormat.parse(now);
+        		} catch (ParseException e) {
+        				// TODO Auto-generated catch block
+        				e.printStackTrace();
+        		}
+        		
+        		Article article = new Article(0,event.getEventName(),event.getEventDescription(),currentTime,"News Around The Neighbourhood",eventLocationDetails.getEventLocationAddress(),eventAdminNRIC,1,"Pending",eventLocationDetails.getEventLocationLat(),eventLocationDetails.getEventLocationLng());
+        		boolean articleCreated = articleManager.createArticle(article);
+        		
+        		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation) && (articleCreated)){
         	        if(request.getParameter("web").equals("true")){
         	        	if(request.getParameter("requestHelp").equals("on")){
             	        	response.sendRedirect("hobbyCategory.jsp");
