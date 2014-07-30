@@ -80,10 +80,20 @@
 		                }
 		            }
 		        });
+		        $("#magicBtn").click(function(){
+			        var eventName = "Caregiving Welfare Association Flag Day";
+				    var eventDescription = "We are welcoming participants for CWA Flag Day, scheduled on 28 Dec 2013 (Saturday), from 8.30am to 4.30pm. All donations collected will go towards the well-being of our clients. ";
+				    $("#eventName").val(eventName);
+				    $("#eventDescription").val(eventDescription);
+				    $('#eventCategory').val("Family");
+				    $("#noOfParticipants").val(99999);
+				    $('#help').attr('checked','checked');
+			    });
 			});
 		</script>
 	</jsp:attribute>
 	<jsp:attribute name="content">
+		<button type="button" id="magicBtn" class="btn btn-default"> Magic Button (for presentation purposes)</button>
 		<form method="post" id="createEventStep1Form" action="createEventStep2.jsp">
 			<div id="currentForm" class="form-horizontal" role="form">
 				<div class="panel panel-primary">
@@ -125,7 +135,7 @@
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">Description</label></span>
-							<textarea class="form-control" name="eventDescription" rows="3" placeholder="Enter event description"></textarea>
+							<textarea class="form-control" id="eventDescription" name="eventDescription" rows="3" placeholder="Enter event description"></textarea>
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">Location</label></span>
@@ -139,7 +149,7 @@
 						</div>
 						<div class="form-group">
 							<span class="floatLeftText"><label class="col-xs-12 control-label">No of participants</label></span>
-							<select class="form-control" id="gType" name="noOfParticipants">
+							<select class="form-control" id="noOfParticipants" name="noOfParticipants">
 								<option value="99"> 0 - 99 </option>
 								<option value="499"> 100 - 499 </option>
 								<option value="999"> 500 - 999 </option>
@@ -150,7 +160,7 @@
 						<div class="form-group">
 							<div class="checkbox">
 							  <label>
-							    <input type="checkbox" name="help" />
+							    <input type="checkbox" name="help" id="help"/>
 								Need help from hobby groups for the event?
 							  </label>
 							</div>

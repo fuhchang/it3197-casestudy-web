@@ -166,11 +166,18 @@
 			                }
 			            }
 		 	   });
+		       $("#magicBtn").click(function(){
+		    	   var dateStart = "08/30/2014 8:30 PM";
+			   	   var dateEnd = "08/30/2014 5:30 PM";
+			   	   $("#eventDateTimeFrom").val(dateStart);
+			   	   $("#eventDateTimeTo").val(dateEnd);
+			   });
 			});
 		</script>
 	</jsp:attribute>
 
 	<jsp:attribute name="content">
+		<button type="button" id="magicBtn" class="btn btn-default"> Magic Button (for presentation purposes)</button>
 		<form method="post" id="createEventStep2Form" action="createEvent">
 			<div id="currentForm" class="form-horizontal" role="form">
 				<div class="panel panel-primary">
