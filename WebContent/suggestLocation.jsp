@@ -57,15 +57,25 @@
 			  	<div class="col-xs-6 col-md-8">
 					<p>Theme(s): </p>
 					<div id="themeAvailable" class="list-group">
+						<div id="arts">
+							<a class='list-group-item' id='MONUMENTS' style='width:50%;'>Monuments</a>
+							<a class='list-group-item' id='NATIONALPARKS' style='width:50%'>Parks</a>
+							<a class='list-group-item' id='TOURISM' style='width:50%'>Tourism</a>
+						</div>
 						<div id="education">
-							<!-- <a class='list-group-item' id='Eldercare' style='width:50%'>Elder Care Services</a>
-							<a class='list-group-item' id='Family' style='width:50%;'>Family Services </a>
-							<a class='list-group-item' id='VoluntaryWelfareOrgs' style='width:50%'>Voluntary Welfare Organizations</a> -->
+							<a class='list-group-item' id='COMMUNITYCLUBS' style='width:50%;'>Community Clubs</a>
+							<a class='list-group-item' id='HERITAGESITES' style='width:50%'>Heritage Sites</a>
+							<a class='list-group-item' id='LIBRARIES' style='width:50%'>Libraries</a>
 						</div>
 						<div id="family">
 							<a class='list-group-item' id='Eldercare'>Elder Care Services</a>
 							<a class='list-group-item' id='Family'>Family Services </a>
 							<a class='list-group-item' id='VoluntaryWelfareOrgs'>Voluntary Welfare Organizations</a>
+						</div>
+						<div id="health">
+							<a class='list-group-item' id='EXERCISEFACILITIES'>Exercise Facilities</a>
+							<a class='list-group-item' id='REGISTERED_PHARMACY'>Retail Pharmacy Locations </a>
+							<a class='list-group-item' id='RelaxSG'>Relax@SG</a>
 						</div>
 					</div>
 				</div>
@@ -82,9 +92,22 @@
 		<div id="googleMap" style="width:98%;height:380px;"></div>
 		<div id="legend">
 		  Legend:
+		  <!-- Arts -->
+		  <div id="forLegend" class='MONUMENTS' style="margin-bottom:5px;margin-top:5px;"><img class="MONUMENTS"/><span class="MONUMENTS" style="font-size:14px;margin-left:5px;">Monuments</span></div>
+		  <div id="forLegend" class='NATIONALPARKS' style="margin-bottom:5px;margin-top:5px;"><img class="NATIONALPARKS"/><span class="NATIONALPARKS" style="font-size:14px;margin-left:5px;">Parks</span></div>
+		  <div id="forLegend" class='TOURISM' style="margin-bottom:5px;margin-top:5px;"><img class="TOURISM"/><span class="TOURISM" style="font-size:14px;margin-left:5px;">Tourism</span></div>
+		  <!-- Education -->
+		  <div id="forLegend" class='COMMUNITYCLUBS' style="margin-bottom:5px;margin-top:5px;"><img class="COMMUNITYCLUBS"/><span class="COMMUNITYCLUBS" style="font-size:14px;margin-left:5px;">Community Clubs</span></div>
+		  <div id="forLegend" class='HERITAGESITES' style="margin-bottom:5px;margin-top:5px;"><img class="HERITAGESITES"/><span class="HERITAGESITES" style="font-size:14px;margin-left:5px;">Heritage Sites</span></div>
+		  <div id="forLegend" class='LIBRARIES' style="margin-bottom:5px;margin-top:5px;"><img class="LIBRARIES"/><span class="LIBRARIES" style="font-size:14px;margin-left:5px;">Libraries</span></div>
+		  <!-- Family -->
 		  <div id="forLegend" class='Eldercare' style="margin-bottom:5px;margin-top:5px;"><img class="Eldercare"/><span class="Eldercare" style="font-size:14px;margin-left:5px;">Elder Care Services</span></div>
 		  <div id="forLegend" class='Family' style="margin-bottom:5px;margin-top:5px;"><img class="Family"/><span class="Family" style="font-size:14px;margin-left:5px;">Family Services</span></div>
 		  <div id="forLegend" class='VoluntaryWelfareOrgs' style="margin-bottom:5px;margin-top:5px;"><img class="VoluntaryWelfareOrgs"/><span class="VoluntaryWelfareOrgs" style="font-size:14px;margin-left:5px;">Voluntary Welfare Organizations</span></div>
+		  <!-- Health -->
+		  <div id="forLegend" class='EXERCISEFACILITIES' style="margin-bottom:5px;margin-top:5px;"><img class="EXERCISEFACILITIES"/><span class="EXERCISEFACILITIES" style="font-size:14px;margin-left:5px;">Exercise Facilities</span></div>
+		  <div id="forLegend" class='REGISTERED_PHARMACY' style="margin-bottom:5px;margin-top:5px;"><img class="REGISTERED_PHARMACY"/><span class="REGISTERED_PHARMACY" style="font-size:14px;margin-left:5px;">Retail Pharmacy Locations </span></div>
+		  <div id="forLegend" class='RelaxSG' style="margin-bottom:5px;margin-top:5px;"><img class="RelaxSG"/><span class="RelaxSG" style="font-size:14px;margin-left:5px;">Relax@SG</span></div>
 		</div>
 		<br/>
 		<div class="row" style="margin-left:1%;margin-right:0%;margin-bottom:1%;">

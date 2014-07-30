@@ -31,6 +31,23 @@ $(document).ready(function() {
 					var y;
 					
 					refreshMap();
+					//Arts
+					$("#arts").hide();
+					$("#forLegend .MONUMENTS").hide();
+					$("#forLegend span .MONUMENTS").hide();
+					$("#forLegend .NATIONALPARKS").hide();
+					$("#forLegend span .NATIONALPARKS").hide();
+					$("#forLegend .TOURISM").hide();
+					$("#forLegend span .TOURISM").hide();
+					//Education
+					$("#education").hide();
+					$("#forLegend .LIBRARIES").hide();
+					$("#forLegend span .LIBRARIES").hide();
+					$("#forLegend .COMMUNITYCLUBS").hide();
+					$("#forLegend span .COMMUNITYCLUBS").hide();
+					$("#forLegend .HERITAGESITES").hide();
+					$("#forLegend span .HERITAGESITES").hide();
+					//Family
 					$("#family").hide();
 					$("#forLegend .Eldercare").hide();
 					$("#forLegend span .Eldercare").hide();
@@ -38,22 +55,60 @@ $(document).ready(function() {
 					$("#forLegend span .Family").hide();
 					$("#forLegend .VoluntaryWelfareOrgs").hide();
 					$("#forLegend span .VoluntaryWelfareOrgs").hide();
+					//Health
+					$("#health").hide();
+					$("#forLegend .EXERCISEFACILITIES").hide();
+					$("#forLegend span .EXERCISEFACILITIES").hide();
+					$("#forLegend .REGISTERED_PHARMACY").hide();
+					$("#forLegend span .REGISTERED_PHARMACY").hide();
+					$("#forLegend .RelaxSG").hide();
+					$("#forLegend span .RelaxSG").hide();
+					/**/
 					$("#legend").hide();
 					$(".panel-body").hide();
 					$("#down").show();
 					$("#up").hide();
 					$(".selectLocationTable").hide();
 					$(".btn").attr("disabled","disabled");
-					
-					if((category == "Family") || (category == "Family#")){
+
+					if((category == "Arts") || (category == "Arts#")){
+						$("#arts").show();
+					}
+					else if((category == "Education") || (category == "Education#")){
+						$("#education").show();
+					}
+					else if((category == "Family") || (category == "Family#")){
 						$("#family").show();
+					}
+					else if((category == "Health") || (category == "Health#")){
+						$("#health").show();
 					}
 
 					 // Try HTML5 geolocation
 					if(navigator.geolocation) {
 						navigator.geolocation.watchPosition(showPosition);
 					}
-					
+					//Arts
+					$("#MONUMENTS").click(function(e){
+						displayTheme("MONUMENTS");
+					});
+					$("#NATIONALPARKS").click(function(e){
+						displayTheme("NATIONALPARKS");
+					});
+					$("#TOURISM").click(function(e){
+						displayTheme("TOURISM");
+					});
+					//Education
+					$("#HERITAGESITES").click(function(e){
+						displayTheme("HERITAGESITES");
+					});
+					$("#LIBRARIES").click(function(e){
+						displayTheme("LIBRARIES");
+					});
+					$("#COMMUNITYCLUBS").click(function(e){
+						displayTheme("COMMUNITYCLUBS");
+					});
+					//Family
 					$("#Eldercare").click(function(e){
 						displayTheme("Eldercare");
 					});
@@ -65,6 +120,16 @@ $(document).ready(function() {
 					$("#VoluntaryWelfareOrgs").click(function(e){
 						displayTheme("VoluntaryWelfareOrgs");
 					});
+					//Health
+					$("#EXERCISEFACILITIES").click(function(e){
+						displayTheme("EXERCISEFACILITIES");
+					});
+					$("#REGISTERED_PHARMACY").click(function(e){
+						displayTheme("REGISTERED_PHARMACY");
+					});
+					$("#RelaxSG").click(function(e){
+						displayTheme("RelaxSG");
+					});
 					
 					$(".deselectAllThemes").click(function(){
 						if(themeNames.length <= 0){
@@ -73,7 +138,33 @@ $(document).ready(function() {
 						}
 						else{
 							$("#legend").hide();
-							if((category == "Family") || (category == "Family#")){
+							if((category == "Arts") || (category == "Arts#")){
+								$("#MONUMENTS").removeClass("active disabled");
+								$("#forLegend .MONUMENTS").hide();
+								$("#forLegend span .MONUMENTS").hide();
+								$("#NATIONALPARKS").removeClass("active disabled");
+								$("#forLegend .NATIONALPARKS").hide();
+								$("#forLegend span .NATIONALPARKS").hide();
+								$("#TOURISM").removeClass("active disabled");
+								$("#forLegend .TOURISM").hide();
+								$("#forLegend span .TOURISM").hide();
+								$(".selectLocationTable").hide();
+								$(".btn").attr("disabled","disabled");
+							}
+							else if((category == "Education") || (category == "Education#")){
+								$("#LIBRARIES").removeClass("active disabled");
+								$("#forLegend .LIBRARIES").hide();
+								$("#forLegend span .LIBRARIES").hide();
+								$("#COMMUNITYCLUBS").removeClass("active disabled");
+								$("#forLegend .COMMUNITYCLUBS").hide();
+								$("#forLegend span .COMMUNITYCLUBS").hide();
+								$("#HERITAGESITES").removeClass("active disabled");
+								$("#forLegend .HERITAGESITES").hide();
+								$("#forLegend span .HERITAGESITES").hide();
+								$(".selectLocationTable").hide();
+								$(".btn").attr("disabled","disabled");
+							}
+							else if((category == "Family") || (category == "Family#")){
 								$("#Eldercare").removeClass("active disabled");
 								$("#forLegend .Eldercare").hide();
 								$("#forLegend span .Eldercare").hide();
@@ -85,15 +176,28 @@ $(document).ready(function() {
 								$("#forLegend span .VoluntaryWelfareOrgs").hide();
 								$(".selectLocationTable").hide();
 								$(".btn").attr("disabled","disabled");
-								markerClusterer.clearMarkers();
-								for(var i = 0;i<markers.length;i++){
-									markers[i].setVisible(false);
-								}
-								markers = [];
-								result = [];
-								themeNames = [];
-								temp = [];
 							}
+							else if((category == "Health") || (category == "Health#")){
+								$("#REGISTERED_PHARMACY").removeClass("active disabled");
+								$("#forLegend .REGISTERED_PHARMACY").hide();
+								$("#forLegend span .REGISTERED_PHARMACY").hide();
+								$("#RelaxSG").removeClass("active disabled");
+								$("#forLegend .RelaxSG").hide();
+								$("#forLegend span .RelaxSG").hide();
+								$("#EXERCISEFACILITIES").removeClass("active disabled");
+								$("#forLegend .EXERCISEFACILITIES").hide();
+								$("#forLegend span .EXERCISEFACILITIES").hide();
+								$(".selectLocationTable").hide();
+								$(".btn").attr("disabled","disabled");
+							}
+							markerClusterer.clearMarkers();
+							for(var i = 0;i<markers.length;i++){
+								markers[i].setVisible(false);
+							}
+							markers = [];
+							result = [];
+							themeNames = [];
+							temp = [];
 						}
 					});
 					
@@ -132,7 +236,11 @@ $(document).ready(function() {
 							var name = result[closest][0];
 							var address = result[closest][2] + "\n"
 									+ result[closest][1];
-							var hyperL = 'For more information: <a href='+result[closest][3]+'>'+result[closest][3]+'</a>';
+							
+							var hyperL = "";
+							if((result[closest][3] != null) || (result[closest][3] == "") || (result[closest][3] != undefined)){
+								hyperL = 'For more information: <a href='+result[closest][3]+'>'+result[closest][3]+'</a>';
+							}
 
 						    var html = '<div id="content">'+
 						      '<div id="siteNotice">'+
@@ -170,7 +278,29 @@ $(document).ready(function() {
 					});
 					
 					$(".refreshMap").click(function(){
-						if((category == "Family") || (category == "Family#")){
+						if((category == "Arts") || (category == "Arts#")){
+							$("#MONUMENTS").removeClass("active disabled");
+							$("#forLegend .MONUMENTS").hide();
+							$("#forLegend span .MONUMENTS").hide();
+							$("#NATIONALPARKS").removeClass("active disabled");
+							$("#forLegend .NATIONALPARKS").hide();
+							$("#forLegend span .NATIONALPARKS").hide();
+							$("#TOURISM").removeClass("active disabled");
+							$("#forLegend .TOURISM").hide();
+							$("#forLegend span .TOURISM").hide();
+						}
+						else if((category == "Education") || (category == "Education#")){
+							$("#LIBRARIES").removeClass("active disabled");
+							$("#forLegend .LIBRARIES").hide();
+							$("#forLegend span .LIBRARIES").hide();
+							$("#COMMUNITYCLUBS").removeClass("active disabled");
+							$("#forLegend .COMMUNITYCLUBS").hide();
+							$("#forLegend span .COMMUNITYCLUBS").hide();
+							$("#HERITAGESITES").removeClass("active disabled");
+							$("#forLegend .HERITAGESITES").hide();
+							$("#forLegend span .HERITAGESITES").hide();
+						}
+						else if((category == "Family") || (category == "Family#")){
 							$("#Eldercare").removeClass("active disabled");
 							$("#forLegend .Eldercare").hide();
 							$("#forLegend span .Eldercare").hide();
@@ -180,15 +310,27 @@ $(document).ready(function() {
 							$("#VoluntaryWelfareOrgs").removeClass("active disabled");
 							$("#forLegend .VoluntaryWelfareOrgs").hide();
 							$("#forLegend span .VoluntaryWelfareOrgs").hide();
-							markerClusterer.clearMarkers();
-							for(var i = 0;i<markers.length;i++){
-								markers[i].setVisible(false);
-							}
-							
-							markers = [];
-							result = [];
-							temp = [];
 						}
+						else if((category == "Health") || (category == "Health#")){
+							$("#REGISTERED_PHARMACY").removeClass("active disabled");
+							$("#forLegend .REGISTERED_PHARMACY").hide();
+							$("#forLegend span .REGISTERED_PHARMACY").hide();
+							$("#RelaxSG").removeClass("active disabled");
+							$("#forLegend .RelaxSG").hide();
+							$("#forLegend span .RelaxSG").hide();
+							$("#EXERCISEFACILITIES").removeClass("active disabled");
+							$("#forLegend .EXERCISEFACILITIES").hide();
+							$("#forLegend span .EXERCISEFACILITIES").hide();
+						}
+
+						markerClusterer.clearMarkers();
+						for(var i = 0;i<markers.length;i++){
+							markers[i].setVisible(false);
+						}
+						
+						markers = [];
+						result = [];
+						temp = [];
 						for(var i=0;i<themeNames.length;i++){
 							displayTheme(themeNames[i]);
 						}
@@ -283,12 +425,12 @@ $(document).ready(function() {
 						var results = mashupResults.results;
 						var initial = result.length;
 						for (var i = 0; i < results.length; i++) {
-							var name = mashupResults.results[i].NAME.toString();
-							var postalCode = mashupResults.results[i].ADDRESSPOSTALCODE.toString();
-							var streetName = mashupResults.results[i].ADDRESSSTREETNAME.toString();
-							var hyperLink = mashupResults.results[i].HYPERLINK.toString();
-							var xy = mashupResults.results[i].XY.toString();
-							var icon_name = mashupResults.results[i].ICON_NAME.toString();
+							var name = mashupResults.results[i].NAME;
+							var postalCode = mashupResults.results[i].ADDRESSPOSTALCODE;
+							var streetName = mashupResults.results[i].ADDRESSSTREETNAME;
+							var hyperLink = mashupResults.results[i].HYPERLINK;
+							var xy = mashupResults.results[i].XY;
+							var icon_name = mashupResults.results[i].ICON_NAME;
 							iconName = "http://www.onemap.sg/icons/" + themeName + "/" + icon_name;
 							result.push([name, postalCode, streetName, hyperLink, xy, iconName ]);
 							temp.push([name, postalCode, streetName, hyperLink, xy, iconName ]);
@@ -331,7 +473,7 @@ $(document).ready(function() {
 						
 						var hyperL = "";
 						
-						if((hyperLink != null) || (hyperLink == "")){
+						if((hyperLink != null) || (hyperLink == "") || (hyperLink != undefined)){
 							hyperL =  'For more information: <a href='+hyperLink+'>'+hyperLink+'</a>'
 					    };
 						
