@@ -33,6 +33,34 @@ public class ProfileWebServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		response.setContentType("text/html");
+		String nric = null;
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+			for(Cookie cookie : cookies){
+				if(cookie.getName().equals("userLogin")){
+					nric = cookie.getValue().toString();
+					break;
+	            }
+	        }
+		}
+		 
+		UserManager userManager = new UserManager();
+		User user = userManager.retrieveUser(nric);
+		request.setAttribute("user", user);
+
+		request.setAttribute("additionalPt", 0);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Profile.jsp");
+		requestDispatcher.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
 		response.setContentType("text/html");
 		String nric = null;
 		Cookie[] cookies = request.getCookies();
@@ -49,15 +77,11 @@ public class ProfileWebServlet extends HttpServlet {
 		User user = userManager.retrieveUser(nric);
 		request.setAttribute("user", user);
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Profile.jsp");
-		requestDispatcher.forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("additionalPt") != null && !request.getParameter("additionalPt").equals("")){
+			userManager.updatePoints(nric, user.getPoints()+Integer.parseInt(request.getParameter("additionalPt")));
+		}
+		
+		response.sendRedirect("ProfileWebServlet");
 	}
 
 }

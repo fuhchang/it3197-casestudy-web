@@ -129,8 +129,8 @@ public class InsertChoiceWebServlet extends HttpServlet {
 			 }
 		 }
 			
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewRiddleWebServlet");
-		requestDispatcher.forward(request, response);
+		 RequestDispatcher requestDispatcher = request.getRequestDispatcher("ViewRiddleWebServlet");
+		 requestDispatcher.forward(request, response);
 	}
 
 }

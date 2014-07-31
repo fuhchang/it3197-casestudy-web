@@ -88,8 +88,7 @@ public class UpdateRiddleWebServlet extends HttpServlet {
 			 riddleManager.updateRiddleAns(riddle, riddleAns);
 		 }
 		 
-		 RequestDispatcher requestDispatcher = request.getRequestDispatcher("RetrieveAllRiddleWebServlet");
-		 requestDispatcher.forward(request, response);
+		 response.sendRedirect("RetrieveAllRiddleWebServlet");
 	}
 
 }

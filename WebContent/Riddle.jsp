@@ -35,7 +35,7 @@
 			}
 			
 			function cannotCreateRiddle() {
-				alert("You do not have sufficient points. 50 points is required to submit a riddle.\nJoin events, participate in hobbies activites, post some articles or just travel with our web to earn some points.");
+				alert("You do not have sufficient points. 50 points is required to submit a riddle.\nParticipate in events and hobbies or simply just travel with our web to earn some points.");
 			}
 			
 			function deleteRiddle(riddleID) {
@@ -72,27 +72,55 @@
 								<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-left"></span></div>
 							</div>
 						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${riddle.riddlePoint == 5}">
+						<c:otherwise>						
+							<c:if test="${userAnsweredList.size() != 0}">
+								<c:forEach items="${userAnsweredList}" var="userAns">
+									<c:if test="${userAns.riddle.riddleID == riddle.riddleID}">
+										<div class="panel-heading" style="color:white;background-color:grey;">
+											<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+										</div>
+									</c:if>
+									<c:if test="${userAns.riddle.riddleID != riddle.riddleID && riddle.riddlePoint == 5}">
+										<div class="panel-heading" style="color:white;background-color:green;">
+											<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+										</div>
+									</c:if>
+									<c:if test="${userAns.riddle.riddleID != riddle.riddleID && riddle.riddlePoint == 10}">
+										<div class="panel-heading" style="color:white;background-color:orange;">
+											<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+										</div>
+									</c:if>
+									<c:if test="${userAns.riddle.riddleID != riddle.riddleID && riddle.riddlePoint == 20}">
+										<div class="panel-heading" style="color:white;background-color:red;">
+											<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
+										</div>
+									</c:if>
+								</c:forEach>
+								<div id="riddle${riddle.riddleID}" class="panel-content" onClick="location.href='ViewRiddleWebServlet?riddleID=${riddle.riddleID}'">
+									<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-left"></span></div>
+								</div>
+							</c:if>
+							
+							<c:if test="${userAnsweredList.size() == 0}">
+								<c:if test="${riddle.riddlePoint == 5}">
 									<div class="panel-heading" style="color:white;background-color:green;">
 										<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
 									</div>
-								</c:when>
-								<c:when test="${riddle.riddlePoint == 10}">
+								</c:if>
+								<c:if test="${riddle.riddlePoint == 10}">
 									<div class="panel-heading" style="color:white;background-color:orange;">
 										<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
 									</div>
-								</c:when>
-								<c:otherwise>
+								</c:if>
+								<c:if test="riddle.riddlePoint == 20}">
 									<div class="panel-heading" style="color:white;background-color:red;">
 										<h3 class="panel-title"><strong>${riddle.riddleTitle}</strong><span class="pull-right glyphicon glyphicon-chevron-right"></span></h3>
 									</div>
-								</c:otherwise>
-							</c:choose>
-							<div id="riddle${riddle.riddleID}" class="panel-content" onClick="location.href='ViewRiddleWebServlet?riddleID=${riddle.riddleID}'">
-								<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-left"></span></div>
-							</div>
+								</c:if>
+								<div id="riddle${riddle.riddleID}" class="panel-content" onClick="location.href='ViewRiddleWebServlet?riddleID=${riddle.riddleID}'">
+									<div class="panel-body" style="text-align:justify">${riddle.riddleContent}<span class="pull-right glyphicon glyphicon-hand-left"></span></div>
+								</div>
+							</c:if>
 						</c:otherwise>
 					</c:choose>
 					
