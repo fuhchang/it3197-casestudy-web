@@ -59,7 +59,7 @@ public class CreateRiddleWebServlet extends HttpServlet {
 		 riddle.setUser(new User(nric));
 		 riddle.setRiddleTitle(request.getParameter("title"));
 		 riddle.setRiddleContent(request.getParameter("content"));
-		 riddle.setRiddleStatus("NORMAL");
+		 riddle.setRiddleStatus("ACTIVE");
 		 riddle.setRiddlePoint(10);
 		 
 		 RiddleManager riddleManager = new RiddleManager();
