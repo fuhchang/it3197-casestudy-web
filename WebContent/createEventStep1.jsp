@@ -81,8 +81,8 @@
 		            }
 		        });
 		        $("#magicBtn").click(function(){
-			        var eventName = "Caregiving Welfare Association Flag Day";
-				    var eventDescription = "We are welcoming participants for CWA Flag Day, scheduled on 28 Dec 2013 (Saturday), from 8.30am to 4.30pm. All donations collected will go towards the well-being of our clients. ";
+			        var eventName = "Caregiving Welfare Association Fund Raising Event";
+				    var eventDescription = "We are welcoming participants for CWA Fund Raising Event, scheduled on 28 Aug 2014 (Saturday), from 8.30am to 4.30pm. All donations collected will go towards the well-being of our clients. ";
 				    $("#eventName").val(eventName);
 				    $("#eventDescription").val(eventDescription);
 				    $('#eventCategory').val("Family");

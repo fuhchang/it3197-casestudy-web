@@ -167,8 +167,8 @@
 			            }
 		 	   });
 		       $("#magicBtn").click(function(){
-		    	   var dateStart = "08/30/2014 8:30 PM";
-			   	   var dateEnd = "08/30/2014 5:30 PM";
+		    	   var dateStart = "08/28/2014 8:30 PM";
+			   	   var dateEnd = "08/28/2014 5:30 PM";
 			   	   $("#eventDateTimeFrom").val(dateStart);
 			   	   $("#eventDateTimeTo").val(dateEnd);
 			   });

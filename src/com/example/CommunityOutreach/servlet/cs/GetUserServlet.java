@@ -55,8 +55,11 @@ public class GetUserServlet extends HttpServlet {
         response.setHeader("Access-Control-Max-Age", "86400");
         
         UserManager userManager = new UserManager();
+        System.out.println(request.getParameter("userNRIC"));
+        System.out.println(request.getParameter("password"));
         User user = userManager.retrieveUser(request.getParameter("userNRIC"), request.getParameter("password"));
         
+       /*
         if(user.equals("")) {
         	JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
@@ -73,6 +76,16 @@ public class GetUserServlet extends HttpServlet {
         	myObj.add("user", userArr);
             out.println(myObj.toString());
         }
+        */
+        Gson gson = new Gson();
+        JsonObject myObj = new JsonObject();
+        myObj.addProperty("success", true);
+    	JsonElement userObj;
+    	JsonArray userArr = new JsonArray();
+    	userObj = gson.toJsonTree(user);
+    	userArr.add(userObj);
+    	myObj.add("user", userArr);
+        out.println(myObj.toString());
         out.close();
         
         /*UserManager getUser = new UserManager();

@@ -213,7 +213,7 @@
 			    </a>
 			    <ul class="dropdown-menu" role="menu">
 			  		<li><a href="#navigate" role="tab" data-toggle="tab" id="DRIVING">By Car</a></li>
-			  		<li><a href="#navigate" role="tab" data-toggle="tab" id="TRANSIT">By Transit</a></li>
+			  		<li><a href="#navigate" role="tab" data-toggle="tab" id="TRANSIT">By Public Transport</a></li>
 			    </ul>
 			  </li>
 			</ul>

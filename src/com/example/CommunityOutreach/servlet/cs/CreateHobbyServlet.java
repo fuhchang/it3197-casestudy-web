@@ -75,9 +75,9 @@ public class CreateHobbyServlet extends HttpServlet {
 		String Lat = request.getParameter("gLat");
 		String Lng = request.getParameter("gLng");
 		String nric = request.getParameter("nric");
-		String img = request.getParameter("byteImg");
 		
-		byte[] byteImg = img.getBytes();
+		
+		
 		Hobby hobby = new Hobby();
 		User user = new User();
 		hobby.setGrpName(title);
