@@ -13,6 +13,7 @@ public class Event{
 	private String occurence;
 	private int noOfParticipantsAllowed;
 	private int active;
+	private int eventFBPostID;
 	
 	/**
 	 * Event's default constructor
@@ -124,5 +125,13 @@ public class Event{
 
 	public void setActive(int active) {
 		this.active = active;
+	}
+
+	public int getEventFBPostID() {
+		return eventFBPostID;
+	}
+
+	public void setEventFBPostID(int eventFBPostID) {
+		this.eventFBPostID = eventFBPostID;
 	}
 }

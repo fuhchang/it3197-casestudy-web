@@ -26,7 +26,7 @@ public class EventManager{
 	 */
 	public boolean createEvent(Event event) {
 		String sql = "INSERT INTO event ";
-		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , 0)";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -83,6 +83,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getInt("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -118,6 +119,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getInt("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -152,6 +154,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getInt("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -186,6 +189,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getInt("eventFBPostID"));
 			} else {
 				return null;
 			}
@@ -223,6 +227,33 @@ public class EventManager{
 			ps.setString(7, event.getOccurence());
 			ps.setInt(8, event.getNoOfParticipantsAllowed());
 			ps.setInt(9, event.getEventID());
+			
+			System.out.println(ps);
+			ps.executeUpdate();
+			conn.setAutoCommit(true);
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * This method is to edit facebook event post id into the database
+	 * @param event
+	 * @return boolean
+	 */
+	public boolean editEventFBPostID(Event event) {
+		String sql = "UPDATE event ";
+		sql += "SET eventFBPostID = ? WHERE eventID = ? ";
+		try {
+			Connection conn = dbController.getConnection();
+			conn.setAutoCommit(false);
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, event.getEventFBPostID());
+			ps.setInt(2, event.getEventID());
 			
 			System.out.println(ps);
 			ps.executeUpdate();
