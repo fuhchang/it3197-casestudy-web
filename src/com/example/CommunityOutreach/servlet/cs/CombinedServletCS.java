@@ -67,7 +67,7 @@ public class CombinedServletCS extends HttpServlet {
 		
 		
 		EventManager em = new EventManager();
-		List<Event> eventList = em.retrieveAllEvents();
+		List<Event> eventList = em.retrieveAllLatestEvents();
 		
 		HobbyManager hm = new HobbyManager();
 		List<Hobby> hobbyList = hm.retrieveAllHobby();

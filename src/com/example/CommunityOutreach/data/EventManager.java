@@ -26,7 +26,7 @@ public class EventManager{
 	 */
 	public boolean createEvent(Event event) {
 		String sql = "INSERT INTO event ";
-		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , 0)";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -83,6 +83,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -118,6 +119,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -127,7 +129,41 @@ public class EventManager{
 			return null;
 		}
 	}
-	
+
+	/**
+	 * This method is to retrieve all events based on the latest date time.
+	 * @return
+	 */
+	public ArrayList<Event> retrieveAllLatestEvents() {
+		String sql = "SELECT * FROM event ORDER BY eventDateTimeFrom";
+		ArrayList<Event> eventArrList = new ArrayList<Event>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Event event = new Event();
+				event.setEventID(rs.getInt("eventID"));
+				event.setEventAdminNRIC(rs.getString("eventAdminNRIC"));
+				event.setEventName(rs.getString("eventName"));
+				event.setEventCategory(rs.getString("eventCategory"));
+				event.setEventDescription(rs.getString("eventDescription"));
+				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
+				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeTo"));
+				event.setOccurence(rs.getString("occurence"));
+				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
+				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
+				eventArrList.add(event);
+			}
+			conn.close();
+			return eventArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	/**
 	 * This method is to retrieve a event based on eventID
@@ -153,6 +189,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
 			} else {
 				return null;
 			}
@@ -163,7 +200,7 @@ public class EventManager{
 			return null;
 		}
 	}
-	
+
 	/**
 	 * This method is to edit event into the database
 	 * @param event
@@ -190,6 +227,33 @@ public class EventManager{
 			ps.setString(7, event.getOccurence());
 			ps.setInt(8, event.getNoOfParticipantsAllowed());
 			ps.setInt(9, event.getEventID());
+			
+			System.out.println(ps);
+			ps.executeUpdate();
+			conn.setAutoCommit(true);
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * This method is to edit facebook event post id into the database
+	 * @param event
+	 * @return boolean
+	 */
+	public boolean editEventFBPostID(Event event) {
+		String sql = "UPDATE event ";
+		sql += "SET eventFBPostID = ? WHERE eventID = ? ";
+		try {
+			Connection conn = dbController.getConnection();
+			conn.setAutoCommit(false);
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, event.getEventFBPostID());
+			ps.setInt(2, event.getEventID());
 			
 			System.out.println(ps);
 			ps.executeUpdate();

@@ -64,7 +64,26 @@ public class RetrieveAllRiddleWebServlet extends HttpServlet {
 		request.setAttribute("riddleAnsList", riddleAnsList);
 		
 		ArrayList<RiddleUserAnswered> userAnsweredList = riddleManager.retrieveAllUserAnswered(nric);
-		request.setAttribute("userAnsweredList", userAnsweredList);
+
+		ArrayList<Riddle> riddleAnsweredList = new ArrayList<Riddle>();
+		ArrayList<Riddle> riddleUnansweredList = new ArrayList<Riddle>();
+		for(int i = 0; i < riddleList.size(); i++){
+			boolean answered = false;
+			for(int ii = 0; ii < userAnsweredList.size(); ii++){
+				if(riddleList.get(i).getRiddleID() == userAnsweredList.get(ii).getRiddle().getRiddleID()){
+					answered = true;
+					break;
+				}
+			}
+			if(answered){
+				riddleAnsweredList.add(riddleList.get(i));
+			}
+			else{
+				riddleUnansweredList.add(riddleList.get(i));
+			}
+		}		
+		request.setAttribute("riddleAnsweredList", riddleAnsweredList);
+		request.setAttribute("riddleUnansweredList", riddleUnansweredList);
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Riddle.jsp");
 		requestDispatcher.forward(request, response);

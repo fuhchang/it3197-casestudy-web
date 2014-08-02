@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import com.example.CommunityOutreach.data.ArticleManager;
 import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
@@ -205,7 +206,13 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		Article article = new Article(0,event.getEventName(),event.getEventDescription(),currentTime,"News Around The Neighbourhood",eventLocationDetails.getEventLocationAddress(),eventAdminNRIC,1,"Pending",eventLocationDetails.getEventLocationLat(),eventLocationDetails.getEventLocationLng());
         		boolean articleCreated = articleManager.createArticle(article);
         		
-        		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation) && (articleCreated)){
+        		Event eventFB = new Event();
+        		eventFB.setEventID(eventID);
+        		eventFB.setEventFBPostID(request.getParameter("eventFBPostID"));
+        		
+        		boolean editEventFBPostID = eventManager.editEventFBPostID(eventFB);
+        		
+        		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation) && (articleCreated) && (editEventFBPostID)){
         	        if(request.getParameter("web").equals("true")){
         	        	if(request.getParameter("requestHelp").equals("on")){
             	        	response.sendRedirect("hobbyCategory.jsp");
