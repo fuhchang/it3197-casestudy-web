@@ -83,7 +83,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
-				event.setEventFBPostID(rs.getInt("eventFBPostID"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -119,7 +119,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
-				event.setEventFBPostID(rs.getInt("eventFBPostID"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -154,7 +154,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
-				event.setEventFBPostID(rs.getInt("eventFBPostID"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
 				eventArrList.add(event);
 			}
 			conn.close();
@@ -189,7 +189,7 @@ public class EventManager{
 				event.setOccurence(rs.getString("occurence"));
 				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
 				event.setActive(rs.getInt("active"));
-				event.setEventFBPostID(rs.getInt("eventFBPostID"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
 			} else {
 				return null;
 			}
@@ -252,7 +252,7 @@ public class EventManager{
 			conn.setAutoCommit(false);
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, event.getEventFBPostID());
+			ps.setString(1, event.getEventFBPostID());
 			ps.setInt(2, event.getEventID());
 			
 			System.out.println(ps);

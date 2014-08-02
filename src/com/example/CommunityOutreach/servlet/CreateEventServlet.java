@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import com.example.CommunityOutreach.data.ArticleManager;
 import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
@@ -147,6 +148,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		UserManager userManager = new UserManager();
 		EventLocationDetailManager eventLocationDetailManager = new EventLocationDetailManager();
         Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,dateTimeFrom,dateTimeTo,occurence,noOfParticipantsAllowed,1);
+        event.setEventFBPostID(request.getParameter("eventFBPostID"));
         User user = userManager.retrieveUser(eventAdminNRIC);
         EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
         
