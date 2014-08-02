@@ -148,7 +148,6 @@ public class CreateEventServlet extends HttpServlet implements Settings{
 		UserManager userManager = new UserManager();
 		EventLocationDetailManager eventLocationDetailManager = new EventLocationDetailManager();
         Event event = new Event(0,eventAdminNRIC,eventName,eventCategory,eventDescription,dateTimeFrom,dateTimeTo,occurence,noOfParticipantsAllowed,1);
-        event.setEventFBPostID(request.getParameter("eventFBPostID"));
         User user = userManager.retrieveUser(eventAdminNRIC);
         EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
         
@@ -207,7 +206,13 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		Article article = new Article(0,event.getEventName(),event.getEventDescription(),currentTime,"News Around The Neighbourhood",eventLocationDetails.getEventLocationAddress(),eventAdminNRIC,1,"Pending",eventLocationDetails.getEventLocationLat(),eventLocationDetails.getEventLocationLng());
         		boolean articleCreated = articleManager.createArticle(article);
         		
-        		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation) && (articleCreated)){
+        		Event eventFB = new Event();
+        		eventFB.setEventID(eventID);
+        		eventFB.setEventFBPostID(request.getParameter("eventFBPostID"));
+        		
+        		boolean editEventFBPostID = eventManager.editEventFBPostID(eventFB);
+        		
+        		if((isEventParticipantsCreated) && (addedPoints) && (addedLocation) && (articleCreated) && (editEventFBPostID)){
         	        if(request.getParameter("web").equals("true")){
         	        	if(request.getParameter("requestHelp").equals("on")){
             	        	response.sendRedirect("hobbyCategory.jsp");
