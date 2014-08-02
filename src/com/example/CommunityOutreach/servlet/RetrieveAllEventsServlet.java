@@ -94,7 +94,7 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
         if(!request.getParameter("web").equals("true")){
 
             EventManager eventManager = new EventManager();
-            ArrayList<Event> eventArrList = eventManager.retrieveAllEvents();
+            ArrayList<Event> eventArrList = eventManager.retrieveAllEventsSorted();
 
     		request.setAttribute("eventArrList", eventArrList);
 	        if((eventArrList.size() == 0) || (eventArrList == null)){

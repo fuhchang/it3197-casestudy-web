@@ -129,6 +129,42 @@ public class EventManager{
 			return null;
 		}
 	}
+	
+	/**
+	 * This method is to retrieve all events sorted from the database.
+	 * 
+	 * @return ArrayList<Event>
+	 */
+	public ArrayList<Event> retrieveAllEventsSorted() {
+		String sql = "SELECT * FROM event ORDER BY eventDateTimeFrom ";
+		ArrayList<Event> eventArrList = new ArrayList<Event>();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Event event = new Event();
+				event.setEventID(rs.getInt("eventID"));
+				event.setEventAdminNRIC(rs.getString("eventAdminNRIC"));
+				event.setEventName(rs.getString("eventName"));
+				event.setEventCategory(rs.getString("eventCategory"));
+				event.setEventDescription(rs.getString("eventDescription"));
+				event.setEventDateTimeFrom(rs.getTimestamp("eventDateTimeFrom"));
+				event.setEventDateTimeTo(rs.getTimestamp("eventDateTimeTo"));
+				event.setOccurence(rs.getString("occurence"));
+				event.setNoOfParticipantsAllowed(rs.getInt("noOfParticipantsAllowed"));
+				event.setActive(rs.getInt("active"));
+				event.setEventFBPostID(rs.getString("eventFBPostID"));
+				eventArrList.add(event);
+			}
+			conn.close();
+			return eventArrList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	/**
 	 * This method is to retrieve all events based on the latest date time.
