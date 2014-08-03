@@ -16,19 +16,20 @@ public class requestHobbyManager {
 	
 	public boolean createRequest(RequestHobby rh){
 		String sql = "INSERT INTO request_hobby ";
-		sql += "VALUES(?,?,?,?,?,?)";
+		sql += "VALUES(?,?,?,?,?,?,?)";
 		boolean result = false;
 		
 		try{
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, 0);
-			ps.setInt(2, 1);
+			ps.setInt(2, rh.getEventID());
 			ps.setInt(3, rh.getHobbyID());
 			ps.setString(4, rh.getRequestStatus());
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			ps.setString(5, dateFormat.format(rh.getRequestDateStart()));
 			ps.setString(6, dateFormat.format(rh.getRequestDateEnd()));
+			ps.setString(7, rh.getGroupname());
 			ps.executeUpdate();
 			result = true;
 		} catch (IllegalAccessException e) {
@@ -76,6 +77,35 @@ public class requestHobbyManager {
 		return reqList;
 	}
 	
+	public ArrayList<RequestHobby> getAllRequest(int eventID){
+		ArrayList<RequestHobby> reqList = new ArrayList<RequestHobby>();
+		String sql = "SELECT * FROM request_hobby where eventID = ?";
+		Connection conn;
+		try {
+			conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, eventID);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				RequestHobby rh = new RequestHobby();
+				rh.setEventID(eventID);
+				rh.setHobbyID(rs.getInt("hobbyID"));
+				rh.setRequestID(rs.getInt("requestID"));
+				rh.setRequestStatus(rs.getString("requestStatus"));
+				rh.setRequestDateStart(rs.getDate("requestDateStart"));
+				rh.setRequestDateEnd(rs.getDate("requestDateEnd"));
+				rh.setGroupname(rs.getString("groupname"));
+				reqList.add(rh);
+			}
+		} catch (IllegalAccessException | InstantiationException
+				| ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return reqList;
+		
+	}
 	public boolean AccpetRequest(int id){
 		boolean result = false;
 		String sql = "UPDATE request_hobby set requestStatus=? WHERE requestID=?";

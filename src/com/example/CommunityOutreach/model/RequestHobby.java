@@ -10,6 +10,7 @@ public class RequestHobby {
 	private String requestStatus;
 	private Date requestDateStart;
 	private Date requestDateEnd;
+	private String groupname;
 	public int getRequestID() {
 		return requestID;
 	}
@@ -57,6 +58,18 @@ public class RequestHobby {
 	 */
 	public void setRequestDateEnd(Date requestDateEnd) {
 		this.requestDateEnd = requestDateEnd;
+	}
+	/**
+	 * @return the groupname
+	 */
+	public String getGroupname() {
+		return groupname;
+	}
+	/**
+	 * @param groupname the groupname to set
+	 */
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
 	}
 	
 	
