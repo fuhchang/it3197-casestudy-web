@@ -66,6 +66,7 @@ public class requestHobbyManager {
 				rh.setRequestStatus(rs.getString("requestStatus"));
 				rh.setRequestDateStart(rs.getDate("requestDateStart"));
 				rh.setRequestDateEnd(rs.getDate("requestDateEnd"));
+				rh.setGroupname(rs.getString("groupname"));
 				reqList.add(rh);
 			}
 		} catch (IllegalAccessException | InstantiationException
