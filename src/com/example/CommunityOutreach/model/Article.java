@@ -19,7 +19,7 @@ public class Article {
 	
 	private double distToSort;
 	private String dist;
-	
+	private String articleFBPostID;
 	/**
 	 * Article's default constructor
 	 */
@@ -37,6 +37,7 @@ public class Article {
 	 * @param active
 	 * @param approved
 	 */
+	
 	public Article(int articleID, String title, String content, Date dateTime,String category, String location, String userNRIC, int active,String approved, double dbLat, double dbLon) {
 		super();
 		this.articleID = articleID;
@@ -50,6 +51,24 @@ public class Article {
 		this.approved = approved;
 		this.dbLat=dbLat;
 		this.dbLon=dbLon;
+	}
+	
+	
+	
+	public Article(int articleID, String title, String content, Date dateTime,String category, String location, String userNRIC, int active,String approved, double dbLat, double dbLon, String articleFBPostID) {
+		super();
+		this.articleID = articleID;
+		this.title = title;
+		this.content = content;
+		this.dateTime = dateTime;
+		this.category = category;
+		this.location = location;
+		this.userNRIC = userNRIC;
+		this.active = active;
+		this.approved = approved;
+		this.dbLat=dbLat;
+		this.dbLon=dbLon;
+		this.articleFBPostID=articleFBPostID;
 	}
 
 	public int getArticleID() {
@@ -170,5 +189,13 @@ public class Article {
 
 	public void setDist(String dist) {
 		this.dist = dist;
+	}
+	
+	public String getArticleFBPostID() {
+		return articleFBPostID;
+	}
+
+	public void setArticleFBPostID(String articleFBPostID) {
+		this.articleFBPostID = articleFBPostID;
 	}
 }

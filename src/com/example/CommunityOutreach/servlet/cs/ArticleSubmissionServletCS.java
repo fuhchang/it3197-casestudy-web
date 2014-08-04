@@ -82,10 +82,10 @@ public class ArticleSubmissionServletCS extends HttpServlet {
 		String approved= "Pending";
 		double dbLat= Double.parseDouble(request.getParameter("storingLat"));
 		double dbLon = Double.parseDouble(request.getParameter("storingLon"));
-		
+		String artImgPostId = request.getParameter("artImgPostId");
 		
 		ArticleManager am = new ArticleManager();
-		Article a = new Article(0, title, content, currentTime, category, location, userNRIC, active,approved,dbLat, dbLon);
+		Article a = new Article(0, title, content, currentTime, category, location, userNRIC, active,approved,dbLat, dbLon, artImgPostId);
 		
 		 boolean articleCreatedCheck = false;
 	        try{

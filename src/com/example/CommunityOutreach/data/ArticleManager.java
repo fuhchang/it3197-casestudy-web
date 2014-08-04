@@ -26,7 +26,7 @@ public class ArticleManager {
 	 */
 	public boolean createArticle(Article article) {
 		String sql = "INSERT INTO articles ";
-		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,? )";
+		sql += "VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,? ,? )";
 		try {
 			Connection conn = dbController.getConnection();
 			conn.setAutoCommit(false);
@@ -45,6 +45,7 @@ public class ArticleManager {
 			ps.setString(9, article.getApproved());
 			ps.setDouble(10, article.getDbLat());
 			ps.setDouble(11, article.getDbLon());
+			ps.setString(12, article.getArticleFBPostID());
 
 			System.out.println(ps);
 			ps.executeUpdate();
