@@ -87,6 +87,7 @@ public class UserManager {
 		}
 	}
 	
+	
 	/**
 	 * This method is to retrieve all active users from the database.
 	 * 
@@ -135,6 +136,38 @@ public class UserManager {
 			
 			ps.setString(1, nric);
 			ps.setString(2, password);
+			
+			ResultSet rs = ps.executeQuery();
+			User user = new User();
+			if (rs.next()) {
+				user.setNric(rs.getString("nric"));
+				user.setName(rs.getString("name"));
+				user.setType(rs.getString("type"));
+				user.setPassword(rs.getString("password"));
+				user.setContactNo(rs.getString("contactNo"));
+				user.setAddress(rs.getString("address"));
+				user.setEmail(rs.getString("email"));
+				user.setActive(rs.getInt("active"));
+				user.setPoints(rs.getInt("points"));
+			} else {
+				return null;
+			}
+			conn.close();
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public User retrieveUserByName(String name) {
+		String sql = "SELECT * FROM user WHERE name=?";
+		
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, name);
 			
 			ResultSet rs = ps.executeQuery();
 			User user = new User();

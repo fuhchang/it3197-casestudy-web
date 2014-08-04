@@ -47,6 +47,8 @@ public class UploadImageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		
+		/*
 		String appPath = request.getServletContext().getRealPath("");
 		String savePath = appPath + File.separator + SAVE_DIR; 
 		
@@ -65,7 +67,7 @@ public class UploadImageServlet extends HttpServlet {
 			
 			System.out.println(savePath + File.separator + fileName);
 		}
-		
+		*/
 	}
 
 }
