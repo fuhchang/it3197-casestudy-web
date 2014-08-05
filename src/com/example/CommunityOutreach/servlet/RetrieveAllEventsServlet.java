@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.model.EventLocationDetail;
 import com.example.CommunityOutreach.model.User;
 import com.example.CommunityOutreach.util.Settings;
 import com.google.gson.Gson;
@@ -94,8 +96,15 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
         if(!request.getParameter("web").equals("true")){
 
             EventManager eventManager = new EventManager();
+            EventLocationDetailManager eventLocationDetailsManager = new EventLocationDetailManager();
             ArrayList<Event> eventArrList = eventManager.retrieveAllEventsSorted();
-
+            ArrayList<EventLocationDetail> eventLocationDetailArrList = new ArrayList<EventLocationDetail>();
+            for(int i=0;i<eventArrList.size();i++){
+            	if(eventArrList.get(i).getActive() == 1){
+            		eventLocationDetailArrList.add(eventLocationDetailsManager.retrieveEventLocationDetails(eventArrList.get(i).getEventID()));
+            	}
+            }
+            
     		request.setAttribute("eventArrList", eventArrList);
 	        if((eventArrList.size() == 0) || (eventArrList == null)){
 	            JsonObject myObj = new JsonObject();
@@ -107,12 +116,18 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
 	            Gson gson = new Gson();
 	            JsonObject myObj = new JsonObject();
 	            myObj.addProperty("success", true);
-	        	JsonElement eventObj;
+	        	JsonElement eventObj, eventLocationObj;
 	        	JsonArray eventArray = new JsonArray();
+	        	JsonArray eventLocationArray = new JsonArray();
 	            for(int i=0;i<eventArrList.size();i++){
 	            	eventObj = gson.toJsonTree(eventArrList.get(i));
 	            	eventArray.add(eventObj);
 	            	myObj.add("eventInfo", eventArray);
+	            }
+	            for(int i=0;i<eventLocationDetailArrList.size();i++){
+	            	eventLocationObj = gson.toJsonTree(eventLocationDetailArrList.get(i));
+	            	eventLocationArray.add(eventLocationObj);
+	            	myObj.add("eventLocationInfo", eventLocationArray);
 	            }
 	            out.println(myObj.toString());
 	        }
