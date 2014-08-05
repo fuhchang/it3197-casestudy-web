@@ -52,24 +52,24 @@ public class CreateUserServlet extends HttpServlet {
         
         String nric = request.getParameter("nric");
         //Real Values
-        /*String name = request.getParameter("name");
+        String name = request.getParameter("name");
         String type = request.getParameter("type");
         String password = request.getParameter("password");
         String contactNo = request.getParameter("contactNo");
         String address = request.getParameter("address");
-        String email = request.getParameter("email");*/
+        String email = request.getParameter("email");
         
         //Testing Values
         System.out.println("NRIC: " + nric);
-		String name = "Jim";
+		/*String name = "Jim";
 		String type = "User";
 		String password = "234";
 		String contactNo = "91230495";
 		String address = "test";
-		String email = "test";
+		String email = "test";*/
         
         UserManager userManager = new UserManager();
-        User user = new User(nric,name,type,password,contactNo,address,email,1,100);
+        User user = new User(nric,name,type,password,contactNo,address,email,1,0);
         User checkUser = userManager.retrieveUser(nric);
         if((checkUser != null)){
             JsonObject myObj = new JsonObject();
