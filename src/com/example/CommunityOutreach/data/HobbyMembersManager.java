@@ -83,4 +83,35 @@ public class HobbyMembersManager {
 		return result;
 		
 	}
+	
+	public HobbyMembers CheckMember(String nric, int grpID){
+		String sql = "select * from hobbies_group_members where groupID = ? AND userNRIC =? ";
+		HobbyMembers hobbyMember = new HobbyMembers();
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, grpID);
+			ps.setString(2, nric);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				hobbyMember.setUserNRIC(rs.getString("userNRIC"));
+				hobbyMember.setRole(rs.getString("MemberRole"));
+			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catchAl block
+			e.printStackTrace();
+		}
+		
+		return hobbyMember;
+	}
 }

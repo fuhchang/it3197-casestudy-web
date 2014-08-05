@@ -15,6 +15,7 @@ public class Hobby {
 	private int active;
 	private String photo;
 	private String adminNric;
+	private String hobbyFBPostID;
 	public int getGrpID() {
 		return grpID;
 	}
@@ -106,6 +107,18 @@ public class Hobby {
 	 */
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	/**
+	 * @return the hobbyFBPostID
+	 */
+	public String getHobbyFBPostID() {
+		return hobbyFBPostID;
+	}
+	/**
+	 * @param hobbyFBPostID the hobbyFBPostID to set
+	 */
+	public void setHobbyFBPostID(String hobbyFBPostID) {
+		this.hobbyFBPostID = hobbyFBPostID;
 	}
 	
 	

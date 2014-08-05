@@ -75,10 +75,13 @@ public class CreateHobbyServlet extends HttpServlet {
 		String Lat = request.getParameter("gLat");
 		String Lng = request.getParameter("gLng");
 		String nric = request.getParameter("nric");
-		
-		
+		String imgFile = request.getParameter("gImg");
+		String imgID = request.getParameter("imgID");
 		
 		Hobby hobby = new Hobby();
+		if(!imgFile.equals("")){
+			hobby.setPhoto(imgFile);
+		}
 		User user = new User();
 		hobby.setGrpName(title);
 		hobby.setCategory(category);
@@ -88,7 +91,7 @@ public class CreateHobbyServlet extends HttpServlet {
 			hobby.setLng(Double.parseDouble(Lng));
 		}
 		hobby.setGrpDesc(grpDesc);
-		
+		hobby.setHobbyFBPostID(imgID);
 		HobbyManager hobbyManager = new HobbyManager();
 		boolean result = hobbyManager.createHobby(hobby, user);
 		if (result) {

@@ -21,7 +21,7 @@ public class HobbyManager {
 		int active = 1;
 		boolean result = false;
 		String sql = "INSERT INTO hobbies_group ";
-		sql += "VALUES(?,?,?,?,?,?,?,?,?)";
+		sql += "VALUES(?,?,?,?,?,?,?,?,?,?)";
 		try {
 			Connection conn = dbController.getConnection();
 			hobby.setGrpID(0);
@@ -32,11 +32,11 @@ public class HobbyManager {
 			ps.setString(3, hobby.getCategory());
 			ps.setDouble(4, hobby.getLat());
 			ps.setDouble(5, hobby.getLng());
-			ps.setBytes(6, null);
+			ps.setString(6, hobby.getPhoto());
 			ps.setString(7, hobby.getGrpDesc());
 			ps.setString(8, user.getNric());
 			ps.setInt(9, 1);
-			
+			ps.setString(10, hobby.getHobbyFBPostID());
 			ps.executeUpdate();
 			result=true;
 		} catch (IllegalAccessException e) {
@@ -76,6 +76,7 @@ public class HobbyManager {
 				hobby.setPhoto(rs.getString("groupimage"));
 				hobby.setAdminNric(rs.getString("adminNric"));
 				hobby.setActive(rs.getInt("active"));
+				hobby.setHobbyFBPostID(rs.getString("hobbyFBPostID"));
 				hobbyList.add(hobby);
 			}
 		} catch (IllegalAccessException e) {
