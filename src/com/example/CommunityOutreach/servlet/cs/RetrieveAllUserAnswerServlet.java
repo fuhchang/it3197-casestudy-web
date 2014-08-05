@@ -11,24 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.RiddleManager;
-import com.example.CommunityOutreach.model.Riddle;
-import com.example.CommunityOutreach.model.RiddleAnswer;
+import com.example.CommunityOutreach.model.RiddleUserAnswered;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class RetrieveAllRiddleWithAnswersServlet
+ * Servlet implementation class RetrieveAllUserAnswerServlet
  */
-@WebServlet("/RetrieveAllRiddleWithAnswersServlet")
-public class RetrieveAllRiddleWithAnswersServlet extends HttpServlet {
+@WebServlet("/RetrieveAllUserAnswerServlet")
+public class RetrieveAllUserAnswerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RetrieveAllRiddleWithAnswersServlet() {
+    public RetrieveAllUserAnswerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -57,20 +56,12 @@ public class RetrieveAllRiddleWithAnswersServlet extends HttpServlet {
         response.setHeader("Access-Control-Max-Age", "86400");
         
         RiddleManager riddleManager = new RiddleManager();
-        ArrayList<Riddle> riddleList = riddleManager.retrieveAllRiddle();
-    	ArrayList<RiddleAnswer> riddleAnsList = new ArrayList<RiddleAnswer>();
-    	
-        for(int i = 0; i < riddleList.size(); i++) {
-        	//RiddleAnswer[] riddleAnsArr = riddleManager.retrieveRiddleAnswers(riddleList.get(i));
-        	for(int ii = 0; ii < 4; ii++) {
-        		//riddleAnsList.add(riddleAnsArr[ii]);
-        	}
-        }
-        
-        if(riddleList.size() == 0 || riddleList == null) {
+        ArrayList<RiddleUserAnswered> answeredList = riddleManager.retrieveAllUserAnswered(request.getParameter("userNRIC"));
+
+        if(answeredList.size() == 0 || answeredList == null) {
         	JsonObject myObj = new JsonObject();
         	myObj.addProperty("success", false);
-        	myObj.addProperty("message", "Unable to retrieve riddle.");
+        	myObj.addProperty("message", "Unable to retrieve user answers.");
         	out.println(myObj.toString());
         } else {
         	Gson gson = new Gson();
@@ -80,37 +71,12 @@ public class RetrieveAllRiddleWithAnswersServlet extends HttpServlet {
         	JsonElement obj;
         	JsonArray jsonArr = new JsonArray();
         	
-        	for(int i = 0; i < riddleList.size(); i++) {
-        		obj = gson.toJsonTree(riddleList.get(i));
+        	for(int i = 0; i < answeredList.size(); i++) {
+        		obj = gson.toJsonTree(answeredList.get(i));
         		jsonArr.add(obj);
-        		myObj.add("list", jsonArr);
-        	}
-        	for(int i = 0; i < riddleAnsList.size(); i++) {
-        		obj = gson.toJsonTree(riddleAnsList.get(i));
-        		jsonArr.add(obj);
-        		myObj.add("list", jsonArr);
+        		myObj.add("answeredList", jsonArr);
         	}
         	out.println(myObj.toString());
-        	
-        	/*JsonElement riddleObj;
-        	JsonArray riddleArray = new JsonArray();
-        	
-        	for(int i = 0; i < riddleList.size(); i++) {
-        		riddleObj = gson.toJsonTree(riddleList.get(i));
-        		riddleArray.add(riddleObj);
-        		myObj.add("riddleList", riddleArray);
-        	}
-        	out.println(myObj.toString());
-        	
-        	JsonElement riddleAnsObj;
-        	JsonArray riddleAnsArray = new JsonArray();
-        	
-        	for(int i = 0; i < riddleAnsList.size(); i++) {
-        		riddleAnsObj = gson.toJsonTree(riddleAnsList.get(i));
-        		riddleAnsArray.add(riddleAnsObj);
-        		myObj.add("riddleAnsList", riddleAnsArray);
-        	}
-        	out.println(myObj.toString());*/
         }
         out.close();
 	}
