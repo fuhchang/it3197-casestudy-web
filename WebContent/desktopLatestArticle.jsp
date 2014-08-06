@@ -139,10 +139,9 @@
 		
 	
 	
-		<ul class="nav nav-tabs" role="tablist" style="margin-left:5px;">
-			
-		  <li class="active"><a href="DesktopLatestArticle">Latest News</a></li>
+		<ul class="nav nav-tabs" role="tablist" style="margin-left:5px;">		  
 		  <li><a href="DesktopFeedbackArticle">Feedbacks</a></li>
+		  <li class="active"><a href="DesktopLatestArticle">Latest News</a></li>
 		  <li><a href="DesktopLocationArticle">Location Requests</a></li>
 		  <li><a href="DesktopDeleteLatestArticle">Remove Articles From Main Page</a></li>
 		</ul>

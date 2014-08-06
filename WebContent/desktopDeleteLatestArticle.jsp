@@ -134,9 +134,8 @@
 		</div>
 	
 		<ul class="nav nav-tabs" role="tablist" style="margin-left:5px;">
-			
-		  <li><a href="DesktopLatestArticle">Latest News</a></li>
 		  <li><a href="DesktopFeedbackArticle">Feedbacks</a></li>
+		  <li><a href="DesktopLatestArticle">Latest News</a></li>
 		  <li><a href="DesktopLocationArticle">Location Requests</a></li>
 		  <li class="active"><a href="DesktopDeleteLatestArticle">Remove Articles From Main Page</a></li>
 		</ul>
