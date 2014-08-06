@@ -981,6 +981,7 @@ public class ArticleManager {
 				article.setApproved(rs.getString("status"));
 				article.setDbLat(rs.getDouble("lat"));
 				article.setDbLon(rs.getDouble("lng"));
+				article.setArticleFBPostID(rs.getString("articleFBPostID"));
 				articlesArrList.add(article);
 					
 				UserManager um = new UserManager();
