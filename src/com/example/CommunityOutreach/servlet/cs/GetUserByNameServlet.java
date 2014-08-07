@@ -55,7 +55,6 @@ public class GetUserByNameServlet extends HttpServlet {
         String name = request.getParameter("username");
         UserManager userManager = new UserManager();
         User user = userManager.retrieveUserByName(name);
-        
         Gson gson = new Gson();
         JsonObject myObj = new JsonObject();
         myObj.addProperty("success", true);

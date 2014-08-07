@@ -97,7 +97,7 @@ public class CreateHobbyServlet extends HttpServlet {
 		if (result) {
 			int grpID = hobbyManager.getLastHobbyID(nric);
 			HobbyMembersManager memberManager = new HobbyMembersManager();
-
+			
 			HobbyMembers members = new HobbyMembers();
 			members.setUserNRIC(nric);
 			members.setActive(1);

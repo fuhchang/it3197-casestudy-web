@@ -55,6 +55,7 @@ public class GetAllJoinedHobbyServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		response.setHeader("Access-Control-Max-Age", "86400");
 		String nric = request.getParameter("nric");
+		
 		HobbyMembersManager member = new HobbyMembersManager();
 		ArrayList<HobbyMembers> memberList = member.retrieveAllHobbyMember(nric);
 		HobbyManager hobbyManager = new HobbyManager();
