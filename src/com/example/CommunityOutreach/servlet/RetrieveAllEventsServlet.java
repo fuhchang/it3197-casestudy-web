@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
+import com.example.CommunityOutreach.data.EventParticipantsManager;
 import com.example.CommunityOutreach.data.UserManager;
 import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.EventLocationDetail;
+import com.example.CommunityOutreach.model.EventParticipants;
 import com.example.CommunityOutreach.model.User;
 import com.example.CommunityOutreach.util.Settings;
 import com.google.gson.Gson;
@@ -97,8 +99,10 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
 
             EventManager eventManager = new EventManager();
             EventLocationDetailManager eventLocationDetailsManager = new EventLocationDetailManager();
+            EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
             ArrayList<Event> eventArrList = eventManager.retrieveAllEventsSorted();
             ArrayList<EventLocationDetail> eventLocationDetailArrList = new ArrayList<EventLocationDetail>();
+            ArrayList<EventParticipants> eventParticipantsArrList = eventParticipantsManager.retrieveAllEventParticipants();
             for(int i=0;i<eventArrList.size();i++){
             	if(eventArrList.get(i).getActive() == 1){
             		eventLocationDetailArrList.add(eventLocationDetailsManager.retrieveEventLocationDetails(eventArrList.get(i).getEventID()));
@@ -116,9 +120,10 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
 	            Gson gson = new Gson();
 	            JsonObject myObj = new JsonObject();
 	            myObj.addProperty("success", true);
-	        	JsonElement eventObj, eventLocationObj;
+	        	JsonElement eventObj, eventLocationObj, eventParticipantsObj;
 	        	JsonArray eventArray = new JsonArray();
 	        	JsonArray eventLocationArray = new JsonArray();
+	        	JsonArray eventParticipantsArray = new JsonArray();
 	            for(int i=0;i<eventArrList.size();i++){
 	            	eventObj = gson.toJsonTree(eventArrList.get(i));
 	            	eventArray.add(eventObj);
@@ -128,6 +133,11 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
 	            	eventLocationObj = gson.toJsonTree(eventLocationDetailArrList.get(i));
 	            	eventLocationArray.add(eventLocationObj);
 	            	myObj.add("eventLocationInfo", eventLocationArray);
+	            }
+	            for(int i=0;i<eventParticipantsArrList.size();i++){
+	            	eventParticipantsObj = gson.toJsonTree(eventParticipantsArrList.get(i));
+	            	eventParticipantsArray.add(eventParticipantsObj);
+	            	myObj.add("eventParticipantsInfo", eventParticipantsArray);
 	            }
 	            out.println(myObj.toString());
 	        }
