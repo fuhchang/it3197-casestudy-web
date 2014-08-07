@@ -102,7 +102,7 @@ public class RetrieveAllEventsServlet extends HttpServlet implements Settings{
             EventParticipantsManager eventParticipantsManager = new EventParticipantsManager();
             ArrayList<Event> eventArrList = eventManager.retrieveAllEventsSorted();
             ArrayList<EventLocationDetail> eventLocationDetailArrList = new ArrayList<EventLocationDetail>();
-            ArrayList<EventParticipants> eventParticipantsArrList = eventParticipantsManager.retrieveAllEventParticipants();
+            ArrayList<EventParticipants> eventParticipantsArrList = eventParticipantsManager.retrieveEventParticipant(request.getParameter("userNRIC"));
             for(int i=0;i<eventArrList.size();i++){
             	if(eventArrList.get(i).getActive() == 1){
             		eventLocationDetailArrList.add(eventLocationDetailsManager.retrieveEventLocationDetails(eventArrList.get(i).getEventID()));
