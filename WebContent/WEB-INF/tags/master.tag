@@ -42,7 +42,7 @@
 					
 					
  					<ul class="nav navbar-nav navbar-right">
-						<li><a href="DesktopLatestArticle">Town Council - Articles</a></li>
+						<li><a href="DesktopFeedbackArticle">Town Council - Articles</a></li>
 					</ul>
  
 					
