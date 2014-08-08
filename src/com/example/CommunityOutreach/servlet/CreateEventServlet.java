@@ -204,6 +204,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         		}
         		
         		Article article = new Article(0,event.getEventName(),event.getEventDescription(),currentTime,"News Around The Neighbourhood",eventLocationDetails.getEventLocationAddress(),eventAdminNRIC,1,"Pending",eventLocationDetails.getEventLocationLat(),eventLocationDetails.getEventLocationLng());
+        		article.setArticleFBPostID(request.getParameter("eventFBPostID"));
         		boolean articleCreated = articleManager.createArticle(article);
         		
         		Event eventFB = new Event();
