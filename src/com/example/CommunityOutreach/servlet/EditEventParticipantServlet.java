@@ -131,20 +131,6 @@ public class EditEventParticipantServlet extends HttpServlet {
             out.println(myObj.toString());
             return;
         }
-        Date dateTimeFrom = checkEvent.getEventDateTimeFrom();
-
-		Calendar currentCalendar = Calendar.getInstance();
-        Date currentDateTime = currentCalendar.getTime();
-        
-        int minutesDifference = dateTimeFrom.compareTo(currentDateTime);
-        
-        if((minutesDifference > 600000) || (minutesDifference < -600000)){
-        	JsonObject myObj = new JsonObject();
-            myObj.addProperty("success", false);
-            myObj.addProperty("message","Unable to check user in for the event.");
-            out.println(myObj.toString());
-            return;
-        }
         
         boolean isEventParticipantsEdited = false;
         try{
