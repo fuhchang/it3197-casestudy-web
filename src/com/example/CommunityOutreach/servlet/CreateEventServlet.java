@@ -225,7 +225,7 @@ public class CreateEventServlet extends HttpServlet implements Settings{
         	        else{
         	        	JsonObject myObj = new JsonObject();
         				myObj.addProperty("success", true);
-        				myObj.addProperty("message","Event created successfully.");
+        				myObj.addProperty("eventID",eventFB.getEventID());
         				out.println(myObj.toString());
         	        }
         		}
