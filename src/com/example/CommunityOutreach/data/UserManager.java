@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.example.CommunityOutreach.controller.DBController;
 import com.example.CommunityOutreach.model.User;
+import com.example.CommunityOutreach.model.UserLocation;
 
 /**
  * This is the data access manager for User
@@ -302,6 +306,8 @@ public class UserManager {
 		}
 	}
 	
+	
+	/* SHERRY */
 	public boolean updatePoints(String nric, int points) {
 		String sql = "UPDATE user set points = ? WHERE nric = ?";
 		boolean result = false;
@@ -330,5 +336,67 @@ public class UserManager {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public boolean insertUserLocation(String userNRIC, double lat, double lng) {
+		boolean result = false;
+		
+		String sql = "INSERT INTO user_location ";
+		sql += "VALUES(?, ?, ?, ?, ?)";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, 0);
+			ps.setString(2, userNRIC);
+			DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			ps.setString(3, df.format(date));
+			ps.setDouble(4, lat);
+			ps.setDouble(5, lng);
+			
+			ps.executeUpdate();
+			result = true;
+			
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public ArrayList<UserLocation> retrieveAllUserLocation() {
+		ArrayList<UserLocation> locationList = new ArrayList<UserLocation>();
+		
+		String sql = "SELECT * FROM user_location";
+		try {
+			Connection conn = dbController.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				UserLocation userLocation = new UserLocation();
+				userLocation.setLocationID(rs.getInt("locationID"));
+				userLocation.setUser(new User(rs.getString("userNRIC")));
+				userLocation.setDateTime(rs.getTimestamp("dateTime"));
+				userLocation.setLat(rs.getDouble("lat"));
+				userLocation.setLng(rs.getDouble("lng"));
+				locationList.add(userLocation);
+			}
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return locationList;
 	}
 }
