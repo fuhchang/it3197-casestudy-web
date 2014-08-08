@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.CommunityOutreach.data.ArticleManager;
 import com.example.CommunityOutreach.data.EventManager;
 import com.example.CommunityOutreach.data.HobbyManager;
+import com.example.CommunityOutreach.data.RiddleManager;
 import com.example.CommunityOutreach.model.Article;
 import com.example.CommunityOutreach.model.Event;
 import com.example.CommunityOutreach.model.Hobby;
+import com.example.CommunityOutreach.model.Riddle;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -72,12 +74,15 @@ public class CombinedServletCS extends HttpServlet {
 		HobbyManager hm = new HobbyManager();
 		List<Hobby> hobbyList = hm.retrieveAllHobby();
 		
+		RiddleManager rm = new RiddleManager();
+		List<Riddle> riddleList = rm.retrieveAllRiddle();
+		
 		request.setAttribute("artList", artList);
 		request.setAttribute("eventList", eventList);
 		request.setAttribute("hobbyList", hobbyList);
+		request.setAttribute("riddleList", riddleList);
 		
-		
-		if((artList.size() == 0) || (artList == null)||(eventList.size() == 0) || (eventList == null)||(hobbyList.size() == 0) || (hobbyList == null)){
+		if((artList.size() == 0) || (artList == null)||(eventList.size() == 0) || (eventList == null)||(hobbyList.size() == 0) || (hobbyList == null)||(riddleList.size() == 0) || (riddleList == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
             myObj.addProperty("message", "Unable to retrieve.");
@@ -104,8 +109,6 @@ public class CombinedServletCS extends HttpServlet {
             	myObj.add("hobbyList", hobbyArray);
             }
             
-            
-            
             JsonElement articleObj;
         	JsonArray articleArray = new JsonArray();
             for(int i=0;i<artList.size();i++){
@@ -113,6 +116,15 @@ public class CombinedServletCS extends HttpServlet {
             	articleArray.add(articleObj);
             	myObj.add("artList", articleArray);
             }
+            
+            JsonElement riddleObj;
+        	JsonArray riddleArray = new JsonArray();
+            for(int i=0;i<riddleList.size();i++){
+            	riddleObj = gson.toJsonTree(riddleList.get(i));
+            	riddleArray.add(riddleObj);
+            	myObj.add("riddleList", riddleArray);
+            }
+            
             out.println(myObj.toString());
             
         }
