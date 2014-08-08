@@ -3,6 +3,7 @@ package com.example.CommunityOutreach.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -120,6 +121,27 @@ public class EditEventParticipantServlet extends HttpServlet {
         	JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
             myObj.addProperty("message","This is no record of such event participants.");
+            out.println(myObj.toString());
+            return;
+        }
+        if(checkEventParticipant.getCheckIn() == 1){
+        	JsonObject myObj = new JsonObject();
+            myObj.addProperty("success", false);
+            myObj.addProperty("message","User checked in already.");
+            out.println(myObj.toString());
+            return;
+        }
+        Date dateTimeFrom = checkEvent.getEventDateTimeFrom();
+
+		Calendar currentCalendar = Calendar.getInstance();
+        Date currentDateTime = currentCalendar.getTime();
+        
+        int minutesDifference = dateTimeFrom.compareTo(currentDateTime);
+        
+        if((minutesDifference > 600000) || (minutesDifference < -600000)){
+        	JsonObject myObj = new JsonObject();
+            myObj.addProperty("success", false);
+            myObj.addProperty("message","Unable to check user in for the event.");
             out.println(myObj.toString());
             return;
         }
