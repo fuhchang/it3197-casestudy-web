@@ -171,7 +171,7 @@ public class EventManager{
 	 * @return
 	 */
 	public ArrayList<Event> retrieveAllLatestEvents() {
-		String sql = "SELECT * FROM event ORDER BY eventDateTimeFrom";
+		String sql = "SELECT * FROM event WHERE eventDateTimeFrom > now() ORDER BY eventDateTimeFrom";
 		ArrayList<Event> eventArrList = new ArrayList<Event>();
 		try {
 			Connection conn = dbController.getConnection();
