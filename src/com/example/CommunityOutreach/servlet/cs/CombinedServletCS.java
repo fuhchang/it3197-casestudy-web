@@ -2,6 +2,7 @@ package com.example.CommunityOutreach.servlet.cs;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,11 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.CommunityOutreach.data.ArticleManager;
+import com.example.CommunityOutreach.data.EventLocationDetailManager;
 import com.example.CommunityOutreach.data.EventManager;
+import com.example.CommunityOutreach.data.EventParticipantsManager;
 import com.example.CommunityOutreach.data.HobbyManager;
 import com.example.CommunityOutreach.data.RiddleManager;
 import com.example.CommunityOutreach.model.Article;
 import com.example.CommunityOutreach.model.Event;
+import com.example.CommunityOutreach.model.EventLocationDetail;
+import com.example.CommunityOutreach.model.EventParticipants;
 import com.example.CommunityOutreach.model.Hobby;
 import com.example.CommunityOutreach.model.Riddle;
 import com.google.gson.Gson;
@@ -71,6 +76,15 @@ public class CombinedServletCS extends HttpServlet {
 		EventManager em = new EventManager();
 		List<Event> eventList = em.retrieveAllLatestEvents();
 		
+		EventLocationDetailManager elm = new EventLocationDetailManager();
+		EventParticipantsManager epm = new EventParticipantsManager();
+		List<EventLocationDetail> eventLocationList = new ArrayList<EventLocationDetail>();
+		List<ArrayList<EventParticipants>> eventParticipantsList = new ArrayList<ArrayList<EventParticipants>>();
+		for(int i=0;i<eventList.size();i++){
+			eventLocationList.add(elm.retrieveEventLocationDetails(eventList.get(i).getEventID()));			
+			eventParticipantsList.add(epm.retrieveEventParticipant(eventList.get(i).getEventID()));
+		}
+		
 		HobbyManager hm = new HobbyManager();
 		List<Hobby> hobbyList = hm.retrieveAllHobby();
 		
@@ -79,10 +93,12 @@ public class CombinedServletCS extends HttpServlet {
 		
 		request.setAttribute("artList", artList);
 		request.setAttribute("eventList", eventList);
+		request.setAttribute("eventLocationList", eventLocationList);
+		request.setAttribute("eventParticipantsList", eventParticipantsList);
 		request.setAttribute("hobbyList", hobbyList);
 		request.setAttribute("riddleList", riddleList);
 		
-		if((artList.size() == 0) || (artList == null)||(eventList.size() == 0) || (eventList == null)||(hobbyList.size() == 0) || (hobbyList == null)||(riddleList.size() == 0) || (riddleList == null)){
+		if((artList.size() == 0) || (artList == null) || (eventList.size() == 0) || (eventList == null)  || (eventLocationList.size() == 0) || (eventLocationList == null)  || (eventParticipantsList.size() == 0) || (eventParticipantsList == null) ||(hobbyList.size() == 0) || (hobbyList == null)||(riddleList.size() == 0) || (riddleList == null)){
             JsonObject myObj = new JsonObject();
             myObj.addProperty("success", false);
             myObj.addProperty("message", "Unable to retrieve.");
@@ -94,12 +110,29 @@ public class CombinedServletCS extends HttpServlet {
             myObj.addProperty("success", true);
         	
             JsonElement eventObj;
+            JsonElement eventLocationObj;
+            JsonElement eventParticipantsObj;
             JsonArray eventArray = new JsonArray();
+            JsonArray eventLocationArray = new JsonArray();
+            JsonArray eventParticipantsArray = new JsonArray();
             for(int i = 0; i< eventList.size();i++){
             	eventObj = gson.toJsonTree(eventList.get(i));
             	eventArray.add(eventObj);
             	myObj.add("eventList", eventArray);
             }
+            
+            for(int i = 0; i< eventLocationList.size();i++){
+            	eventLocationObj = gson.toJsonTree(eventLocationList.get(i));
+            	eventLocationArray.add(eventLocationObj);
+            	myObj.add("eventLocationList", eventLocationArray);
+            }
+            
+            for(int i = 0; i< eventParticipantsList.size();i++){
+            	eventParticipantsObj = gson.toJsonTree(eventParticipantsList.get(i));
+            	eventParticipantsArray.add(eventParticipantsObj);
+            	myObj.add("eventParticipantsList", eventParticipantsArray);
+            }
+            
             
             JsonElement hobbyObj;
             JsonArray hobbyArray = new JsonArray();
