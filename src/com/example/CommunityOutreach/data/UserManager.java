@@ -373,7 +373,7 @@ public class UserManager {
 	public ArrayList<UserLocation> retrieveAllUserLocation() {
 		ArrayList<UserLocation> locationList = new ArrayList<UserLocation>();
 		
-		String sql = "SELECT * FROM user_location";
+		String sql = "SELECT * FROM user_location WHERE MONTH(dateTime) = MONTH(CURDATE()) AND YEAR(dateTime) = YEAR(CURDATE())";
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
