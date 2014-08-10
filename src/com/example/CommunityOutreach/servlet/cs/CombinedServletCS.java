@@ -127,10 +127,12 @@ public class CombinedServletCS extends HttpServlet {
             	myObj.add("eventLocationList", eventLocationArray);
             }
             
-            for(int i = 0; i< eventParticipantsList.size();i++){
-            	eventParticipantsObj = gson.toJsonTree(eventParticipantsList.get(i));
-            	eventParticipantsArray.add(eventParticipantsObj);
-            	myObj.add("eventParticipantsList", eventParticipantsArray);
+            if(eventParticipantsList.size() > 0){
+	            for(int i = 0; i< eventParticipantsList.size();i++){
+	            	eventParticipantsObj = gson.toJsonTree(eventParticipantsList.get(i));
+	            	eventParticipantsArray.add(eventParticipantsObj);
+	            	myObj.add("eventParticipantsList", eventParticipantsArray);
+	            }
             }
             
             
