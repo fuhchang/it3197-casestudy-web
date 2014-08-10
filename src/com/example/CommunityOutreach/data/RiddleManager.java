@@ -114,17 +114,18 @@ public class RiddleManager {
 		return result;
 	}
 	
-	public boolean insertRate(String userNRIC, String rate) {
+	public boolean insertRate(int riddleID, String userNRIC, String rate) {
 		boolean result = false;
 
-		String sql = "UPDATE riddle_user_answered set answeredRate = ? WHERE userNRIC = ?";
+		String sql = "UPDATE riddle_user_answered set answeredRate = ? WHERE (riddleID = ? AND userNRIC = ?)";
 		
 		try {
 			Connection conn = dbController.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.setString(1, rate);
-			ps.setString(2, userNRIC);
+			ps.setInt(2, riddleID);
+			ps.setString(3, userNRIC);
 			
 			ps.executeUpdate();
 			result = true;

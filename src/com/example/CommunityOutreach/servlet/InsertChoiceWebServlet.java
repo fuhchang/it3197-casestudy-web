@@ -62,9 +62,9 @@ public class InsertChoiceWebServlet extends HttpServlet {
 		 User user = userManager.retrieveUser(nric);
 		 
 		 RiddleManager riddleManager = new RiddleManager();
-		 
+
+		 int riddleID = Integer.parseInt(request.getParameter("riddleID"));
 		 if(request.getParameter("riddleAnswerID") != null) {
-			 int riddleID = Integer.parseInt(request.getParameter("riddleID"));
 			 int riddleAnswerID = Integer.parseInt(request.getParameter("riddleAnswerID"));
 			 
 			 boolean result = riddleManager.insertChoice(riddleID, riddleAnswerID, nric);
@@ -122,7 +122,7 @@ public class InsertChoiceWebServlet extends HttpServlet {
 			 }
 		 }
 		 else if(request.getParameter("rating") != null) {
-			 boolean result = riddleManager.insertRate(nric, request.getParameter("rating").toUpperCase());
+			 boolean result = riddleManager.insertRate(riddleID, nric, request.getParameter("rating").toUpperCase());
 			 
 			 if(result) {
 				 userManager.updatePoints(nric, user.getPoints()+1);
